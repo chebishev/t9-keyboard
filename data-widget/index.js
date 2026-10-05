@@ -156,13 +156,15 @@ DataWidget({
           text: key.label,
 
           click_func: () => {
-             if (currentMultiTapKey === key) {
+            if (currentMultiTapKey === key) {
     currentMultiTapIndex =
       (currentMultiTapIndex + 1) % key.chars.length
   } else {
     currentMultiTapKey = key
     currentMultiTapIndex = 0
   }
+
+  keyboard.clearBuffer()
 
   keyboard.inputBuffer(
     key.chars[currentMultiTapIndex]
