@@ -1,0 +1,73 @@
+{
+  "configVersion": "v3",
+  "app": {
+    "appId": 1130042,
+    "appName": "T9 BG Keyboard",
+    "appType": "app",
+    "version": {
+      "code": 5,
+      "name": "1.2.0"
+    },
+    "icon": "icon.png",
+    "vender": "chebishev",
+    "description": "T9 English/Bulgarian keyboard"
+  },
+  "permissions": [
+    "device:os.input.method",
+    "data:os.device.info"
+  ],
+  "runtime": {
+    "apiVersion": {
+      "compatible": "4.0",
+      "target": "4.0",
+      "minVersion": "4.2"
+    }
+  },
+  "targets": {
+    "default": {
+      "module": {
+        "page": {
+          "pages": [
+            "page/index",
+            "page/about",
+            "data-widget/index"
+          ]
+        },
+        "data-widget": {
+          "widgets": [
+            {
+              "name": "T9 BG Keyboard",
+              "path": "data-widget/index",
+              "icon": "icon.png",
+              "runtime": {
+                "ability": [
+                  {
+                    "name": "en-US",
+                    "type": 2,
+                    "subType": []
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "platforms": [
+        {
+          "st": "r",
+          "dw": 480
+        },
+        {
+          "st": "s",
+          "dw": 480
+        }
+      ]
+    }
+  },
+  "i18n": {
+    "en-US": {
+      "appName": "T9 BG Keyboard"
+    }
+  },
+  "defaultLanguage": "en-US"
+}
