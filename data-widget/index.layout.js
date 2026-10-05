@@ -4,7 +4,7 @@ import { px } from '@zos/utils';
 
 export const { h } = keyboard.getContentRect();
 export const { width: DEVICE_WIDTH } = getDeviceInfo();
-const keyboardButtonColor = 0x5f5f5f;
+const keyboardButtonColor = 0x000000;
 
 export const styles = {
   container: {
@@ -71,7 +71,7 @@ export const styles = {
 
   actionKeyContainer: {
     layout: {
-      width: "12%",
+      width: "14%",
       height: "100%",
       display: "flex",
       justify_content: "center",
