@@ -141,5 +141,5 @@ The keyboard is registered as a `data-widget` and uses the Zepp OS keyboard APIs
 See the repository license for details.
 
 ## Screenshots
-[!Image](screenshots/hello.png)
-[!Image](screenshots/zdraveyte.png)
+![Image](./screenshots/hello.png)
+![Image](./screenshots/zdraveyte.png)
