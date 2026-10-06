@@ -5,8 +5,8 @@
     "appName": "T9 BG Keyboard",
     "appType": "app",
     "version": {
-      "code": 5,
-      "name": "1.2.0"
+      "code": 1,
+      "name": "1.0.0"
     },
     "icon": "icon.png",
     "vender": "chebishev",
