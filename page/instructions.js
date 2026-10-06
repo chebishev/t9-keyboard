@@ -3,8 +3,9 @@ import {
     widget,
     text_style,
     align,
+    setStatusBarVisible
 } from '@zos/ui'
-import { getDeviceInfo } from '@zos/device'
+import { getDeviceInfo, SCREEN_SHAPE_SQUARE } from '@zos/device'
 
 const { width: DEVICE_WIDTH } = getDeviceInfo()
 const deviceInfo = getDeviceInfo();
