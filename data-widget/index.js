@@ -18,6 +18,7 @@ let hideDeleteOnRelease = false
 let currentMultiTapKey = null
 let currentMultiTapIndex = 0
 let multiTapTimer = null
+let pendingChar = ""
 
 const MULTITAP_TIMEOUT = 800
 const letterWidgets = [];
@@ -61,6 +62,24 @@ function updateInputState(hasText = keyboard.getTextContext().length > 0) {
 
   deleteImage.setAlpha(hasText ? 255 : 0)
   deleteButton.setEnable(hasText)
+}
+
+function commitPendingChar() {
+  if (!pendingChar) return
+
+  keyboard.clearBuffer()
+  keyboard.inputText(pendingChar)
+
+  pendingChar = ""
+  currentMultiTapKey = null
+  currentMultiTapIndex = 0
+
+  if (multiTapTimer) {
+    clearTimeout(multiTapTimer)
+    multiTapTimer = null
+  }
+
+  updateInputState()
 }
 
 DataWidget({
@@ -156,20 +175,30 @@ DataWidget({
           text: key.label,
 
           click_func: () => {
-            if (currentMultiTapKey === key) {
+  if (multiTapTimer) {
+    clearTimeout(multiTapTimer)
+    multiTapTimer = null
+  }
+
+  if (currentMultiTapKey === key) {
     currentMultiTapIndex =
       (currentMultiTapIndex + 1) % key.chars.length
   } else {
+    commitPendingChar()
+
     currentMultiTapKey = key
     currentMultiTapIndex = 0
   }
 
-  keyboard.clearBuffer()
+  pendingChar = key.chars[currentMultiTapIndex]
 
-  keyboard.inputBuffer(
-    key.chars[currentMultiTapIndex]
-  )
-          },
+  keyboard.clearBuffer()
+  keyboard.inputBuffer(pendingChar)
+
+  multiTapTimer = setTimeout(() => {
+    commitPendingChar()
+  }, MULTITAP_TIMEOUT)
+},
           longpress_func: () => {
             keyboard.inputText(key.longPress)
             updateInputState()

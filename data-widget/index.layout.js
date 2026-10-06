@@ -71,7 +71,7 @@ export const styles = {
 
   actionKeyContainer: {
     layout: {
-      width: "14%",
+      width: "13%",
       height: "100%",
       display: "flex",
       justify_content: "center",
