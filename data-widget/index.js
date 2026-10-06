@@ -252,12 +252,7 @@ DataWidget({
 
   build() {
     console.log("BUILD")
-    console.log("container:", styles.container)
-console.log("keyboard:", styles.keyboard)
-console.log("keyboardRow:", styles.keyboardRow)
-console.log("keyButton:", styles.keyButton)
-console.log("actionKeyContainer:", styles.actionKeyContainer)
-
+    
     // Main container
     const vc = createWidget(
       widget.VIRTUAL_CONTAINER,
