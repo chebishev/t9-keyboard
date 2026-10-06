@@ -125,6 +125,28 @@ DataWidget({
       ...styles.deleteKey,
 
       click_func: () => {
+
+        if (pendingChar) {
+          keyboard.clearBuffer()
+
+          pendingChar = ""
+          currentMultiTapKey = null
+          currentMultiTapIndex = 0
+
+          if (multiTapTimer) {
+            clearTimeout(multiTapTimer)
+            multiTapTimer = null
+          }
+
+          const hasText = keyboard.getTextContext().length > 0
+
+          hideDeleteOnRelease = !hasText
+
+          deleteButton.setEnable(hasText)
+          
+          return
+        }
+
         const text = keyboard.getTextContext()
 
         hideDeleteOnRelease = text.length === 1
@@ -206,6 +228,8 @@ DataWidget({
 
             keyboard.clearBuffer()
             keyboard.inputBuffer(pendingChar)
+            deleteImage.setAlpha(255)
+            deleteButton.setEnable(true)
 
             multiTapTimer = setTimeout(() => {
               commitPendingChar()
