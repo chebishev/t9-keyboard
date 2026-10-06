@@ -79,6 +79,14 @@ function commitPendingChar() {
     multiTapTimer = null
   }
 
+  if (shiftEnabled && !capsLockEnabled) {
+    shiftEnabled = false
+
+    shiftImage.setProperty(
+      prop.SRC,
+      "image/shift_off.png"
+    )
+  }
   updateInputState()
 }
 
@@ -175,30 +183,34 @@ DataWidget({
           text: key.label,
 
           click_func: () => {
-  if (multiTapTimer) {
-    clearTimeout(multiTapTimer)
-    multiTapTimer = null
-  }
+            if (multiTapTimer) {
+              clearTimeout(multiTapTimer)
+              multiTapTimer = null
+            }
 
-  if (currentMultiTapKey === key) {
-    currentMultiTapIndex =
-      (currentMultiTapIndex + 1) % key.chars.length
-  } else {
-    commitPendingChar()
+            if (currentMultiTapKey === key) {
+              currentMultiTapIndex =
+                (currentMultiTapIndex + 1) % key.chars.length
+            } else {
+              commitPendingChar()
 
-    currentMultiTapKey = key
-    currentMultiTapIndex = 0
-  }
+              currentMultiTapKey = key
+              currentMultiTapIndex = 0
+            }
 
-  pendingChar = key.chars[currentMultiTapIndex]
+            const char = key.chars[currentMultiTapIndex]
 
-  keyboard.clearBuffer()
-  keyboard.inputBuffer(pendingChar)
+            pendingChar = (shiftEnabled || capsLockEnabled)
+              ? char.toUpperCase()
+              : char
 
-  multiTapTimer = setTimeout(() => {
-    commitPendingChar()
-  }, MULTITAP_TIMEOUT)
-},
+            keyboard.clearBuffer()
+            keyboard.inputBuffer(pendingChar)
+
+            multiTapTimer = setTimeout(() => {
+              commitPendingChar()
+            }, MULTITAP_TIMEOUT)
+          },
           longpress_func: () => {
             keyboard.inputText(key.longPress)
             updateInputState()
