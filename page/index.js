@@ -1,4 +1,3 @@
-
 import {
   keyboard,
   createWidget,
@@ -295,7 +294,7 @@ Page({
     createMenuButton(vc, "Go to Settings", () => {
       keyboardGotoSettings();
     });
-    
+
     createInstructionsButton(vc);
     createAboutButton(vc);
     createBottomSpacer(vc);

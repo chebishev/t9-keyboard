@@ -152,8 +152,8 @@ function updateKeyLabels() {
 
     const label =
       shiftEnabled &&
-      !capsLockEnabled &&
-      key.shiftLabel
+        !capsLockEnabled &&
+        key.shiftLabel
         ? key.shiftLabel
         : key.label
 
@@ -252,7 +252,7 @@ DataWidget({
 
   build() {
     console.log("BUILD")
-    
+
     // Main container
     const vc = createWidget(
       widget.VIRTUAL_CONTAINER,
@@ -367,8 +367,8 @@ DataWidget({
               click_func: () => {
                 const activeKey =
                   getActiveRows()
-                    [rowIndex]
-                    [keyIndex]
+                  [rowIndex]
+                  [keyIndex]
 
                 /*
                  * Shift symbols exist only on keys
@@ -379,8 +379,8 @@ DataWidget({
                  */
                 const activeChars =
                   shiftEnabled &&
-                  !capsLockEnabled &&
-                  activeKey.shiftChars
+                    !capsLockEnabled &&
+                    activeKey.shiftChars
                     ? activeKey.shiftChars
                     : activeKey.chars
 
@@ -421,7 +421,7 @@ DataWidget({
 
                 const char =
                   activeChars[
-                    currentMultiTapIndex
+                  currentMultiTapIndex
                   ]
 
                 /*
@@ -467,8 +467,8 @@ DataWidget({
               longpress_func: () => {
                 const activeKey =
                   getActiveRows()
-                    [rowIndex]
-                    [keyIndex]
+                  [rowIndex]
+                  [keyIndex]
 
                 /*
                  * Commit pending character first,
