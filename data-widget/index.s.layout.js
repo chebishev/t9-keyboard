@@ -24,7 +24,7 @@ export const styles = {
     ...baseStyles.keyButton,
     layout: {
       ...baseStyles.keyButton.layout,
-      width: "8.5%",
+      width: "32%",
     },
   },
 
@@ -34,20 +34,11 @@ export const styles = {
     y: h - px(56),
   },
 
-  shiftImage: {
-    ...baseStyles.shiftImage,
-    layout: {
-      ...baseStyles.shiftImage.layout,
-      width: "26",
-      height: "26",
-    },
-  },
-
   actionKeyContainer: {
     ...baseStyles.actionKeyContainer,
     layout: {
       ...baseStyles.actionKeyContainer.layout,
-      width: "25%",
+      width: "24%",
     },
   },
 };
