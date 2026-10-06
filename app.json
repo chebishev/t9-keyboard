@@ -29,6 +29,7 @@
         "page": {
           "pages": [
             "page/index",
+            "page/instructions",
             "page/about",
             "data-widget/index"
           ]

@@ -124,6 +124,13 @@ function createBottomSpacer(parent) {
   });
 }
 
+function createInstructionsButton(parent) {
+  return createMenuButton(parent, "Instructions", () => {
+    push({
+      url: "page/instructions",
+    });
+  });
+}
 
 function createAboutButton(parent) {
   return createMenuButton(parent, "About", () => {
@@ -288,7 +295,8 @@ Page({
     createMenuButton(vc, "Go to Settings", () => {
       keyboardGotoSettings();
     });
-
+    
+    createInstructionsButton(vc);
     createAboutButton(vc);
     createBottomSpacer(vc);
   },
@@ -340,6 +348,7 @@ Page({
       });
     });
 
+    createInstructionsButton(vc);
     createAboutButton(vc);
     createMenuButton(vc, "Exit", () => {
       exit();
@@ -379,7 +388,7 @@ Page({
       keyboardGotoSettings();
     });
 
-
+    createInstructionsButton(vc);
     createAboutButton(vc);
 
 
