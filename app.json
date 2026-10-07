@@ -30,6 +30,7 @@
           "pages": [
             "page/index",
             "page/instructions",
+            "page/settings",
             "page/about",
             "data-widget/index"
           ]

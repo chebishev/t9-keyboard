@@ -131,6 +131,14 @@ function createInstructionsButton(parent) {
   });
 }
 
+function createSettingsButton(parent) {
+  return createMenuButton(parent, "Настройки", () => {
+    push({
+      url: "page/settings",
+    });
+  });
+}
+
 function createAboutButton(parent) {
   return createMenuButton(parent, "О приложении", () => {
     push({
@@ -296,6 +304,7 @@ Page({
     });
 
     createInstructionsButton(vc);
+    createSettingsButton(vc);
     createAboutButton(vc);
     createBottomSpacer(vc);
   },
@@ -348,6 +357,7 @@ Page({
     });
 
     createInstructionsButton(vc);
+    createSettingsButton(vc);
     createAboutButton(vc);
     createMenuButton(vc, "Выход", () => {
       exit();
@@ -387,7 +397,7 @@ Page({
       keyboardGotoSettings();
     });
 
-    createInstructionsButton(vc);
+    createSettingsButton(vc);
     createAboutButton(vc);
 
 

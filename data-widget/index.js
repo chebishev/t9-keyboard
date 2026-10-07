@@ -6,6 +6,9 @@ import {
   event,
 } from '@zos/ui'
 import { styles } from "zosLoader:./index.[pf].layout.js"
+import { LocalStorage } from "@zos/storage";
+
+const localStorage = new LocalStorage()
 
 let shiftEnabled = false
 let capsLockEnabled = false
@@ -23,7 +26,7 @@ let pendingChar = ""
 
 let currentLanguage = "ru"
 
-const MULTITAP_TIMEOUT = 800
+let MULTITAP_TIMEOUT = 800
 const letterWidgets = []
 
 const ruRows = [
@@ -246,6 +249,9 @@ function commitPendingChar() {
 
 
 DataWidget({
+  state: {
+    multiTapTimeout: MULTITAP_TIMEOUT,
+  },
   onInit() {
     console.log("INIT")
   },
