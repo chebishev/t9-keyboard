@@ -1,27 +1,27 @@
-# T9 BG Keyboard
+# T9 Russian Keyboard
 
-A Bulgarian and English multi-tap keyboard for Zepp OS.
+A Russian and English multi-tap keyboard for Zepp OS.
 
-T9 BG Keyboard brings a classic mobile phone-style typing experience to compatible Amazfit devices. Letters are grouped on 9 keys and selected by repeatedly tapping the corresponding key.
+T9 Russian Keyboard brings a classic mobile phone-style typing experience to compatible Amazfit devices. Letters are grouped on 9 keys and selected by repeatedly tapping the corresponding key.
 
-The keyboard supports Bulgarian and English, Shift, Caps Lock, numbers, symbols, and switching to other Zepp OS input methods.
+The keyboard supports Russian and English, Shift, Caps Lock, numbers, symbols, and switching to other Zepp OS input methods.
 
 ## Features
 
-- 🇧🇬 Bulgarian multi-tap layout
+- RU Russian multi-tap layout
 - 🇬🇧 English multi-tap layout
 - Classic 9-key typing
 - Shift for a single uppercase letter
 - Caps Lock (longpress Shift Button to activate it)
 - Additional symbols (.,?!/@€-_)
 - Numbers 0–9
-- Quick Bulgarian / English switching
+- Quick Russian / English switching
 - Access to other installed Zepp OS keyboards (longpress globe icon)
 - Support for round and square displays
 
 ## Keyboard Layout
 
-### Bulgarian
+### Russian
 
 | Key | Characters |
 |-----|------------|
@@ -32,8 +32,8 @@ The keyboard supports Bulgarian and English, Shift, Caps Lock, numbers, symbols,
 | 5 | М Н О П |
 | 6 | Р С Т У |
 | 7 | Ф Х Ц Ч |
-| 8 | Ш Щ Ъ |
-| 9 | Ь Ю Я |
+| 8 | Ш Щ Ъ Ы |
+| 9 | Ь Э Ю Я |
 | 0 | Space (hold) |
 
 ### English
@@ -57,7 +57,7 @@ For example:
 
 `2 → A → B → C`
 
-or in Bulgarian:
+or in Russian:
 
 `2 → А → Б → В → Г`
 
@@ -91,9 +91,9 @@ Hold the **Space** key to enter:
 
 **Tap the Globe button**
 
-Switches between the built-in Bulgarian and English layouts:
+Switches between the built-in Russian and English layouts:
 
-`BG ↔ EN`
+`RU ↔ EN`
 
 **Hold the Globe button**
 
@@ -109,7 +109,7 @@ Hold Delete to clear the input.
 
 ## Supported Devices
 
-T9 BG Keyboard is designed for Zepp OS devices supporting third-party input methods.
+T9 Russian Keyboard is designed for Zepp OS devices supporting third-party input methods.
 
 The interface includes layouts for:
 
@@ -128,7 +128,11 @@ Tested on real Balance 2 and emulators for the other models
 
 The keyboard is implemented as a Zepp OS data widget.
 
-After installation, enable T9 BG Keyboard from the keyboard/input method settings on your watch.
+After installation, enable T9 Russian Keyboard from the keyboard/input method settings on your watch.
+
+## App Language
+
+Русский
 
 ## Development
 
@@ -142,4 +146,4 @@ See the repository license for details.
 
 ## Screenshots
 ![Image](./screenshots/hello.png)
-![Image](./screenshots/zdraveyte.png)
+![Image](./screenshots/zdrastvuyte.png)
