@@ -25,10 +25,10 @@ Page({
         // Title
         createWidget(widget.TEXT, {
             x: 80,
-            y: 20,
+            y: 25,
             w: DEVICE_WIDTH - 160,
             h: 45,
-            text: "HOW TO USE",
+            text: "КАК ПОЛЬЗОВАТЬСЯ",
             text_size: 24,
             color: 0xffffff,
             align_h: align.CENTER_H,
@@ -50,7 +50,7 @@ Page({
             y: 74,
             w: 290,
             h: 65,
-            text: "Tap — Shift / symbols\nHold — Caps Lock",
+            text: "Нажатие — Shift / символы\nУдержание — Caps Lock",
             text_size: 20,
             color: 0xffffff,
             text_style: text_style.WRAP,
@@ -73,8 +73,8 @@ Page({
             x: 125,
             y: 154,
             w: 290,
-            h: 50,
-            text: "Hold key — Type number",
+            h: 54,
+            text: "Удержание клавиши:\nввод цифры",
             text_size: 20,
             color: 0xffffff,
         })
@@ -83,7 +83,7 @@ Page({
         // SPACE / 0
         createWidget(widget.IMG, {
             x: 55,
-            y: 222,
+            y: 212,
             w: 56,
             h: 56,
             src: "image/blank.png",
@@ -91,10 +91,10 @@ Page({
 
         createWidget(widget.TEXT, {
             x: 125,
-            y: 224,
+            y: 240,
             w: 290,
             h: 50,
-            text: "Hold — Type 0",
+            text: "Удержание — ввод 0",
             text_size: 20,
             color: 0xffffff,
         })
@@ -111,10 +111,10 @@ Page({
 
         createWidget(widget.TEXT, {
             x: 125,
-            y: 294,
+            y: 300,
             w: 290,
             h: 65,
-            text: "Tap — Bulgarian / English\nHold — More keyboards",
+            text: "Нажатие — русский / английский\nУдержание — другие клавиатуры",
             text_size: 20,
             color: 0xffffff,
             text_style: text_style.WRAP,
@@ -127,7 +127,7 @@ Page({
             y: 382,
             w: 300,
             h: 60,
-            text: "Tap repeatedly to cycle letters",
+            text: "Нажимайте несколько раз для выбора буквы",
             text_size: 18,
             color: 0xb6b6b6,
             align_h: align.CENTER_H,

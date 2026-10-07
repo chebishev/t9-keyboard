@@ -1,7 +1,7 @@
 {
-  "name": "T9 BG Keyboard",
+  "name": "T9 Русская Клавиатура",
   "version": "1.0.0",
-  "description": "T9 English/Bulgarian keyboard",
+  "description": "T9 English/Russian keyboard",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

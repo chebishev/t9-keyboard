@@ -2,7 +2,7 @@
   "configVersion": "v3",
   "app": {
     "appId": 1130042,
-    "appName": "T9 BG Keyboard",
+    "appName": "T9 Русская Клавиатура",
     "appType": "app",
     "version": {
       "code": 1,
@@ -10,7 +10,7 @@
     },
     "icon": "icon.png",
     "vender": "chebishev",
-    "description": "T9 English/Bulgarian keyboard"
+    "description": "T9 English/Russian keyboard"
   },
   "permissions": [
     "device:os.input.method",
@@ -37,13 +37,13 @@
         "data-widget": {
           "widgets": [
             {
-              "name": "T9 BG Keyboard",
+              "name": "T9 Русская Клавиатура",
               "path": "data-widget/index",
               "icon": "icon.png",
               "runtime": {
                 "ability": [
                   {
-                    "name": "en-US",
+                    "name": "ru-RU",
                     "type": 2,
                     "subType": []
                   }
@@ -66,9 +66,9 @@
     }
   },
   "i18n": {
-    "en-US": {
-      "appName": "T9 BG Keyboard"
+    "ru-RU": {
+      "appName": "T9 Русская Клавиатура"
     }
   },
-  "defaultLanguage": "en-US"
+  "defaultLanguage": "ru-RU"
 }

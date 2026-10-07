@@ -14,11 +14,11 @@ export const APP_INFO = BASE_APP_INFO
 export const CREATOR_INFO = {
     ...BASE_CREATOR_INFO,
     y: px(160),
-    h: px(80)
+    h: px(110)
 }
 
 export const QRCODE = {
     ...BASE_QRCODE,
-    y: px(290),
-    bg_y: px(270)
+    y: px(310),
+    bg_y: px(290)
 }

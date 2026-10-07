@@ -72,7 +72,7 @@ const menuButtonColor = 0x0c86d1;
 const menuButtonLayout = {
   width: "100%",
   height: px(88),
-  font_size: px(36),
+  font_size: px(31),
   corner_radius: px(44),
 };
 
@@ -124,7 +124,7 @@ function createBottomSpacer(parent) {
 }
 
 function createInstructionsButton(parent) {
-  return createMenuButton(parent, "Instructions", () => {
+  return createMenuButton(parent, "Инструкции", () => {
     push({
       url: "page/instructions",
     });
@@ -132,7 +132,7 @@ function createInstructionsButton(parent) {
 }
 
 function createAboutButton(parent) {
-  return createMenuButton(parent, "About", () => {
+  return createMenuButton(parent, "О приложении", () => {
     push({
       url: "page/about",
     });
@@ -230,7 +230,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `Enable ${appName}`,
+      text: `Включить ${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
@@ -273,7 +273,7 @@ Page({
         width: "auto",
         max_width: px(200),
         height: px(70),
-        font_size: px(27),
+        font_size: px(24),
         line_clamp: 2,
       },
     });
@@ -281,7 +281,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `Please toggle ${appName} on in settings`,
+      text: `Включите ${appName} в настройках`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
@@ -291,7 +291,7 @@ Page({
     });
 
 
-    createMenuButton(vc, "Go to Settings", () => {
+    createMenuButton(vc, "Перейти в настройки", () => {
       keyboardGotoSettings();
     });
 
@@ -308,7 +308,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `Enable ${appName}`,
+      text: `Включить ${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
@@ -331,7 +331,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `Touch and hold the Globe key on the keyboard, then select ${appName}`,
+      text: `Нажмите и удерживайте клавишу с глобусом на клавиатуре, затем выберите ${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
@@ -341,7 +341,7 @@ Page({
     });
 
 
-    createMenuButton(vc, "Show Keyboard", () => {
+    createMenuButton(vc, "Показать клавиатуру", () => {
       this.keyboard(() => {
         this.onResume();
       });
@@ -349,7 +349,7 @@ Page({
 
     createInstructionsButton(vc);
     createAboutButton(vc);
-    createMenuButton(vc, "Exit", () => {
+    createMenuButton(vc, "Выход", () => {
       exit();
     });
     createBottomSpacer(vc);
@@ -362,7 +362,7 @@ Page({
 
 
     showToast({
-      content: "You're all set",
+      content: "Всё готово",
     });
 
 
@@ -378,12 +378,12 @@ Page({
     });
 
 
-    createMenuButton(vc, "Show Keyboard", () => {
+    createMenuButton(vc, "Показать клавиатуру", () => {
       this.keyboard();
     });
 
 
-    createMenuButton(vc, "Go To Settings", () => {
+    createMenuButton(vc, "Перейти в настройки", () => {
       keyboardGotoSettings();
     });
 
@@ -391,7 +391,7 @@ Page({
     createAboutButton(vc);
 
 
-    createMenuButton(vc, "Exit", () => {
+    createMenuButton(vc, "Выход", () => {
       exit();
     });
 

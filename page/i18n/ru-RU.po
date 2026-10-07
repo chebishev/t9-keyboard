@@ -1,0 +1,14 @@
+msgid "appName"
+msgstr "T9 Русская Клавиатура"
+
+msgid "version"
+msgstr "ver. 1.0.0"
+
+msgid "creator"
+msgstr "Это приложение создано chebishev"
+
+msgid "email"
+msgstr "Обратная связь: suffer@abv.bg"
+
+msgid "link"
+msgstr "https://chebishev.github.io"

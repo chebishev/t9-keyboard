@@ -21,18 +21,18 @@ let currentMultiTapIndex = 0
 let multiTapTimer = null
 let pendingChar = ""
 
-let currentLanguage = "bg"
+let currentLanguage = "ru"
 
 const MULTITAP_TIMEOUT = 800
 const letterWidgets = []
 
-const bgRows = [
+const ruRows = [
   [
     {
       label: '.,?!',
       chars: '.,?!',
-      shiftLabel: '@€-_',
-      shiftChars: '@€-_',
+      shiftLabel: '@₽-_',
+      shiftChars: '@₽-_',
       longPress: '1'
     },
     {
@@ -70,13 +70,13 @@ const bgRows = [
       longPress: '7'
     },
     {
-      label: 'ШЩЪ',
-      chars: 'шщъ',
+      label: 'ШЩЪЫ',
+      chars: 'шщъы',
       longPress: '8'
     },
     {
-      label: 'ЬЮЯ',
-      chars: 'ьюя',
+      label: 'ЬЮЯЭ',
+      chars: 'ьюяэ',
       longPress: '9'
     },
   ],
@@ -87,8 +87,8 @@ const enRows = [
     {
       label: '.,?!',
       chars: '.,?!',
-      shiftLabel: '@€-_',
-      shiftChars: '@€-_',
+      shiftLabel: '@₽-_',
+      shiftChars: '@₽-_',
       longPress: '1'
     },
     {
@@ -140,7 +140,7 @@ const enRows = [
 
 
 function getActiveRows() {
-  return currentLanguage === "bg" ? bgRows : enRows
+  return currentLanguage === "ru" ? ruRows : enRows
 }
 
 
@@ -585,9 +585,9 @@ DataWidget({
           commitPendingChar()
 
           currentLanguage =
-            currentLanguage === "bg"
+            currentLanguage === "ru"
               ? "en"
-              : "bg"
+              : "ru"
 
           updateKeyLabels()
         },
@@ -716,7 +716,7 @@ DataWidget({
 
   onDestroy() {
     console.log(
-      'BG keyboard: onDestroy'
+      'RU keyboard: onDestroy'
     )
   },
 })
