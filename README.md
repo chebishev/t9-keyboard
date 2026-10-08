@@ -126,7 +126,7 @@ T9 Russian Keyboard предназначена для устройств Zepp OS
 ## Требования
 
 - Zepp OS с поддержкой сторонних клавиатур / data-widget
-- API Level 4.0 или выше
+- API Level 4.2 или выше
 
 ## Установка
 
