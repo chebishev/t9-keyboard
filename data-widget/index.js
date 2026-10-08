@@ -11,7 +11,8 @@ import { LocalStorage } from "@zos/storage";
 
 const localStorage = new LocalStorage()
 
-let shiftEnabled = false
+// Start keyboard with Uppercase letter
+let shiftEnabled = true
 let capsLockEnabled = false
 let shiftImage = null
 let deleteImage = null
@@ -264,21 +265,21 @@ DataWidget({
   },
 
   changeMultiTapTimeout() {
-  const currentIndex = MULTITAP_SPEEDS.findIndex(
-    speed => speed.value === this.state.multiTapTimeout
-  )
+    const currentIndex = MULTITAP_SPEEDS.findIndex(
+      speed => speed.value === this.state.multiTapTimeout
+    )
 
-  const nextSpeed =
-    MULTITAP_SPEEDS[(currentIndex + 1) % MULTITAP_SPEEDS.length]
+    const nextSpeed =
+      MULTITAP_SPEEDS[(currentIndex + 1) % MULTITAP_SPEEDS.length]
 
-  this.state.multiTapTimeout = nextSpeed.value
+    this.state.multiTapTimeout = nextSpeed.value
 
-  localStorage.setItem('multiTapTimeout', nextSpeed.value)
+    localStorage.setItem('multiTapTimeout', nextSpeed.value)
 
-  showToast({
-    content: `Скорость ввода:\n${nextSpeed.label}`,
-  })
-},
+    showToast({
+      content: `Скорость ввода:\n${nextSpeed.label}`,
+    })
+  },
 
   build() {
 
@@ -732,6 +733,15 @@ DataWidget({
         shiftImage = img
       }
     })
+    // enable full shift behaviour on start
+    shiftImage.setProperty(
+      prop.SRC,
+      shiftEnabled
+        ? "image/shift_on.png"
+        : "image/shift_off.png"
+    )
+
+    updateKeyLabels()
   },
 
 

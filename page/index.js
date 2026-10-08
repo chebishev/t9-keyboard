@@ -18,7 +18,6 @@ import { getDeviceInfo, SCREEN_SHAPE_SQUARE } from "@zos/device";
 import { exit, launchApp, push } from "@zos/router";
 import { getPackageInfo } from "@zos/app";
 
-
 const deviceInfo = getDeviceInfo();
 const appName = getPackageInfo().name;
 
@@ -31,7 +30,6 @@ function keyboardIsEnabled() {
   return true;
 }
 
-
 function keyboardIsSelected() {
   if (keyboard.isSelected) {
     return keyboard.isSelected();
@@ -39,7 +37,6 @@ function keyboardIsSelected() {
 
   return true;
 }
-
 
 function keyboardGotoSettings() {
   if (keyboard.gotoSettings) {
@@ -52,13 +49,11 @@ function keyboardGotoSettings() {
   });
 }
 
-
 function defaultTheme() {
   if (deviceInfo.screenShape === SCREEN_SHAPE_SQUARE) {
     setStatusBarVisible(false);
   }
 }
-
 
 const defaultTextStyle = {
   color: 0xffffff,
@@ -89,7 +84,6 @@ const pageLayout = {
   padding_right: px(72),
 };
 
-
 function createPageContainer() {
   return createWidget(widget.VIRTUAL_CONTAINER, {
     layout: {
@@ -97,7 +91,6 @@ function createPageContainer() {
     },
   });
 }
-
 
 function createMenuButton(parent, text, clickFunc) {
   return createWidget(widget.BUTTON, {
@@ -111,7 +104,6 @@ function createMenuButton(parent, text, clickFunc) {
     },
   });
 }
-
 
 function createBottomSpacer(parent) {
   return createWidget(widget.FILL_RECT, {
