@@ -1,6 +1,6 @@
 {
   "name": "T9 Russian Keyboard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "T9 English/Russian keyboard",
   "main": "app.js",
   "scripts": {
