@@ -1,30 +1,31 @@
 # T9 Russian Keyboard
 
-A Russian and English multi-tap keyboard for Zepp OS.
+Клавиатура с многократным нажатием клавиш (Multi-tap) для русского и английского языков на Zepp OS.
 
-T9 Russian Keyboard brings a classic mobile phone-style typing experience to compatible Amazfit devices. Letters are grouped on 9 keys and selected by repeatedly tapping the corresponding key.
+**T9 Russian Keyboard** позволяет вводить текст на совместимых устройствах Amazfit так же, как на классических кнопочных мобильных телефонах. Буквы распределены по 9 клавишам и выбираются последовательными нажатиями соответствующей клавиши.
 
-The keyboard supports Russian and English, Shift, Caps Lock, numbers, symbols, and switching to other Zepp OS input methods.
+Клавиатура поддерживает русский и английский языки, Shift, Caps Lock, цифры, специальные символы и переключение на другие методы ввода Zepp OS.
 
-## Features
+## Возможности
 
-- RU Russian multi-tap layout
-- 🇬🇧 English multi-tap layout
-- Classic 9-key typing
-- Shift for a single uppercase letter
-- Caps Lock (longpress Shift Button to activate it)
-- Additional symbols (.,?!/@€-_)
-- Numbers 0–9
-- Quick Russian / English switching
-- Access to other installed Zepp OS keyboards (longpress globe icon)
-- Support for round and square displays
+- 🇷🇺 Русская раскладка с многократным нажатием клавиш
+- 🇬🇧 Английская раскладка с многократным нажатием клавиш
+- Классический ввод текста с помощью 9 клавиш
+- Shift для ввода одной заглавной буквы
+- Caps Lock (активируется долгим нажатием кнопки Shift)
+- Дополнительные символы (`.,?!/@₽-_`)
+- Цифры от 0 до 9
+- Быстрое переключение между русским и английским языками
+- Доступ к другим установленным клавиатурам Zepp OS (долгое нажатие на значок глобуса)
+- Изменение скорости ввода (долгое нажатие на значок X или ✓)
+- Поддержка круглых и квадратных экранов
 
-## Keyboard Layout
+## Раскладка клавиатуры
 
-### Russian
+### Русская
 
-| Key | Characters |
-|-----|------------|
+| Клавиша | Символы |
+|---|---|
 | 1 | . , ? ! |
 | 2 | А Б В Г |
 | 3 | Д Е Ж З |
@@ -34,12 +35,12 @@ The keyboard supports Russian and English, Shift, Caps Lock, numbers, symbols, a
 | 7 | Ф Х Ц Ч |
 | 8 | Ш Щ Ъ Ы |
 | 9 | Ь Э Ю Я |
-| 0 | Space (hold) |
+| 0 | Пробел (удержание) |
 
-### English
+### Английская
 
-| Key | Characters |
-|-----|------------|
+| Клавиша | Символы |
+|---|---|
 | 1 | . , ? ! |
 | 2 | A B C |
 | 3 | D E F |
@@ -49,101 +50,104 @@ The keyboard supports Russian and English, Shift, Caps Lock, numbers, symbols, a
 | 7 | P Q R S |
 | 8 | T U V |
 | 9 | W X Y Z |
-| 0 | Space (hold) |
+| 0 | Пробел (удержание) |
 
-Repeatedly tap a key to cycle through its characters.
+Для выбора нужной буквы нажмите соответствующую клавишу несколько раз.
 
-For example:
+Например, на английской раскладке:
 
 `2 → A → B → C`
 
-or in Russian:
+Или на русской:
 
 `2 → А → Б → В → Г`
 
-## Shift and Caps Lock
+## Shift и Caps Lock
 
-**Tap Shift**
+**Короткое нажатие Shift**
 
-Enables Shift for the next character.
+Включает Shift для ввода следующего символа.
 
-On the punctuation key, Shift provides additional symbols:
+При использовании клавиши пунктуации Shift открывает дополнительные символы:
 
-`@ € - _`
+`@ ₽ - _`
 
-**Hold Shift**
+**Долгое нажатие Shift**
 
-Enables Caps Lock.
+Включает Caps Lock.
 
-Tap Shift again to disable it.
+Чтобы отключить Caps Lock, нажмите Shift ещё раз.
 
-## Numbers
+## Ввод цифр
 
-Hold one of the character keys to enter its corresponding number:
+Чтобы ввести цифру, нажмите и удерживайте соответствующую клавишу:
 
 `1 2 3 4 5 6 7 8 9`
 
-Hold the **Space** key to enter:
+Чтобы ввести цифру `0`, нажмите и удерживайте клавишу **Пробел**.
 
-`0`
+## Переключение языков
 
-## Language Switching
+**Короткое нажатие на значок глобуса**
 
-**Tap the Globe button**
-
-Switches between the built-in Russian and English layouts:
+Переключает встроенные русскую и английскую раскладки:
 
 `RU ↔ EN`
 
-**Hold the Globe button**
+**Долгое нажатие на значок глобуса**
 
-Opens the Zepp OS input method selector, allowing you to switch to another installed keyboard.
+Открывает меню выбора метода ввода Zepp OS, позволяя переключиться на другую установленную клавиатуру.
 
-## Delete
+**Долгое нажатие X или ✓**
 
-Tap Delete to remove the previous character.
+Изменение скорости ввода (Очень быстро: 200мс, "Быстро": 400мс, "Нормально": 600мс, "Медленно": 800мс, "Очень медленно": 1000мс)
 
-A character that is still being selected with multi-tap can also be deleted before it is committed.
+## Удаление символов
 
-Hold Delete to clear the input.
+Короткое нажатие кнопки удаления удаляет предыдущий символ.
 
-## Supported Devices
+Символ, который ещё выбирается последовательными нажатиями, также можно удалить до завершения ввода.
 
-T9 Russian Keyboard is designed for Zepp OS devices supporting third-party input methods.
+**Долгое нажатие кнопки удаления** полностью очищает введённый текст.
 
-The interface includes layouts for:
+## Поддерживаемые устройства
 
-- Round displays
-- Square displays
+T9 Russian Keyboard предназначена для устройств Zepp OS с поддержкой сторонних методов ввода.
 
-Development and testing are primarily focused on 480×480 round devices, 390x450 square devices and Bip Max
-Tested on real Balance 2 and emulators for the other models
+Интерфейс адаптирован для:
 
-## Requirements
+- Круглых экранов
+- Квадратных экранов
 
-- Zepp OS with third-party keyboard / data-widget support
-- API Level 4.0 or newer
+Разработка и тестирование в основном ориентированы на устройства с круглыми экранами 480×480, квадратными экранами 390×450, а также Bip Max.
 
-## Installation
+Клавиатура протестирована на реальном **Amazfit Balance 2** и в эмуляторах других моделей.
 
-The keyboard is implemented as a Zepp OS data widget.
+## Требования
 
-After installation, enable T9 Russian Keyboard from the keyboard/input method settings on your watch.
+- Zepp OS с поддержкой сторонних клавиатур / data-widget
+- API Level 4.0 или выше
 
-## App Language
+## Установка
+
+Клавиатура реализована в виде модуля **data-widget** для Zepp OS.
+
+После установки включите **T9 Russian Keyboard** в настройках клавиатуры или методов ввода на часах.
+
+## Язык приложения
 
 Русский
 
-## Development
+## Разработка
 
-The project is built using the Zepp OS SDK.
+Проект разработан с использованием Zepp OS SDK.
 
-The keyboard is registered as a `data-widget` and uses the Zepp OS keyboard APIs for text input, composition, function keys, and input-method switching.
+Клавиатура зарегистрирована как `data-widget` и использует API клавиатуры Zepp OS для ввода текста, формирования символов, обработки функциональных клавиш и переключения методов ввода.
 
-## License
+## Лицензия
 
-See the repository license for details.
+Подробную информацию см. в файле лицензии репозитория.
 
-## Screenshots
+## Скриншоты
 ![Image](./screenshots/hello.png)
 ![Image](./screenshots/zdrastvuyte.png)
