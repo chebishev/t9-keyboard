@@ -38,8 +38,8 @@ Page({
 
         // SHIFT
         createWidget(widget.IMG, {
-            x: 58,
-            y: 80,
+            x: 55,
+            y: 70,
             w: 48,
             h: 48,
             src: "image/shift_off.png",
@@ -60,7 +60,7 @@ Page({
         // NUMBERS 1–9
         createWidget(widget.TEXT, {
             x: 55,
-            y: 158,
+            y: 155,
             w: 60,
             h: 42,
             text: "1–9",
@@ -71,7 +71,7 @@ Page({
 
         createWidget(widget.TEXT, {
             x: 125,
-            y: 154,
+            y: 140,
             w: 290,
             h: 54,
             text: "Удержание клавиши:\nввод цифры",
@@ -83,7 +83,7 @@ Page({
         // SPACE / 0
         createWidget(widget.IMG, {
             x: 55,
-            y: 212,
+            y: 180,
             w: 56,
             h: 56,
             src: "image/blank.png",
@@ -91,7 +91,7 @@ Page({
 
         createWidget(widget.TEXT, {
             x: 125,
-            y: 240,
+            y: 210,
             w: 290,
             h: 50,
             text: "Удержание — ввод 0",
@@ -102,8 +102,8 @@ Page({
 
         // GLOBE
         createWidget(widget.IMG, {
-            x: 58,
-            y: 300,
+            x: 55,
+            y: 244,
             w: 48,
             h: 54,
             src: "image/globe.png",
@@ -111,7 +111,7 @@ Page({
 
         createWidget(widget.TEXT, {
             x: 125,
-            y: 300,
+            y: 250,
             w: 290,
             h: 65,
             text: "Нажатие — русский / английский\nУдержание — другие клавиатуры",
@@ -119,12 +119,37 @@ Page({
             color: 0xffffff,
             text_style: text_style.WRAP,
         })
+        
+        // Enter/Cancel
+        createWidget(widget.IMG, {
+            x: 30,
+            y: 310,
+            w: 48,
+            h: 54,
+            src: "image/cancel.png",
+        })
+        createWidget(widget.IMG, {
+            x: 70,
+            y: 310,
+            w: 48,
+            h: 54,
+            src: "image/check.png",
+        })
 
+        createWidget(widget.TEXT, {
+            x: 125,
+            y: 315,
+            w: 290,
+            h: 60,
+            text: "Удержание — изменение\nскорости ввода",
+            text_size: 20,
+            color: 0xffffff,
+        })
 
         // MULTI-TAP
         createWidget(widget.TEXT, {
             x: 90,
-            y: 382,
+            y: 400,
             w: 300,
             h: 60,
             text: "Нажимайте несколько раз для выбора буквы",

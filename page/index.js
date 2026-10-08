@@ -386,6 +386,7 @@ Page({
       keyboardGotoSettings();
     });
 
+    createInstructionsButton(vc);
     createAboutButton(vc);
 
     createMenuButton(vc, "Выход", () => {
