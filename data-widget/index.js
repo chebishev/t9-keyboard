@@ -3,8 +3,9 @@ import {
   widget,
   keyboard,
   prop,
-  event,
+  event
 } from '@zos/ui'
+import { showToast } from "@zos/interaction";
 import { styles } from "zosLoader:./index.[pf].layout.js"
 import { LocalStorage } from "@zos/storage";
 
@@ -26,7 +27,15 @@ let pendingChar = ""
 
 let currentLanguage = "ru"
 
-let MULTITAP_TIMEOUT = 800
+const MULTITAP_TIMEOUT = 800
+const MULTITAP_SPEEDS = [
+  { value: 200, label: "Очень быстро" },
+  { value: 400, label: "Быстро" },
+  { value: 600, label: "Нормально" },
+  { value: 800, label: "Медленно" },
+  { value: 1000, label: "Очень медленно" }
+]
+
 const letterWidgets = []
 
 const ruRows = [
@@ -250,14 +259,28 @@ function commitPendingChar() {
 
 DataWidget({
   state: {
-    multiTapTimeout: MULTITAP_TIMEOUT,
-  },
-  onInit() {
-    console.log("INIT")
+    multiTapTimeout:
+      localStorage.getItem('multiTapTimeout') ?? MULTITAP_TIMEOUT,
   },
 
+  changeMultiTapTimeout() {
+  const currentIndex = MULTITAP_SPEEDS.findIndex(
+    speed => speed.value === this.state.multiTapTimeout
+  )
+
+  const nextSpeed =
+    MULTITAP_SPEEDS[(currentIndex + 1) % MULTITAP_SPEEDS.length]
+
+  this.state.multiTapTimeout = nextSpeed.value
+
+  localStorage.setItem('multiTapTimeout', nextSpeed.value)
+
+  showToast({
+    content: `Скорость ввода:\n${nextSpeed.label}`,
+  })
+},
+
   build() {
-    console.log("BUILD")
 
     // Main container
     const vc = createWidget(
@@ -467,7 +490,7 @@ DataWidget({
                 multiTapTimer =
                   setTimeout(() => {
                     commitPendingChar()
-                  }, MULTITAP_TIMEOUT)
+                  }, this.state.multiTapTimeout)
               },
 
               longpress_func: () => {
@@ -652,6 +675,9 @@ DataWidget({
             )
           }
         },
+        longpress_func: () => {
+          this.changeMultiTapTimeout()
+        }
       },
     ]
 

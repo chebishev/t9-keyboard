@@ -1,7 +1,7 @@
 {
   "configVersion": "v3",
   "app": {
-    "appId": 1130042,
+    "appId": 1130272,
     "appName": "T9 Русская Клавиатура",
     "appType": "app",
     "version": {
@@ -14,7 +14,8 @@
   },
   "permissions": [
     "device:os.input.method",
-    "data:os.device.info"
+    "data:os.device.info",
+    "device:os.local_storage"
   ],
   "runtime": {
     "apiVersion": {
@@ -30,7 +31,6 @@
           "pages": [
             "page/index",
             "page/instructions",
-            "page/settings",
             "page/about",
             "data-widget/index"
           ]
