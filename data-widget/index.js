@@ -14,7 +14,7 @@ const localStorage = new LocalStorage()
 const vibro = new Vibrator()
 
 function vibrate() {
-  vibro.setMode(20)
+  vibro.setMode(27)
   vibro.start()
 }
 
