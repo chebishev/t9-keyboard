@@ -5,9 +5,20 @@ import {
   prop,
   event,
 } from '@zos/ui'
+import { showToast } from "@zos/interaction";
 import { styles } from "zosLoader:./index.[pf].layout.js"
+import { LocalStorage } from "@zos/storage";
+import { Vibrator } from '@zos/sensor'
 
-let shiftEnabled = false
+const localStorage = new LocalStorage()
+const vibro = new Vibrator()
+
+function vibrate() {
+  vibro.setMode(27)
+  vibro.start()
+}
+
+let shiftEnabled = true
 let capsLockEnabled = false
 let shiftImage = null
 let deleteImage = null
@@ -24,6 +35,14 @@ let pendingChar = ""
 let currentLanguage = "bg"
 
 const MULTITAP_TIMEOUT = 800
+const MULTITAP_SPEEDS = [
+  { value: 200, label: "Very fast" },
+  { value: 400, label: "Fast" },
+  { value: 600, label: "Normal" },
+  { value: 800, label: "Slow" },
+  { value: 1000, label: "Very slow" }
+]
+
 const letterWidgets = []
 
 const bgRows = [
@@ -246,13 +265,29 @@ function commitPendingChar() {
 
 
 DataWidget({
-  onInit() {
-    console.log("INIT")
+  state: {
+    multiTapTimeout:
+      localStorage.getItem('multiTapTimeout') ?? MULTITAP_TIMEOUT,
+  },
+
+  changeMultiTapTimeout() {
+    const currentIndex = MULTITAP_SPEEDS.findIndex(
+      speed => speed.value === this.state.multiTapTimeout
+    )
+
+    const nextSpeed =
+      MULTITAP_SPEEDS[(currentIndex + 1) % MULTITAP_SPEEDS.length]
+
+    this.state.multiTapTimeout = nextSpeed.value
+
+    localStorage.setItem('multiTapTimeout', nextSpeed.value)
+
+    showToast({
+      content: `Typing speed:\n${nextSpeed.label}`,
+    })
   },
 
   build() {
-    console.log("BUILD")
-
     // Main container
     const vc = createWidget(
       widget.VIRTUAL_CONTAINER,
@@ -324,6 +359,7 @@ DataWidget({
       longpress_func: () => {
         keyboard.clearInput()
         updateInputState()
+        vibrate()
       },
     })
 
@@ -461,7 +497,7 @@ DataWidget({
                 multiTapTimer =
                   setTimeout(() => {
                     commitPendingChar()
-                  }, MULTITAP_TIMEOUT)
+                  }, this.state.multiTapTimeout)
               },
 
               longpress_func: () => {
@@ -552,6 +588,7 @@ DataWidget({
            *   .,?!
            */
           updateKeyLabels()
+          vibrate()
         },
 
         longpress_func: () => {
@@ -568,6 +605,7 @@ DataWidget({
           )
 
           updateKeyLabels()
+          vibrate()
         },
       },
 
@@ -590,6 +628,7 @@ DataWidget({
               : "bg"
 
           updateKeyLabels()
+          vibrate()
         },
 
         longpress_func: () => {
@@ -646,6 +685,9 @@ DataWidget({
             )
           }
         },
+        longpress_func: () => {
+          this.changeMultiTapTimeout()
+        }
       },
     ]
 
@@ -688,6 +730,10 @@ DataWidget({
         img
       )
 
+      if (key.type === "shift") {
+        shiftImage = img
+      }
+
       if (key.type === "globe") {
         globeImage = img
       }
@@ -695,11 +741,16 @@ DataWidget({
       if (key.type === "enter") {
         actionImage = img
       }
-
-      if (key.type === "shift") {
-        shiftImage = img
-      }
     })
+    // enable full shift behaviour on start
+    shiftImage.setProperty(
+      prop.SRC,
+      shiftEnabled
+        ? "image/shift_on.png"
+        : "image/shift_off.png"
+    )
+
+    updateKeyLabels()
   },
 
 
