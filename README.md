@@ -19,6 +19,7 @@ The keyboard supports Bulgarian and English, Shift, Caps Lock, numbers, symbols,
 - Access to other installed Zepp OS keyboards (longpress globe icon)
 - Change typing speed (hold X or ✓ keys)
 - Support for round and square displays
+- Shift enabled by default on startup
 
 ## Keyboard Layout
 
