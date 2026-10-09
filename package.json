@@ -1,6 +1,6 @@
 {
   "name": "T9 BG Keyboard",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "T9 English/Bulgarian keyboard",
   "main": "app.js",
   "scripts": {

@@ -2,7 +2,7 @@ msgid "appName"
 msgstr "T9 BG Keyboard"
 
 msgid "version"
-msgstr "ver. 1.0.0"
+msgstr "ver. 1.1.0"
 
 msgid "creator"
 msgstr "This app is created by chebishev"

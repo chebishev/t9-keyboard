@@ -4,7 +4,7 @@ import { px } from '@zos/utils';
 
 export const { h } = keyboard.getContentRect();
 export const { width: DEVICE_WIDTH } = getDeviceInfo();
-const keyboardButtonColor = 0x000000;
+const keyboardButtonColor = 0xf00000;
 
 export const styles = {
     container: {

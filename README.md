@@ -17,6 +17,7 @@ The keyboard supports Bulgarian and English, Shift, Caps Lock, numbers, symbols,
 - Numbers 0–9
 - Quick Bulgarian / English switching
 - Access to other installed Zepp OS keyboards (longpress globe icon)
+- Change typing speed (hold X or ✓ keys)
 - Support for round and square displays
 
 ## Keyboard Layout
@@ -55,11 +56,11 @@ Repeatedly tap a key to cycle through its characters.
 
 For example:
 
-`2 → A → B → C`
+`A → B → C`
 
 or in Bulgarian:
 
-`2 → А → Б → В → Г`
+`А → Б → В → Г`
 
 ## Shift and Caps Lock
 
@@ -98,6 +99,10 @@ Switches between the built-in Bulgarian and English layouts:
 **Hold the Globe button**
 
 Opens the Zepp OS input method selector, allowing you to switch to another installed keyboard.
+
+**Hold Cancel or Enter button**
+- Change the time for the chosen letter to commit with the following options:
+- Very fast: 200ms, Fast: 400ms, Normal: 600ms, Slow: 800ms, Very slow: 1000ms
 
 ## Delete
 
