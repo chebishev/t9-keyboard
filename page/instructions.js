@@ -9,6 +9,8 @@ import { getDeviceInfo, SCREEN_SHAPE_SQUARE } from '@zos/device'
 
 const { width: DEVICE_WIDTH } = getDeviceInfo()
 const deviceInfo = getDeviceInfo();
+const centeredHeading = DEVICE_WIDTH / 6.7
+const imageX = 40
 
 function defaultTheme() {
     if (deviceInfo.screenShape === SCREEN_SHAPE_SQUARE) {
@@ -24,9 +26,9 @@ Page({
     build() {
         // Title
         createWidget(widget.TEXT, {
-            x: 80,
+            x: centeredHeading,
             y: 25,
-            w: DEVICE_WIDTH - 160,
+            w: DEVICE_WIDTH - centeredHeading * 2,
             h: 45,
             text: "КАК ПОЛЬЗОВАТЬСЯ",
             text_size: 24,
@@ -38,7 +40,7 @@ Page({
 
         // SHIFT
         createWidget(widget.IMG, {
-            x: 55,
+            x: imageX,
             y: 70,
             w: 48,
             h: 48,
@@ -46,7 +48,7 @@ Page({
         })
 
         createWidget(widget.TEXT, {
-            x: 125,
+            x: 120,
             y: 74,
             w: 290,
             h: 65,
@@ -59,7 +61,7 @@ Page({
 
         // NUMBERS 1–9
         createWidget(widget.TEXT, {
-            x: 55,
+            x: imageX,
             y: 155,
             w: 60,
             h: 42,
@@ -70,7 +72,7 @@ Page({
         })
 
         createWidget(widget.TEXT, {
-            x: 125,
+            x: 120,
             y: 140,
             w: 290,
             h: 54,
@@ -82,7 +84,7 @@ Page({
 
         // SPACE / 0
         createWidget(widget.IMG, {
-            x: 55,
+            x: imageX,
             y: 180,
             w: 56,
             h: 56,
@@ -90,7 +92,7 @@ Page({
         })
 
         createWidget(widget.TEXT, {
-            x: 125,
+            x: 120,
             y: 210,
             w: 290,
             h: 50,
@@ -102,7 +104,7 @@ Page({
 
         // GLOBE
         createWidget(widget.IMG, {
-            x: 55,
+            x: imageX,
             y: 244,
             w: 48,
             h: 54,
@@ -110,7 +112,7 @@ Page({
         })
 
         createWidget(widget.TEXT, {
-            x: 125,
+            x: 120,
             y: 250,
             w: 290,
             h: 65,
@@ -122,14 +124,14 @@ Page({
         
         // Enter/Cancel
         createWidget(widget.IMG, {
-            x: 30,
+            x: 15,
             y: 310,
             w: 48,
             h: 54,
             src: "image/cancel.png",
         })
         createWidget(widget.IMG, {
-            x: 70,
+            x: 50,
             y: 310,
             w: 48,
             h: 54,
@@ -137,7 +139,7 @@ Page({
         })
 
         createWidget(widget.TEXT, {
-            x: 125,
+            x: 120,
             y: 315,
             w: 290,
             h: 60,
@@ -148,8 +150,8 @@ Page({
 
         // MULTI-TAP
         createWidget(widget.TEXT, {
-            x: 90,
-            y: 400,
+            x: DEVICE_WIDTH / 2 - 150,
+            y: 395,
             w: 300,
             h: 60,
             text: "Нажимайте несколько раз для выбора буквы",

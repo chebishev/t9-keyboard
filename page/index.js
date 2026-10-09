@@ -80,8 +80,8 @@ const pageLayout = {
   flex_flow: "column",
   row_gap: px(25),
   padding_top: px(40),
-  padding_left: px(72),
-  padding_right: px(72),
+  padding_left: px(60),
+  padding_right: px(60),
 };
 
 function createPageContainer() {

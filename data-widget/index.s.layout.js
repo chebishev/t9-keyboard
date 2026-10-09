@@ -16,7 +16,7 @@ export const styles = {
         ...baseStyles.keyboardRow,
         layout: {
             ...baseStyles.keyboardRow.layout,
-            height: "13vh",
+            height: "17vh",
         },
     },
 
@@ -25,6 +25,8 @@ export const styles = {
         layout: {
             ...baseStyles.keyButton.layout,
             width: "32%",
+            font_size: "35",
+        
         },
     },
 

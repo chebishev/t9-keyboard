@@ -13,7 +13,7 @@ export const APP_INFO = BASE_APP_INFO
 
 export const CREATOR_INFO = {
     ...BASE_CREATOR_INFO,
-    y: px(160),
+    y: px(150),
     h: px(110)
 }
 
