@@ -2,7 +2,7 @@ msgid "appName"
 msgstr "T9 Русская Клавиатура"
 
 msgid "version"
-msgstr "ver. 1.0.1"
+msgstr "ver. 1.1.0"
 
 msgid "creator"
 msgstr "Это приложение создано chebishev"
