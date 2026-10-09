@@ -14,7 +14,7 @@ const localStorage = new LocalStorage()
 const vibro = new Vibrator()
 
 function vibrate() {
-  vibro.setMode(27)
+  vibro.setMode(20)
   vibro.start()
 }
 
@@ -361,6 +361,7 @@ DataWidget({
       longpress_func: () => {
         keyboard.clearInput()
         updateInputState()
+        vibrate()
       },
     })
 
@@ -589,6 +590,7 @@ DataWidget({
            *   .,?!
            */
           updateKeyLabels()
+          vibrate()
         },
 
         longpress_func: () => {
@@ -605,6 +607,7 @@ DataWidget({
           )
 
           updateKeyLabels()
+          vibrate()
         },
       },
 
@@ -627,6 +630,7 @@ DataWidget({
               : "ru"
 
           updateKeyLabels()
+          vibrate()
         },
 
         longpress_func: () => {
