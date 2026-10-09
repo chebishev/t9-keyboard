@@ -8,8 +8,15 @@ import {
 import { showToast } from "@zos/interaction";
 import { styles } from "zosLoader:./index.[pf].layout.js"
 import { LocalStorage } from "@zos/storage";
+import { Vibrator } from '@zos/sensor'
 
 const localStorage = new LocalStorage()
+const vibro = new Vibrator()
+
+function vibrate() {
+  vibro.setMode(27)
+  vibro.start()
+}
 
 // Start keyboard with Uppercase letter
 let shiftEnabled = true
