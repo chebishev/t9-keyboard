@@ -4,7 +4,7 @@ import { px } from '@zos/utils';
 
 export const { h } = keyboard.getContentRect();
 export const { width: DEVICE_WIDTH } = getDeviceInfo();
-const keyboardButtonColor = 0x000000;
+const keyboardButtonColor = 0xf00000;
 
 export const styles = {
     container: {
@@ -24,7 +24,7 @@ export const styles = {
         layout: {
             display: "flex",
             flex_flow: "column",
-            gap: "24",
+            gap: "2",
             width: "100%",
             flex_grow: "1",
         },
@@ -38,7 +38,7 @@ export const styles = {
             align_items: "center",
             align_content: "center",
             width: "100%",
-            height: "12.2vh",
+            height: "16vh",
             column_gap: "2",
         },
     },
@@ -49,8 +49,8 @@ export const styles = {
         press_color: keyboardButtonColor,
         layout: {
             height: "100%",
-            width: "28%",
-            font_size: "32",
+            width: "32%",
+            font_size: "36",
         },
     },
 

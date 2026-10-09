@@ -18,7 +18,6 @@ let shiftImage = null
 let deleteImage = null
 let deleteButton = null
 let globeImage = null
-let spaceButton = null
 let actionImage = null
 let hideDeleteOnRelease = false
 
@@ -224,10 +223,6 @@ function updateInputState(
 
   deleteImage.setAlpha(hasText ? 255 : 0)
   deleteButton.setEnable(hasText)
-
-  // Space
-  spaceImage.setAlpha(hasText ? 255 : 80)
-  spaceButton.setEnable(hasText)
 }
 
 
@@ -641,13 +636,9 @@ DataWidget({
 
       // SPACE / 0
       {
-        type: "space",
         src: "image/blank.png",
 
         action: () => {
-          // Space doesn't work if no text (systemlike)
-          if (!keyboard.getTextContext().length) return
-
           if (pendingChar) {
             commitPendingChar()
           }
@@ -736,11 +727,6 @@ DataWidget({
 
       if (key.type === "globe") {
         globeImage = img
-      }
-
-      if (key.type == "space") {
-        spaceImage = img
-        spaceButton = btn
       }
 
       if (key.type === "enter") {
