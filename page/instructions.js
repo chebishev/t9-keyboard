@@ -7,13 +7,15 @@ import {
 } from '@zos/ui'
 import { getDeviceInfo, SCREEN_SHAPE_SQUARE } from '@zos/device'
 
-const { width: DEVICE_WIDTH } = getDeviceInfo()
-const deviceInfo = getDeviceInfo();
-const centeredHeading = DEVICE_WIDTH / 6.7
-const imageX = 40
+const { width: DEVICE_WIDTH, screenShape } = getDeviceInfo()
+const widgetImageX = 40
+const widgetTextX = 120
+const widgetTextW = 290
+const widgetTextSize = 20
+const widgetTextColor = 0xffffff
 
 function defaultTheme() {
-    if (deviceInfo.screenShape === SCREEN_SHAPE_SQUARE) {
+    if (screenShape === SCREEN_SHAPE_SQUARE) {
         setStatusBarVisible(false);
     }
 }
@@ -26,13 +28,13 @@ Page({
     build() {
         // Title
         createWidget(widget.TEXT, {
-            x: centeredHeading,
+            x: 0,
             y: 25,
-            w: DEVICE_WIDTH - centeredHeading * 2,
+            w: DEVICE_WIDTH,
             h: 45,
             text: "КАК ПОЛЬЗОВАТЬСЯ",
-            text_size: 24,
-            color: 0xffffff,
+            text_size: widgetTextSize + 4,
+            color: widgetTextColor,
             align_h: align.CENTER_H,
             text_style: text_style.NONE,
         })
@@ -40,7 +42,7 @@ Page({
 
         // SHIFT
         createWidget(widget.IMG, {
-            x: imageX,
+            x: widgetImageX,
             y: 70,
             w: 48,
             h: 48,
@@ -48,43 +50,43 @@ Page({
         })
 
         createWidget(widget.TEXT, {
-            x: 120,
+            x: widgetTextX,
             y: 74,
-            w: 290,
+            w: widgetTextW,
             h: 65,
             text: "Нажатие — Shift / символы\nУдержание — Caps Lock",
-            text_size: 20,
-            color: 0xffffff,
+            text_size: widgetTextSize,
+            color: widgetTextColor,
             text_style: text_style.WRAP,
         })
 
 
         // NUMBERS 1–9
         createWidget(widget.TEXT, {
-            x: imageX,
+            x: widgetImageX,
             y: 155,
             w: 60,
             h: 42,
             text: "1–9",
-            text_size: 22,
-            color: 0xffffff,
+            text_size: widgetTextSize + 4,
+            color: widgetTextColor,
             align_h: align.CENTER_H,
         })
 
         createWidget(widget.TEXT, {
-            x: 120,
+            x: widgetTextX,
             y: 140,
-            w: 290,
+            w: widgetTextW,
             h: 54,
             text: "Удержание клавиши:\nввод цифры",
-            text_size: 20,
-            color: 0xffffff,
+            text_size: widgetTextSize,
+            color: widgetTextColor,
         })
 
 
         // SPACE / 0
         createWidget(widget.IMG, {
-            x: imageX,
+            x: widgetImageX,
             y: 180,
             w: 56,
             h: 56,
@@ -92,19 +94,19 @@ Page({
         })
 
         createWidget(widget.TEXT, {
-            x: 120,
+            x: widgetTextX,
             y: 210,
-            w: 290,
+            w: widgetTextW,
             h: 50,
             text: "Удержание — ввод 0",
-            text_size: 20,
-            color: 0xffffff,
+            text_size: widgetTextSize,
+            color: widgetTextColor,
         })
 
 
         // GLOBE
         createWidget(widget.IMG, {
-            x: imageX,
+            x: widgetImageX,
             y: 244,
             w: 48,
             h: 54,
@@ -112,16 +114,16 @@ Page({
         })
 
         createWidget(widget.TEXT, {
-            x: 120,
+            x: widgetTextX,
             y: 250,
-            w: 290,
+            w: widgetTextW,
             h: 65,
             text: "Нажатие — русский / английский\nУдержание — другие клавиатуры",
-            text_size: 20,
-            color: 0xffffff,
+            text_size: widgetTextSize,
+            color: widgetTextColor,
             text_style: text_style.WRAP,
         })
-        
+
         // Enter/Cancel
         createWidget(widget.IMG, {
             x: 15,
@@ -139,23 +141,23 @@ Page({
         })
 
         createWidget(widget.TEXT, {
-            x: 120,
+            x: widgetTextX,
             y: 315,
-            w: 290,
+            w: widgetTextW,
             h: 60,
             text: "Удержание — изменение\nскорости ввода",
-            text_size: 20,
-            color: 0xffffff,
+            text_size: widgetTextSize,
+            color: widgetTextColor,
         })
 
         // MULTI-TAP
         createWidget(widget.TEXT, {
-            x: DEVICE_WIDTH / 2 - 150,
+            x: 0,
             y: 395,
-            w: 300,
+            w: DEVICE_WIDTH,
             h: 60,
-            text: "Нажимайте несколько раз для выбора буквы",
-            text_size: 18,
+            text: "Нажимайте несколько раз\nдля выбора буквы",
+            text_size: widgetTextSize - 2,
             color: 0xb6b6b6,
             align_h: align.CENTER_H,
             text_style: text_style.WRAP,
