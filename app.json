@@ -1,16 +1,16 @@
 {
   "configVersion": "v3",
   "app": {
-    "appId": 1130042,
-    "appName": "T9 BG Keyboard",
+    "appId": 1130590,
+    "appName": "T9 Greek Keyboard",
     "appType": "app",
     "version": {
-      "code": 2,
-      "name": "1.1.0"
+      "code": 1,
+      "name": "1.0.0"
     },
     "icon": "icon.png",
-    "vender": "chebishev",
-    "description": "T9 English/Bulgarian keyboard"
+    "vendor": "chebishev",
+    "description": "T9 English/Greek keyboard"
   },
   "permissions": [
     "device:os.input.method",
@@ -38,13 +38,13 @@
         "data-widget": {
           "widgets": [
             {
-              "name": "T9 BG Keyboard",
+              "name": "T9 Greek Keyboard",
               "path": "data-widget/index",
               "icon": "icon.png",
               "runtime": {
                 "ability": [
                   {
-                    "name": "en-US",
+                    "name": "el-GR",
                     "type": 2,
                     "subType": []
                   }
@@ -68,7 +68,10 @@
   },
   "i18n": {
     "en-US": {
-      "appName": "T9 BG Keyboard"
+      "appName": "T9 Greek Keyboard"
+    },
+    "el-GR": {
+      "appName": "T9 Ελληνικό Πληκτρολόγιο"
     }
   },
   "defaultLanguage": "en-US"

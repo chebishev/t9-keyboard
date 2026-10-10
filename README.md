@@ -1,21 +1,21 @@
-# T9 BG Keyboard
+# T9 Greek Keyboard
 
-A Bulgarian and English multi-tap keyboard for Zepp OS.
+A Greek and English multi-tap keyboard for Zepp OS.
 
-T9 BG Keyboard brings a classic mobile phone-style typing experience to compatible Amazfit devices. Letters are grouped on 9 keys and selected by repeatedly tapping the corresponding key.
+T9 Greek Keyboard brings a classic mobile phone-style typing experience to compatible Amazfit devices. Letters are grouped on 9 keys and selected by repeatedly tapping the corresponding key.
 
 The keyboard supports Bulgarian and English, Shift, Caps Lock, numbers, symbols, and switching to other Zepp OS input methods.
 
 ## Features
 
-- 🇧🇬 Bulgarian multi-tap layout
+- GR Greek multi-tap layout
 - 🇬🇧 English multi-tap layout
 - Classic 9-key typing
 - Shift for a single uppercase letter
 - Caps Lock (longpress Shift Button to activate it)
 - Additional symbols (.,?!/@€-_)
 - Numbers 0–9
-- Quick Bulgarian / English switching
+- Quick Greek / English switching
 - Access to other installed Zepp OS keyboards (longpress globe icon)
 - Change typing speed (hold X or ✓ keys)
 - Support for round and square displays
@@ -23,7 +23,7 @@ The keyboard supports Bulgarian and English, Shift, Caps Lock, numbers, symbols,
 
 ## Keyboard Layout
 
-### Bulgarian
+### Greek
 
 | Key | Characters |
 |-----|------------|
@@ -59,7 +59,7 @@ For example:
 
 `A → B → C`
 
-or in Bulgarian:
+or in Greek:
 
 `А → Б → В → Г`
 
@@ -93,7 +93,7 @@ Hold the **Space** key to enter:
 
 **Tap the Globe button**
 
-Switches between the built-in Bulgarian and English layouts:
+Switches between the built-in Greek and English layouts:
 
 `BG ↔ EN`
 
