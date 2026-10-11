@@ -28,14 +28,14 @@ The keyboard supports Bulgarian and English, Shift, Caps Lock, numbers, symbols,
 | Key | Characters |
 |-----|------------|
 | 1 | . , ? ! |
-| 2 | А Б В Г |
-| 3 | Д Е Ж З |
-| 4 | И Й К Л |
-| 5 | М Н О П |
-| 6 | Р С Т У |
-| 7 | Ф Х Ц Ч |
-| 8 | Ш Щ Ъ |
-| 9 | Ь Ю Я |
+| 2 | α ά β γ |
+| 3 | δ ε έ ζ |
+| 4 | η ή θ ι ί |
+| 5 | κ λ μ |
+| 6 | ν ξ ο ό |
+| 7 | π ρ σ ς |
+| 8 | τ υ ύ φ |
+| 9 | χ ψ ω ώ |
 | 0 | Space (hold) |
 
 ### English
@@ -43,25 +43,25 @@ The keyboard supports Bulgarian and English, Shift, Caps Lock, numbers, symbols,
 | Key | Characters |
 |-----|------------|
 | 1 | . , ? ! |
-| 2 | A B C |
-| 3 | D E F |
-| 4 | G H I |
-| 5 | J K L |
-| 6 | M N O |
-| 7 | P Q R S |
-| 8 | T U V |
-| 9 | W X Y Z |
+| 2 | a b c |
+| 3 | d e f |
+| 4 | g h i |
+| 5 | j k l |
+| 6 | m n o |
+| 7 | p q r s |
+| 8 | t u v |
+| 9 | w x y z |
 | 0 | Space (hold) |
 
 Repeatedly tap a key to cycle through its characters.
 
 For example:
 
-`A → B → C`
+`a → b → c`
 
 or in Greek:
 
-`А → Б → В → Г`
+`α → ά → β → γ`
 
 ## Shift and Caps Lock
 
@@ -95,7 +95,7 @@ Hold the **Space** key to enter:
 
 Switches between the built-in Greek and English layouts:
 
-`BG ↔ EN`
+`GR ↔ EN`
 
 **Hold the Globe button**
 

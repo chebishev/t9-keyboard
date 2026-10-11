@@ -4,6 +4,7 @@ import { px } from "@zos/utils"
 import { getPackageInfo } from "@zos/app";
 
 const { name, version, vender } = getPackageInfo()
+console.log("ά".toUpperCase(), "έ".toUpperCase(), "ή".toUpperCase(), "ί".toUpperCase(), "ό".toUpperCase(), "ύ".toUpperCase(), "ώ".toUpperCase())
 
 export const APP_INFO = {
     x: px(96),
