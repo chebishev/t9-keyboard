@@ -1,11 +1,8 @@
-msgid "appName"
-msgstr "T9 Greek Keyboard"
-
-msgid "version"
-msgstr "ver. 1.0.0"
+msgid "ver"
+msgstr "ver."
 
 msgid "creator"
-msgstr "This app is created by chebishev"
+msgstr "This app is created by"
 
 msgid "email"
 msgstr "Feedback: suffer@abv.bg"

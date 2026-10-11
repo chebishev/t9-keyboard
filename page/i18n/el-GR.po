@@ -1,11 +1,8 @@
-msgid "appName"
-msgstr "T9 Ελληνικά Πληκτρολόγιο"
-
-msgid "version"
-msgstr "έκδ. 1.0.0"
+msgid "ver"
+msgstr "έκδ."
 
 msgid "creator"
-msgstr "Αυτή η εφαρμογή δημιουργήθηκε από τον chebishev"
+msgstr "Αυτή η εφαρμογή δημιουργήθηκε από τον"
 
 msgid "email"
 msgstr "Σχόλια: suffer@abv.bg"
