@@ -2,7 +2,7 @@ msgid "appName"
 msgstr "T9 Ελληνικά Πληκτρολόγιο"
 
 msgid "version"
-msgstr "ver. 1.1.0"
+msgstr "έκδ. 1.0.0"
 
 msgid "creator"
 msgstr "Αυτή η εφαρμογή δημιουργήθηκε από τον chebishev"
