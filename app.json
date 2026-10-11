@@ -2,7 +2,7 @@
   "configVersion": "v3",
   "app": {
     "appId": 1130590,
-    "appName": "T9 Greek Keyboard",
+    "appName": "appName",
     "appType": "app",
     "version": {
       "code": 1,
@@ -38,7 +38,7 @@
         "data-widget": {
           "widgets": [
             {
-              "name": "T9 Greek Keyboard",
+              "name": "Data widget name",
               "path": "data-widget/index",
               "icon": "icon.png",
               "runtime": {
@@ -68,10 +68,10 @@
   },
   "i18n": {
     "en-US": {
-      "appName": "T9 Greek Keyboard"
+      "appName": "i18 name us"
     },
     "el-GR": {
-      "appName": "T9 Ελληνικό Πληκτρολόγιο"
+      "appName": "i18 name gr"
     }
   },
   "defaultLanguage": "en-US"
