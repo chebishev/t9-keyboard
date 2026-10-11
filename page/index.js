@@ -71,7 +71,7 @@ const menuButtonColor = 0x0c86d1;
 const menuButtonLayout = {
   width: "100%",
   height: px(88),
-  font_size: px(36),
+  font_size: px(32),
   corner_radius: px(44),
 };
 
@@ -361,7 +361,7 @@ Page({
 
 
     showToast({
-      content: getText("youreAllSet"),
+      content: getText("youAreAllSet"),
     });
 
 

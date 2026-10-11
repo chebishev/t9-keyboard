@@ -46,57 +46,57 @@ const MULTITAP_SPEEDS = [
 
 const letterWidgets = []
 
-const bgRows = [
+const grRows = [
   [
     {
-      label: '.,?!',
-      chars: '.,?!',
+      label: '.,;!',
+      chars: '.,;!',
       shiftLabel: '@€-_',
       shiftChars: '@€-_',
       longPress: '1'
     },
     {
-      label: 'АБВГ',
-      chars: 'абвг',
+      label: 'ΑΒΓ',
+      chars: 'αάβγ',
       longPress: '2'
     },
     {
-      label: 'ДЕЖЗ',
-      chars: 'дежз',
+      label: 'ΔΕΖ',
+      chars: 'δεέζ',
       longPress: '3'
     },
   ],
   [
     {
-      label: 'ИЙКЛ',
-      chars: 'ийкл',
+      label: 'ΗΘΙ',
+      chars: 'ηήθιί',
       longPress: '4'
     },
     {
-      label: 'МНОП',
-      chars: 'мноп',
+      label: 'ΚΛΜ',
+      chars: 'κλμ',
       longPress: '5'
     },
     {
-      label: 'РСТУ',
-      chars: 'рсту',
+      label: 'ΝΞΟ',
+      chars: 'νξοό',
       longPress: '6'
     },
   ],
   [
     {
-      label: 'ФХЦЧ',
-      chars: 'фхцч',
+      label: 'ΠΡΣ',
+      chars: 'πρσς',
       longPress: '7'
     },
     {
-      label: 'ШЩЪ',
-      chars: 'шщъ',
+      label: 'ΤΥΦ',
+      chars: 'τυύφ',
       longPress: '8'
     },
     {
-      label: 'ЬЮЯ',
-      chars: 'ьюя',
+      label: 'ΧΨΩ',
+      chars: 'χψωώ',
       longPress: '9'
     },
   ],
@@ -160,7 +160,7 @@ const enRows = [
 
 
 function getActiveRows() {
-  return currentLanguage === "bg" ? bgRows : enRows
+  return currentLanguage === "gr" ? grRows : enRows
 }
 
 
@@ -624,9 +624,9 @@ DataWidget({
           commitPendingChar()
 
           currentLanguage =
-            currentLanguage === "bg"
+            currentLanguage === "gr"
               ? "en"
-              : "bg"
+              : "gr"
 
           updateKeyLabels()
           vibrate()

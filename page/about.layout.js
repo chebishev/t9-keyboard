@@ -4,11 +4,10 @@ import { px } from "@zos/utils"
 import { getPackageInfo } from "@zos/app";
 
 const { name, version, vender } = getPackageInfo()
-console.log("ά".toUpperCase(), "έ".toUpperCase(), "ή".toUpperCase(), "ί".toUpperCase(), "ό".toUpperCase(), "ύ".toUpperCase(), "ώ".toUpperCase())
 
 export const APP_INFO = {
     x: px(96),
-    y: px(60),
+    y: px(40),
     w: px(288),
     h: px(50),
     color: 0xffffff,
@@ -21,9 +20,9 @@ export const APP_INFO = {
 
 export const CREATOR_INFO = {
     x: px(96),
-    y: px(130),
+    y: px(110),
     w: px(288),
-    h: px(48),
+    h: px(75),
     color: 0xffffff,
     text_size: px(19),
     align_h: align.CENTER_H,
@@ -35,11 +34,11 @@ export const CREATOR_INFO = {
 export const QRCODE = {
     content: getText("link"),
     x: px(140),
-    y: px(210),
+    y: px(230),
     w: px(200),
     h: px(200),
     bg_x: px(120),
-    bg_y: px(190),
+    bg_y: px(210),
     bg_w: px(240),
     bg_h: px(240)
 }
