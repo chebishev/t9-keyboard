@@ -9,6 +9,7 @@ import { showToast } from "@zos/interaction";
 import { styles } from "zosLoader:./index.[pf].layout.js"
 import { LocalStorage } from "@zos/storage";
 import { Vibrator } from '@zos/sensor'
+import { getText } from "@zos/i18n"
 
 const localStorage = new LocalStorage()
 const vibro = new Vibrator()
@@ -32,15 +33,15 @@ let currentMultiTapIndex = 0
 let multiTapTimer = null
 let pendingChar = ""
 
-let currentLanguage = "bg"
+let currentLanguage = "gr"
 
 const MULTITAP_TIMEOUT = 800
 const MULTITAP_SPEEDS = [
-  { value: 200, label: "Very fast" },
-  { value: 400, label: "Fast" },
-  { value: 600, label: "Normal" },
-  { value: 800, label: "Slow" },
-  { value: 1000, label: "Very slow" }
+  { value: 200, label: getText("veryFast") },
+  { value: 400, label: getText("fast") },
+  { value: 600, label: getText("normal") },
+  { value: 800, label: getText("slow") },
+  { value: 1000, label: getText("verySlow") }
 ]
 
 const letterWidgets = []

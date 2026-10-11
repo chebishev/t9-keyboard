@@ -1,3 +1,20 @@
+// data-widget
+
+msgid "veryFast"
+msgstr "Πολύ γρήγορα"
+
+msgid "fast"
+msgstr "Γρήγορα"
+
+msgid "normal"
+msgstr "Κανονικά"
+
+msgid "slow"
+msgstr "Αργά"
+
+msgid "verySlow"
+msgstr "Πολύ αργά"
+
 // about.layout.js
 
 msgid "ver"
