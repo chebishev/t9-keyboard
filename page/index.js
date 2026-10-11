@@ -71,7 +71,7 @@ const menuButtonColor = 0x0c86d1;
 const menuButtonLayout = {
   width: "100%",
   height: px(88),
-  font_size: px(32),
+  font_size: px(Number(getText("menuButtonFontSize"))),
   corner_radius: px(44),
 };
 

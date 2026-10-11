@@ -31,6 +31,10 @@ msgstr "https://chebishev.github.io"
 
 // index.js
 
+
+msgid "menuButtonFontSize"
+msgstr "32"
+
 msgid "enable"
 msgstr "Ενεργοποίηση "
 
