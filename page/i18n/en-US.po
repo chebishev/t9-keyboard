@@ -1,91 +1,92 @@
 // data-widget
 
 msgid "veryFast"
-msgstr "Very fast"
+msgstr "Πολύ γρήγορα"
 
 msgid "fast"
-msgstr "Fast"
+msgstr "Γρήγορα"
 
 msgid "normal"
-msgstr "Normal"
+msgstr "Κανονικά"
 
 msgid "slow"
-msgstr "Slow"
+msgstr "Αργά"
 
 msgid "verySlow"
-msgstr "Very slow"
+msgstr "Πολύ αργά"
 
 // about.layout.js
 
 msgid "ver"
-msgstr "\nver. "
+msgstr "\nέκδ. "
 
 msgid "creator"
-msgstr "This app is created by "
+msgstr "Αυτή η εφαρμογή δημιουργήθηκε από τον "
 
 msgid "email"
-msgstr "Feedback: suffer@abv.bg"
+msgstr "Σχόλια: suffer@abv.bg"
 
 msgid "link"
 msgstr "https://chebishev.github.io"
 
 // index.js
 
+
 msgid "menuButtonFontSize"
-msgstr "36"
+msgstr "32"
 
 msgid "enable"
-msgstr "Enable "
+msgstr "Ενεργοποίηση "
 
 msgid "toggle"
-msgstr "Please toggle "
+msgstr "Ενεργοποιήστε το "
 
 msgid "onInSettings"
-msgstr " on in settings"
+msgstr " στις ρυθμίσεις"
 
 msgid "goToSettings"
-msgstr "Go to settings"
+msgstr "Μετάβαση στις ρυθμίσεις"
 
 msgid "touchHoldSelect"
-msgstr "Touch and hold the Globe key on the keyboard, then select "
+msgstr "Αγγίξτε παρατεταμένα το πλήκτρο της υδρογείου στο πληκτρολόγιο και επιλέξτε "
 
 msgid "showKeyboard"
-msgstr "Show keyboard"
+msgstr "Εμφάνιση πληκτρολογίου"
 
 msgid "instructions"
-msgstr "Instructions"
+msgstr "Οδηγίες"
 
 msgid "about"
-msgstr "About"
+msgstr "Σχετικά"
 
 msgid "exit"
-msgstr "Exit"
+msgstr "Έξοδος"
 
 msgid "youAreAllSet"
-msgstr "You're all set"
+msgstr "Όλα είναι έτοιμα"
 
 msgid "input"
-msgstr "Input: "
+msgstr "Εισαγωγή: "
 
 // instructions.js
 
 msgid "howToUse"
-msgstr "How to use"
+msgstr "Τρόπος χρήσης"
 
 msgid "shift"
-msgstr "Tap — Shift / symbols\nHold — Caps Lock"
+msgstr "Πάτημα — Shift / σύμβολα\nΚράτημα — Caps Lock"
 
 msgid "holdKey"
-msgstr "Hold key — Type number"
+msgstr "Κράτημα πλήκτρου — Εισαγωγή αριθμού"
 
 msgid "holdSpace"
-msgstr "Hold — Type 0"
+msgstr "Κράτημα — Εισαγωγή 0"
 
 msgid "globe"
-msgstr "Tap — Greek / English\nHold — More keyboards"
+msgstr "Πάτημα — Ελληνικά / Αγγλικά\nΚράτημα — Άλλα πληκτρολόγια"
 
 msgid "enter"
-msgstr "Hold — change\ntyping speed"
+msgstr "Κράτημα — αλλαγή\nταχύτητας πληκτρολόγησης"
 
 msgid "multiTap"
-msgstr "Tap repeatedly to cycle letters"
+msgstr "Πατήστε επανειλημμένα\nγια εναλλαγή γραμμάτων"

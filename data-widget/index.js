@@ -415,11 +415,13 @@ DataWidget({
                  * symbols layer.
                  */
                 const activeChars =
-                  shiftEnabled &&
-                    !capsLockEnabled &&
-                    activeKey.shiftChars
+                  shiftEnabled && !capsLockEnabled && activeKey.shiftChars
                     ? activeKey.shiftChars
-                    : activeKey.chars
+                    : currentLanguage === "gr" &&
+                      (shiftEnabled || capsLockEnabled) &&
+                      activeKey.longPress === "7"
+                      ? "πρσ"
+                      : activeKey.chars
 
                 if (multiTapTimer) {
                   clearTimeout(
