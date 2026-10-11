@@ -1,5 +1,5 @@
 msgid "appName"
-msgstr "T9 BG Keyboard"
+msgstr "T9 Greek Keyboard"
 
 msgid "version"
 msgstr "ver. 1.1.0"
