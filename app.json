@@ -2,11 +2,11 @@
   "configVersion": "v3",
   "app": {
     "appId": 1130272,
-    "appName": "T9 Русская Клавиатура",
+    "appName": "T9 Russian Keyboard",
     "appType": "app",
     "version": {
       "code": 3,
-      "name": "1.1.0"
+      "name": "1.1.1"
     },
     "icon": "icon.png",
     "vender": "chebishev",
@@ -38,7 +38,7 @@
         "data-widget": {
           "widgets": [
             {
-              "name": "T9 Русская Клавиатура",
+              "name": "T9 Russian Keyboard",
               "path": "data-widget/index",
               "icon": "icon.png",
               "runtime": {
@@ -67,9 +67,12 @@
     }
   },
   "i18n": {
+    "en-US": {
+      "appName": "T9 Russian Keyboard"
+    },
     "ru-RU": {
       "appName": "T9 Русская Клавиатура"
     }
   },
-  "defaultLanguage": "ru-RU"
+  "defaultLanguage": "en-US"
 }
