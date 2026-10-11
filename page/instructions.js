@@ -118,7 +118,7 @@ Page({
             y: 245,
             w: widgetTextW,
             h: 65,
-            text: "Tap — Bulgarian / English\nHold — More keyboards",
+            text: "Tap — Greek / English\nHold — More keyboards",
             text_size: widgetTextSize,
             color: widgetTextColor,
             text_style: text_style.WRAP,

@@ -15,7 +15,7 @@ export const APP_INFO = {
     align_h: align.CENTER_H,
     align_v: align.CENTER_V,
     text_style: text_style.WRAP,
-    text: `${name}\n${getText("ver")} ${version}`
+    text: `${name}${getText("ver")}${version}`
 }
 
 export const CREATOR_INFO = {
@@ -28,7 +28,7 @@ export const CREATOR_INFO = {
     align_h: align.CENTER_H,
     align_v: align.CENTER_V,
     text_style: text_style.WRAP,
-    text: `${getText("creator")} ${vender}\n${getText("email")}`
+    text: `${getText("creator")}${vender}\n${getText("email")}`
 }
 
 export const QRCODE = {
