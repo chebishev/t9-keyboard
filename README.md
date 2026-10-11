@@ -134,7 +134,7 @@ Tested on real Balance 2 and emulators for the other models
 
 The keyboard is implemented as a Zepp OS data widget.
 
-After installation, enable T9 BG Keyboard from the keyboard/input method settings on your watch.
+After installation, enable T9 Greek Keyboard from the keyboard/input method settings on your watch.
 
 ## Development
 
@@ -148,4 +148,4 @@ See the repository license for details.
 
 ## Screenshots
 ![Image](./screenshots/hello.png)
-![Image](./screenshots/zdraveyte.png)
+![Image](./screenshots/hellogr.png)
