@@ -15,7 +15,7 @@ msgstr "https://chebishev.github.io"
 // index.js
 
 msgid "enable"
-msgstr "Ενεργοποίηση"
+msgstr "Ενεργοποίηση "
 
 msgid "toggle"
 msgstr "Ενεργοποιήστε το "
@@ -68,4 +68,4 @@ msgid "enter"
 msgstr "Κράτημα — αλλαγή\nταχύτητας πληκτρολόγησης"
 
 msgid "multiTap"
-msgstr "Πατήστε επανειλημμένα για εναλλαγή γραμμάτων"
+msgstr "Πατήστε επανειλημμένα\nγια εναλλαγή γραμμάτων"

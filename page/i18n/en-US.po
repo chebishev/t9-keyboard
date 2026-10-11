@@ -15,7 +15,7 @@ msgstr "https://chebishev.github.io"
 // index.js
 
 msgid "enable"
-msgstr "Enable"
+msgstr "Enable "
 
 msgid "toggle"
 msgstr "Please toggle "
