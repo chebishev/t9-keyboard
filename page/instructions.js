@@ -5,6 +5,7 @@ import {
     align,
     setStatusBarVisible
 } from '@zos/ui'
+import { getText } from "@zos/i18n"
 import { getDeviceInfo, SCREEN_SHAPE_SQUARE } from '@zos/device'
 
 const { width: DEVICE_WIDTH, screenShape } = getDeviceInfo()
@@ -32,11 +33,11 @@ Page({
             y: 25,
             w: DEVICE_WIDTH,
             h: 45,
-            text: "КАК ПОЛЬЗОВАТЬСЯ",
+            text: getText("howToUse"),
             text_size: widgetTextSize + 4,
             color: widgetTextColor,
             align_h: align.CENTER_H,
-            text_style: text_style.NONE,
+            text_style: text_style.NONE
         })
 
 
@@ -54,7 +55,7 @@ Page({
             y: 74,
             w: widgetTextW,
             h: 65,
-            text: "Нажатие — Shift / символы\nУдержание — Caps Lock",
+            text: getText("shift"),
             text_size: widgetTextSize,
             color: widgetTextColor,
             text_style: text_style.WRAP,
@@ -64,7 +65,7 @@ Page({
         // NUMBERS 1–9
         createWidget(widget.TEXT, {
             x: widgetImageX,
-            y: 155,
+            y: 145,
             w: 60,
             h: 42,
             text: "1–9",
@@ -75,10 +76,10 @@ Page({
 
         createWidget(widget.TEXT, {
             x: widgetTextX,
-            y: 140,
+            y: 147,
             w: widgetTextW,
             h: 54,
-            text: "Удержание клавиши:\nввод цифры",
+            text: getText("holdKey"),
             text_size: widgetTextSize,
             color: widgetTextColor,
         })
@@ -87,7 +88,7 @@ Page({
         // SPACE / 0
         createWidget(widget.IMG, {
             x: widgetImageX,
-            y: 180,
+            y: 170,
             w: 56,
             h: 56,
             src: "image/blank.png",
@@ -95,10 +96,10 @@ Page({
 
         createWidget(widget.TEXT, {
             x: widgetTextX,
-            y: 210,
+            y: 200,
             w: widgetTextW,
             h: 50,
-            text: "Удержание — ввод 0",
+            text: getText("holdSpace"),
             text_size: widgetTextSize,
             color: widgetTextColor,
         })
@@ -107,7 +108,7 @@ Page({
         // GLOBE
         createWidget(widget.IMG, {
             x: widgetImageX,
-            y: 244,
+            y: 239,
             w: 48,
             h: 54,
             src: "image/globe.png",
@@ -115,10 +116,10 @@ Page({
 
         createWidget(widget.TEXT, {
             x: widgetTextX,
-            y: 250,
+            y: 245,
             w: widgetTextW,
             h: 65,
-            text: "Нажатие — русский / английский\nУдержание — другие клавиатуры",
+            text: getText("globe"),
             text_size: widgetTextSize,
             color: widgetTextColor,
             text_style: text_style.WRAP,
@@ -145,7 +146,7 @@ Page({
             y: 315,
             w: widgetTextW,
             h: 60,
-            text: "Удержание — изменение\nскорости ввода",
+            text: getText("enter"),
             text_size: widgetTextSize,
             color: widgetTextColor,
         })
@@ -156,7 +157,7 @@ Page({
             y: 395,
             w: DEVICE_WIDTH,
             h: 60,
-            text: "Нажимайте несколько раз\nдля выбора буквы",
+            text: getText("multiTap"),
             text_size: widgetTextSize - 2,
             color: 0xb6b6b6,
             align_h: align.CENTER_H,
