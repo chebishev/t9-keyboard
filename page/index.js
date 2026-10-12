@@ -10,7 +10,7 @@ import {
   updateLayout,
   setStatusBarVisible,
 } from "@zos/ui";
-
+import { getText } from "@zos/i18n"
 import { px } from "@zos/utils";
 import { showToast } from "@zos/interaction";
 import { scrollTo } from "@zos/page";
@@ -18,9 +18,9 @@ import { getDeviceInfo, SCREEN_SHAPE_SQUARE } from "@zos/device";
 import { exit, launchApp, push } from "@zos/router";
 import { getPackageInfo } from "@zos/app";
 
+
 const deviceInfo = getDeviceInfo();
 const appName = getPackageInfo().name;
-
 
 function keyboardIsEnabled() {
   if (keyboard.isEnabled) {
@@ -30,6 +30,7 @@ function keyboardIsEnabled() {
   return true;
 }
 
+
 function keyboardIsSelected() {
   if (keyboard.isSelected) {
     return keyboard.isSelected();
@@ -37,6 +38,7 @@ function keyboardIsSelected() {
 
   return true;
 }
+
 
 function keyboardGotoSettings() {
   if (keyboard.gotoSettings) {
@@ -49,11 +51,13 @@ function keyboardGotoSettings() {
   });
 }
 
+
 function defaultTheme() {
   if (deviceInfo.screenShape === SCREEN_SHAPE_SQUARE) {
     setStatusBarVisible(false);
   }
 }
+
 
 const defaultTextStyle = {
   color: 0xffffff,
@@ -67,7 +71,7 @@ const menuButtonColor = 0x0c86d1;
 const menuButtonLayout = {
   width: "100%",
   height: px(88),
-  font_size: px(31),
+  font_size: px(Number(getText("menuButtonFontSize"))),
   corner_radius: px(44),
 };
 
@@ -80,9 +84,10 @@ const pageLayout = {
   flex_flow: "column",
   row_gap: px(25),
   padding_top: px(40),
-  padding_left: px(60),
-  padding_right: px(60),
+  padding_left: px(72),
+  padding_right: px(72),
 };
+
 
 function createPageContainer() {
   return createWidget(widget.VIRTUAL_CONTAINER, {
@@ -91,6 +96,7 @@ function createPageContainer() {
     },
   });
 }
+
 
 function createMenuButton(parent, text, clickFunc) {
   return createWidget(widget.BUTTON, {
@@ -105,6 +111,7 @@ function createMenuButton(parent, text, clickFunc) {
   });
 }
 
+
 function createBottomSpacer(parent) {
   return createWidget(widget.FILL_RECT, {
     parent,
@@ -116,7 +123,7 @@ function createBottomSpacer(parent) {
 }
 
 function createInstructionsButton(parent) {
-  return createMenuButton(parent, "Инструкции", () => {
+  return createMenuButton(parent, getText("instructions"), () => {
     push({
       url: "page/instructions",
     });
@@ -124,7 +131,7 @@ function createInstructionsButton(parent) {
 }
 
 function createAboutButton(parent) {
-  return createMenuButton(parent, "О приложении", () => {
+  return createMenuButton(parent, getText("about"), () => {
     push({
       url: "page/about",
     });
@@ -222,7 +229,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `Включить ${appName}`,
+      text: `Enable ${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
@@ -265,7 +272,7 @@ Page({
         width: "auto",
         max_width: px(200),
         height: px(70),
-        font_size: px(24),
+        font_size: px(27),
         line_clamp: 2,
       },
     });
@@ -273,7 +280,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `Включите ${appName} в настройках`,
+      text: `${getText("toggle")}${appName}${getText("onInSettings")}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
@@ -283,7 +290,7 @@ Page({
     });
 
 
-    createMenuButton(vc, "Перейти в настройки", () => {
+    createMenuButton(vc, getText("goToSettings"), () => {
       keyboardGotoSettings();
     });
 
@@ -300,7 +307,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `Включить ${appName}`,
+      text: `${getText("enable")}${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
@@ -323,7 +330,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `Нажмите и удерживайте клавишу с глобусом на клавиатуре, затем выберите ${appName}`,
+      text: `${getText("touchHoldSelect")}${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
@@ -333,7 +340,7 @@ Page({
     });
 
 
-    createMenuButton(vc, "Показать клавиатуру", () => {
+    createMenuButton(vc, getText("showKeyboard"), () => {
       this.keyboard(() => {
         this.onResume();
       });
@@ -341,7 +348,7 @@ Page({
 
     createInstructionsButton(vc);
     createAboutButton(vc);
-    createMenuButton(vc, "Выход", () => {
+    createMenuButton(vc, getText("exit"), () => {
       exit();
     });
     createBottomSpacer(vc);
@@ -354,7 +361,7 @@ Page({
 
 
     showToast({
-      content: "Всё готово",
+      content: getText("youAreAllSet"),
     });
 
 
@@ -370,20 +377,23 @@ Page({
     });
 
 
-    createMenuButton(vc, "Показать клавиатуру", () => {
+    createMenuButton(vc, getText("showKeyboard"), () => {
       this.keyboard();
     });
 
-    createMenuButton(vc, "Перейти в настройки", () => {
+
+    createMenuButton(vc, getText("goToSettings"), () => {
       keyboardGotoSettings();
     });
 
     createInstructionsButton(vc);
     createAboutButton(vc);
 
-    createMenuButton(vc, "Выход", () => {
+
+    createMenuButton(vc, getText("exit"), () => {
       exit();
     });
+
 
     createBottomSpacer(vc);
   },
@@ -397,7 +407,7 @@ Page({
         deleteKeyboard();
 
         showToast({
-          content: "Input: " + result.data,
+          content: getText("input") + result.data,
         });
 
         if (cb) {

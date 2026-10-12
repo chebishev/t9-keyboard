@@ -1,30 +1,30 @@
 // data-widget
 
 msgid "veryFast"
-msgstr "Very fast"
+msgstr "Очень быстро"
 
 msgid "fast"
-msgstr "Fast"
+msgstr "Быстро"
 
 msgid "normal"
-msgstr "Normal"
+msgstr "Нормально"
 
 msgid "slow"
-msgstr "Slow"
+msgstr "Медленно"
 
 msgid "verySlow"
-msgstr "Very slow"
+msgstr "Очень медленно"
 
 // about.layout.js
 
 msgid "ver"
-msgstr "\nver. "
+msgstr "\nвер. "
 
 msgid "creator"
-msgstr "This app is created by "
+msgstr "Это приложение создано "
 
 msgid "email"
-msgstr "Feedback: suffer@abv.bg"
+msgstr "Обратная связь: suffer@abv.bg"
 
 msgid "link"
 msgstr "https://chebishev.github.io"
@@ -32,60 +32,60 @@ msgstr "https://chebishev.github.io"
 // index.js
 
 msgid "menuButtonFontSize"
-msgstr "36"
+msgstr "31"
 
 msgid "enable"
-msgstr "Enable "
+msgstr "Включить "
 
 msgid "toggle"
-msgstr "Please toggle "
+msgstr "Включите "
 
 msgid "onInSettings"
-msgstr " on in settings"
+msgstr " в настройках"
 
 msgid "goToSettings"
-msgstr "Go to settings"
+msgstr "Перейти в настройки"
 
 msgid "touchHoldSelect"
-msgstr "Touch and hold the Globe key on the keyboard, then select "
+msgstr "Нажмите и удерживайте клавишу с глобусом, затем выберите "
 
 msgid "showKeyboard"
-msgstr "Show keyboard"
+msgstr "Показать клавиатуру"
 
 msgid "instructions"
-msgstr "Instructions"
+msgstr "Инструкции"
 
 msgid "about"
-msgstr "About"
+msgstr "О приложении"
 
 msgid "exit"
-msgstr "Exit"
+msgstr "Выход"
 
 msgid "youAreAllSet"
-msgstr "You're all set"
+msgstr "Всё готово!"
 
 msgid "input"
-msgstr "Input: "
+msgstr "Ввод: "
 
 // instructions.js
 
 msgid "howToUse"
-msgstr "How to use"
+msgstr "Как пользоваться"
 
 msgid "shift"
-msgstr "Tap — Shift / symbols\nHold — Caps Lock"
+msgstr "Нажатие — Shift / символы\nУдержание — Caps Lock"
 
 msgid "holdKey"
-msgstr "Hold key — Type number"
+msgstr "Удержание клавиши — ввод цифры"
 
 msgid "holdSpace"
-msgstr "Hold — Type 0"
+msgstr "Удержание — ввод 0"
 
 msgid "globe"
-msgstr "Tap — Greek / English\nHold — More keyboards"
+msgstr "Нажатие — греческий / английский\nУдержание — другие клавиатуры"
 
 msgid "enter"
-msgstr "Hold — change\ntyping speed"
+msgstr "Удержание — изменение\nскорости ввода"
 
 msgid "multiTap"
-msgstr "Tap repeatedly to cycle letters"
+msgstr "Нажимайте несколько раз\nдля выбора буквы"
