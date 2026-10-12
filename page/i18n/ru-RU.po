@@ -15,6 +15,9 @@ msgstr "Медленно"
 msgid "verySlow"
 msgstr "Очень медленно"
 
+msgid "typingSpeed"
+msgstr "Скорость ввода:\n"
+
 // about.layout.js
 
 msgid "ver"
