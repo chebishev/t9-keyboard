@@ -1,6 +1,9 @@
 import { getText } from "@zos/i18n"
 import { align, text_style } from "@zos/ui"
 import { px } from "@zos/utils"
+import { getPackageInfo } from "@zos/app";
+
+const { name, version, vender } = getPackageInfo()
 
 export const APP_INFO = {
     x: px(96),
@@ -12,7 +15,7 @@ export const APP_INFO = {
     align_h: align.CENTER_H,
     align_v: align.CENTER_V,
     text_style: text_style.WRAP,
-    text: `${getText("appName")}\n${getText("version")}`
+    text: `${name}${getText("ver")}${version}`
 }
 
 export const CREATOR_INFO = {
@@ -25,7 +28,7 @@ export const CREATOR_INFO = {
     align_h: align.CENTER_H,
     align_v: align.CENTER_V,
     text_style: text_style.WRAP,
-    text: `${getText("creator")}\n${getText("email")}`
+    text: `${getText("creator")}${vender}\n${getText("email")}`
 }
 
 export const QRCODE = {
