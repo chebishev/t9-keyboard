@@ -687,6 +687,7 @@ DataWidget({
         },
         longpress_func: () => {
           this.changeMultiTapTimeout()
+          vibrate()
         }
       },
     ]
