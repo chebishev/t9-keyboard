@@ -4,7 +4,7 @@ A Greek and English multi-tap keyboard for Zepp OS.
 
 T9 Greek Keyboard brings a classic mobile phone-style typing experience to compatible Amazfit devices. Letters are grouped on 9 keys and selected by repeatedly tapping the corresponding key.
 
-The keyboard supports Bulgarian and English, Shift, Caps Lock, numbers, symbols, and switching to other Zepp OS input methods.
+The keyboard supports Greek and English, Shift, Caps Lock, numbers, symbols, and switching to other Zepp OS input methods.
 
 ## Features
 
@@ -115,7 +115,7 @@ Hold Delete to clear the input.
 
 ## Supported Devices
 
-T9 BG Keyboard is designed for Zepp OS devices supporting third-party input methods.
+T9 Greek Keyboard is designed for Zepp OS devices supporting third-party input methods.
 
 The interface includes layouts for:
 
