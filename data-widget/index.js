@@ -690,6 +690,7 @@ DataWidget({
         },
         longpress_func: () => {
           this.changeMultiTapTimeout()
+          vibrate()
         }
       },
     ]
@@ -770,7 +771,7 @@ DataWidget({
 
   onDestroy() {
     console.log(
-      'BG keyboard: onDestroy'
+      'GR keyboard: onDestroy'
     )
   },
 })
