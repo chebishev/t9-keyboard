@@ -10,6 +10,7 @@ import { styles } from "zosLoader:./index.[pf].layout.js"
 import { LocalStorage } from "@zos/storage";
 import { Vibrator } from '@zos/sensor'
 import { getText } from "@zos/i18n"
+import { enT9Engine, ruT9Engine } from './engine/t9-engine';
 
 const localStorage = new LocalStorage()
 const vibro = new Vibrator()
@@ -33,8 +34,131 @@ let currentMultiTapKey = null
 let currentMultiTapIndex = 0
 let multiTapTimer = null
 let pendingChar = ""
+let t9Sequence = ""
+let predictionBar = null
+let predictionWidgets = []
 
 let currentLanguage = "ru"
+
+function getActiveT9Engine() {
+  return currentLanguage === 'ru' ? ruT9Engine : enT9Engine;
+}
+
+let currentPredictions = []
+
+function getCurrentWordPrefix() {
+  const text = keyboard.getTextContext() || ''
+
+  // A trailing space means we're starting a new word.
+  if (!pendingChar && /\s$/.test(text)) {
+    return ''
+  }
+
+  const trimmed = text.trimEnd()
+  if (!trimmed) {
+    return ''
+  }
+
+  const words = trimmed.split(/\s+/)
+
+  return (words[words.length - 1] || '').toLowerCase()
+}
+
+function updatePredictions() {
+  const engine = getActiveT9Engine()
+  const sequence = t9Sequence
+  const language = currentLanguage
+  const prefix = getCurrentWordPrefix()
+
+  const letterMatches = prefix
+    ? engine.dictionary.filter(word =>
+      word.toLowerCase().startsWith(prefix)
+    )
+    : []
+
+  if (!sequence) {
+    currentPredictions = letterMatches.slice(0, 5)
+    renderPredictions()
+    return
+  }
+
+  engine.getSuggestions(sequence, prefix, 5, (t9Matches) => {
+    // Ignore stale results after another key press or language switch.
+    if (
+      sequence !== t9Sequence ||
+      language !== currentLanguage
+    ) {
+      return
+    }
+
+    const merged = [...letterMatches, ...t9Matches]
+    currentPredictions = [...new Set(merged)].slice(0, 5)
+    renderPredictions()
+  })
+}
+
+function selectPrediction(word) {
+  if (!word) return
+
+  // Commit the current multi-tap character first.
+  if (pendingChar) {
+    commitPendingChar()
+  }
+
+  const text = keyboard.getTextContext() || ''
+
+  // Do not replace the previous word after a space.
+  if (!text || /\s$/.test(text)) return
+
+  const trimmed = text.trimEnd()
+  const match = trimmed.match(/(\S+)$/)
+
+  if (!match) return
+
+  const currentWord = match[1]
+
+  // Replace the complete current word.
+  keyboard.backspace(currentWord.length)
+  keyboard.inputText(word + ' ')
+
+  // Reset prediction state for the next word.
+  t9Sequence = ''
+  currentPredictions = []
+
+  renderPredictions()
+  updateInputState()
+  updatePredictions()
+}
+
+function renderPredictions() {
+  if (!predictionBar) return
+
+  for (let i = 0; i < 5; i++) {
+    const word = currentPredictions[i] || ''
+
+    if (!predictionWidgets[i]) {
+      predictionWidgets[i] = createWidget(widget.TEXT, {
+        parent: predictionBar,
+        x: i * px(80),
+        y: 0,
+        w: px(80),
+        h: px(50),
+        text: word,
+        text_size: px(18),
+        color: 0xffffff,
+        align_h: 1,
+        align_v: 1,
+      })
+    } else {
+      try {
+        predictionWidgets[i].setProperty(prop.TEXT, word)
+      } catch (e) {
+        predictionWidgets[i] = null
+      }
+    }
+  }
+}
+
 
 const MULTITAP_TIMEOUT = 800
 const MULTITAP_SPEEDS = [
@@ -185,7 +309,6 @@ function updateKeyLabels() {
   })
 }
 
-
 function addImagePressEffect(button, image) {
   button.addEventListener(event.CLICK_DOWN, () => {
     image.setAlpha(182)
@@ -289,8 +412,24 @@ DataWidget({
     })
   },
 
-  build() {
+  onInit() {
+    Promise.all([
+      ruT9Engine.init(),
+      enT9Engine.init(),
+    ]).then(() => {
+      console.log('T9 engines ready')
+    })
+  },
 
+  build() {
+    const background = createWidget(widget.CIRCLE, {
+      center_x: 240,
+      center_y: 240,
+      radius: 240,
+      color: 0xf00000
+    })
+    predictionBar = null
+    predictionWidgets = []
     // Main container
     const vc = createWidget(
       widget.VIRTUAL_CONTAINER,
@@ -298,7 +437,10 @@ DataWidget({
         ...styles.container,
       }
     )
-
+    predictionBar = createWidget(widget.VIRTUAL_CONTAINER, {
+      ...styles.prediction_bar,
+      parent: vc,
+    })
     // Container holding all keyboard rows
     const keyboardWidget = createWidget(
       widget.VIRTUAL_CONTAINER,
@@ -329,6 +471,8 @@ DataWidget({
           keyboard.clearBuffer()
 
           pendingChar = ""
+          t9Sequence = ''
+          updatePredictions()
           currentMultiTapKey = null
           currentMultiTapIndex = 0
 
@@ -353,15 +497,19 @@ DataWidget({
           text.length === 1
 
         keyboard.backspace(1)
-
+        t9Sequence = ''
         updateInputState(
           text.length > 1
         )
+        updatePredictions()
       },
 
       longpress_func: () => {
         keyboard.clearInput()
         updateInputState()
+        t9Sequence = ''
+        currentPredictions = []
+        updatePredictions()
         vibrate()
       },
     })
@@ -408,7 +556,9 @@ DataWidget({
                   getActiveRows()
                   [rowIndex]
                   [keyIndex]
-
+                if (/^[2-9]$/.test(activeKey.longPress)) {
+                  t9Sequence += activeKey.longPress
+                }
                 /*
                  * Shift symbols exist only on keys
                  * which define shiftChars.
@@ -493,7 +643,7 @@ DataWidget({
                 keyboard.inputBuffer(
                   pendingChar
                 )
-
+                updatePredictions()
                 deleteImage.setAlpha(255)
                 deleteButton.setEnable(true)
 
@@ -632,6 +782,9 @@ DataWidget({
 
           updateKeyLabels()
           vibrate()
+          t9Sequence = ''
+          currentPredictions = []
+          updatePredictions()
         },
 
         longpress_func: () => {
@@ -654,8 +807,10 @@ DataWidget({
           if (pendingChar) {
             commitPendingChar()
           }
-
           keyboard.inputText(" ")
+          t9Sequence = ''
+          currentPredictions = []
+          updatePredictions()
           updateInputState()
         },
 
