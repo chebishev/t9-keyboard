@@ -45,6 +45,12 @@ function getActiveT9Engine() {
 }
 
 let currentPredictions = []
+const MAX_PREDICTIONS = 20
+const PREDICTION_ITEM_WIDTH = px(85)
+const PREDICTION_ITEM_GAP = px(8)
+
+let predictionTouchOverlay = null
+let predictionScrollOffset = 0
 
 function getCurrentWordPrefix() {
   const text = keyboard.getTextContext() || ''
@@ -77,24 +83,33 @@ function updatePredictions() {
     : []
 
   if (!sequence) {
-    currentPredictions = letterMatches.slice(0, 5)
+    currentPredictions = letterMatches.slice(0, MAX_PREDICTIONS)
     renderPredictions()
     return
   }
 
-  engine.getSuggestions(sequence, prefix, 5, (t9Matches) => {
-    // Ignore stale results after another key press or language switch.
-    if (
-      sequence !== t9Sequence ||
-      language !== currentLanguage
-    ) {
-      return
-    }
+  engine.getSuggestions(
+    sequence,
+    prefix,
+    MAX_PREDICTIONS,
+    (t9Matches) => {
+      if (
+        sequence !== t9Sequence ||
+        language !== currentLanguage ||
+        prefix !== getCurrentWordPrefix()
+      ) {
+        return
+      }
 
-    const merged = [...letterMatches, ...t9Matches]
-    currentPredictions = [...new Set(merged)].slice(0, 5)
-    renderPredictions()
-  })
+      const merged = [...letterMatches, ...t9Matches]
+
+      currentPredictions = [
+        ...new Set(merged),
+      ].slice(0, MAX_PREDICTIONS)
+
+      renderPredictions()
+    }
+  )
 }
 
 function selectPrediction(word) {
@@ -130,34 +145,162 @@ function selectPrediction(word) {
   updatePredictions()
 }
 
+
+function getPredictionMaxOffset() {
+  const count = currentPredictions.length
+
+  const contentWidth = count > 0
+    ? count * PREDICTION_ITEM_WIDTH +
+    (count - 1) * PREDICTION_ITEM_GAP
+    : 0
+
+  return Math.min(
+    0,
+    styles.prediction_bar.w - contentWidth
+  )
+}
+
+function updatePredictionWidgetPositions() {
+  const bar = styles.prediction_bar
+  const stride = PREDICTION_ITEM_WIDTH + PREDICTION_ITEM_GAP
+
+  for (let i = 0; i < predictionWidgets.length; i++) {
+    const item = predictionWidgets[i]
+    if (!item) continue
+
+    item.setProperty(prop.MORE, {
+      x: bar.x + predictionScrollOffset + i * stride,
+      y: bar.y,
+      w: PREDICTION_ITEM_WIDTH,
+      h: bar.h,
+    })
+  }
+}
+
+function setupPredictionTouchHandlers() {
+  const bar = styles.prediction_bar
+
+  predictionTouchOverlay = createWidget(widget.FILL_RECT, {
+    parent: predictionBar,
+    x: bar.x,
+    y: bar.y,
+    w: bar.w,
+    h: bar.h,
+    alpha: 0,
+  })
+
+  let startX = null
+  let lastX = 0
+  let startTime = 0
+  let didSwipe = false
+
+  predictionTouchOverlay.addEventListener(event.CLICK_DOWN, (info) => {
+    startX = info.x
+    lastX = info.x
+    startTime = Date.now()
+    didSwipe = false
+  })
+
+  predictionTouchOverlay.addEventListener(event.MOVE, (info) => {
+    if (startX === null) return
+
+    const deltaX = info.x - lastX
+
+    if (Math.abs(info.x - startX) > 12) {
+      didSwipe = true
+    }
+
+    if (didSwipe) {
+      predictionScrollOffset += deltaX
+
+      const minOffset = getPredictionMaxOffset()
+
+      predictionScrollOffset = Math.max(
+        minOffset,
+        Math.min(0, predictionScrollOffset)
+      )
+
+      updatePredictionWidgetPositions()
+    }
+
+    lastX = info.x
+  })
+
+  predictionTouchOverlay.addEventListener(event.CLICK_UP, (info) => {
+    if (startX === null) return
+
+    const duration = Date.now() - startTime
+
+    if (!didSwipe && duration < 450) {
+      const relativeX =
+        info.x - bar.x - predictionScrollOffset
+
+      const stride =
+        PREDICTION_ITEM_WIDTH + PREDICTION_ITEM_GAP
+
+      const index = Math.floor(relativeX / stride)
+      const positionInItem = relativeX - index * stride
+
+      if (
+        index >= 0 &&
+        index < currentPredictions.length &&
+        positionInItem >= 0 &&
+        positionInItem < PREDICTION_ITEM_WIDTH
+      ) {
+        selectPrediction(currentPredictions[index])
+      }
+    }
+
+    startX = null
+    startTime = 0
+    didSwipe = false
+  })
+}
+
 function renderPredictions() {
   if (!predictionBar) return
 
-  for (let i = 0; i < 5; i++) {
+  const bar = styles.prediction_bar
+  const stride = PREDICTION_ITEM_WIDTH + PREDICTION_ITEM_GAP
+
+  // Start at the beginning whenever the suggestions change.
+  predictionScrollOffset = 0
+
+  // Create a fixed pool of text widgets.
+  // The transparent touch overlay must be above all of them.
+  for (let i = 0; i < MAX_PREDICTIONS; i++) {
     const word = currentPredictions[i] || ''
 
     if (!predictionWidgets[i]) {
       predictionWidgets[i] = createWidget(widget.TEXT, {
         parent: predictionBar,
-        x: i * px(80),
-        y: 0,
-        w: px(80),
-        h: px(50),
+        x: bar.x + i * stride,
+        y: bar.y,
+        w: PREDICTION_ITEM_WIDTH,
+        h: bar.h,
         text: word,
-        text_size: px(18),
+        text_size: px(16),
         color: 0xffffff,
         align_h: 1,
         align_v: 1,
       })
     } else {
-      try {
-        predictionWidgets[i].setProperty(prop.TEXT, word)
-      } catch (e) {
-        predictionWidgets[i] = null
-      }
+      predictionWidgets[i].setProperty(prop.TEXT, word)
     }
+
+    predictionWidgets[i].setProperty(
+      prop.VISIBLE,
+      Boolean(word)
+    )
   }
+
+  if (!predictionTouchOverlay) {
+    setupPredictionTouchHandlers()
+  }
+
+  updatePredictionWidgetPositions()
 }
+
 
 
 const MULTITAP_TIMEOUT = 800
@@ -422,14 +565,16 @@ DataWidget({
   },
 
   build() {
-    const background = createWidget(widget.CIRCLE, {
-      center_x: 240,
-      center_y: 240,
-      radius: 240,
-      color: 0xf00000
-    })
+    // const background = createWidget(widget.CIRCLE, {
+    //   center_x: 240,
+    //   center_y: 240,
+    //   radius: 240,
+    //   color: 0xf00000
+    // })
     predictionBar = null
     predictionWidgets = []
+    predictionTouchOverlay = null
+    predictionScrollOffset = 0
     // Main container
     const vc = createWidget(
       widget.VIRTUAL_CONTAINER,
@@ -437,9 +582,13 @@ DataWidget({
         ...styles.container,
       }
     )
-    predictionBar = createWidget(widget.VIRTUAL_CONTAINER, {
-      ...styles.prediction_bar,
+    predictionBar = vc
+
+    // DEBUG: check prediction bar layering
+    createWidget(widget.FILL_RECT, {
       parent: vc,
+      ...styles.prediction_bar,
+      color: 0xff00ff,
     })
     // Container holding all keyboard rows
     const keyboardWidget = createWidget(

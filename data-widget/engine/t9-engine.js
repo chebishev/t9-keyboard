@@ -221,6 +221,7 @@ class T9Engine {
 
         const processChunk = () => {
             if (this.cancel_flag) {
+                callback([]);
                 return;
             }
 
