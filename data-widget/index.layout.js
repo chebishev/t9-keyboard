@@ -96,6 +96,7 @@ export const styles = {
     // Prediction item geometry and appearance.
     predictionItemWidth: px(85),
     predictionItemGap: px(8),
+    predictionItemInset: px(44),
 
     predictionText: {
         text_size: px(22),

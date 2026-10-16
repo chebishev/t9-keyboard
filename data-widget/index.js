@@ -86,6 +86,15 @@ let predictionBarSeparator = null
 let predictionTouchOverlay = null
 let predictionScrollOffset = 0
 
+function vibrate(){
+  vibro.setMode(27)
+  vibro.start()
+}
+
+function getActiveT9Engine() {
+  return currentLanguage === 'ru' ? ruT9Engine : enT9Engine
+}
+
 function getCurrentWordPrefix() {
   const text = keyboard.getTextContext() || ''
 
@@ -215,7 +224,7 @@ function getPredictionStartX() {
   // on square screens, align the bar to its left edge.
   return IS_ROUND
     ? Math.floor(DEVICE_WIDTH / 2 - PREDICTION_ITEM_WIDTH / 2)
-    : styles.prediction_bar.x
+    : styles.prediction_bar.x + styles.predictionItemInset
 }
 
 function updatePredictionWidgetPositions() {
