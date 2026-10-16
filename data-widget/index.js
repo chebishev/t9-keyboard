@@ -1,18 +1,27 @@
+// Zepp OS APIs
+import { getDeviceInfo } from '@zos/device'
+import { getText } from '@zos/i18n'
+import { showToast } from '@zos/interaction'
+import { Vibrator } from '@zos/sensor'
+import { LocalStorage } from '@zos/storage'
 import {
   createWidget,
-  widget,
+  event,
   keyboard,
   prop,
-  event,
-  align
+  widget,
 } from '@zos/ui'
-import { showToast } from "@zos/interaction";
-import { styles } from "zosLoader:./index.[pf].layout.js"
-import { LocalStorage } from "@zos/storage";
-import { Vibrator } from '@zos/sensor'
-import { getText } from "@zos/i18n"
-import { enT9Engine, ruT9Engine } from './engine/t9-engine';
-import { getDeviceInfo } from '@zos/device'
+
+// Layout
+import { styles } from 'zosLoader:./index.[pf].layout.js'
+
+// Application modules
+import { enT9Engine, ruT9Engine } from './engine/t9-engine'
+import { enRows, ruRows } from './keyboard-keys'
+
+// ========================================
+// DEVICE AND SERVICES
+// ========================================
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = getDeviceInfo()
 const IS_ROUND = DEVICE_WIDTH === DEVICE_HEIGHT
@@ -20,41 +29,60 @@ const IS_ROUND = DEVICE_WIDTH === DEVICE_HEIGHT
 const localStorage = new LocalStorage()
 const vibro = new Vibrator()
 
-function vibrate() {
-  vibro.setMode(27)
-  vibro.start()
-}
 
-// Start keyboard with Uppercase letter
+// ========================================
+// CONFIGURATION
+// ========================================
+
+// Multi-tap
+const MULTITAP_TIMEOUT = 800
+
+const MULTITAP_SPEEDS = [
+  { value: 200, label: getText('veryFast') },
+  { value: 400, label: getText('fast') },
+  { value: 600, label: getText('normal') },
+  { value: 800, label: getText('slow') },
+  { value: 1000, label: getText('verySlow') },
+]
+
+// Predictions
+const MAX_PREDICTIONS = 5
+const PREDICTION_ITEM_WIDTH = styles.predictionItemWidth
+const PREDICTION_ITEM_GAP = styles.predictionItemGap
+
+
+// ========================================
+// KEYBOARD STATE
+// ========================================
+
+// Language and character case
+let currentLanguage = 'ru'
 let shiftEnabled = true
 let capsLockEnabled = false
+
+// Multi-tap
+let currentMultiTapKey = null
+let currentMultiTapIndex = 0
+let multiTapTimer = null
+let pendingChar = ''
+
+// T9
+let t9Sequence = ''
+let currentPredictions = []
+
+// Keyboard widgets
 let shiftImage = null
 let deleteImage = null
 let deleteButton = null
 let globeImage = null
 let actionImage = null
 let hideDeleteOnRelease = false
+const letterWidgets = []
 
-let currentMultiTapKey = null
-let currentMultiTapIndex = 0
-let multiTapTimer = null
-let pendingChar = ""
-let t9Sequence = ""
+// Prediction widgets
 let predictionBar = null
 let predictionWidgets = []
 let predictionBarSeparator = null
-
-let currentLanguage = "ru"
-
-function getActiveT9Engine() {
-  return currentLanguage === 'ru' ? ruT9Engine : enT9Engine;
-}
-
-let currentPredictions = []
-const MAX_PREDICTIONS = 5
-const PREDICTION_ITEM_WIDTH = px(85)
-const PREDICTION_ITEM_GAP = px(8)
-
 let predictionTouchOverlay = null
 let predictionScrollOffset = 0
 
@@ -217,7 +245,7 @@ function setupPredictionTouchHandlers() {
     y: bar.y,
     w: bar.w,
     h: bar.h,
-    alpha: 0,
+    ...styles.predictionTouchOverlay,
   })
 
   let startX = null
@@ -310,10 +338,7 @@ function renderPredictions() {
         w: PREDICTION_ITEM_WIDTH,
         h: bar.h,
         text: word,
-        text_size: px(22),
-        color: 0xffffff,
-        align_h: align.CENTER_H,
-        align_v: align.CENTER_V,
+        ...styles.predictionText,
       })
     } else {
       predictionWidgets[i].setProperty(prop.TEXT, word)
@@ -338,132 +363,6 @@ function renderPredictions() {
 
   updatePredictionWidgetPositions()
 }
-
-
-
-const MULTITAP_TIMEOUT = 800
-const MULTITAP_SPEEDS = [
-  { value: 200, label: getText("veryFast") },
-  { value: 400, label: getText("fast") },
-  { value: 600, label: getText("normal") },
-  { value: 800, label: getText("slow") },
-  { value: 1000, label: getText("verySlow") }
-]
-
-const letterWidgets = []
-
-const ruRows = [
-  [
-    {
-      label: '.,?!',
-      chars: '.,?!',
-      shiftLabel: '@₽-_',
-      shiftChars: '@₽-_',
-      longPress: '1'
-    },
-    {
-      label: 'АБВГ',
-      chars: 'абвг',
-      longPress: '2'
-    },
-    {
-      label: 'ДЕЖЗ',
-      chars: 'дежз',
-      longPress: '3'
-    },
-  ],
-  [
-    {
-      label: 'ИЙКЛ',
-      chars: 'ийкл',
-      longPress: '4'
-    },
-    {
-      label: 'МНОП',
-      chars: 'мноп',
-      longPress: '5'
-    },
-    {
-      label: 'РСТУ',
-      chars: 'рсту',
-      longPress: '6'
-    },
-  ],
-  [
-    {
-      label: 'ФХЦЧ',
-      chars: 'фхцч',
-      longPress: '7'
-    },
-    {
-      label: 'ШЩЪЫ',
-      chars: 'шщъы',
-      longPress: '8'
-    },
-    {
-      label: 'ЬЮЯЭ',
-      chars: 'ьюяэ',
-      longPress: '9'
-    },
-  ],
-]
-
-const enRows = [
-  [
-    {
-      label: '.,?!',
-      chars: '.,?!',
-      shiftLabel: '@₽-_',
-      shiftChars: '@₽-_',
-      longPress: '1'
-    },
-    {
-      label: 'ABC',
-      chars: 'abc',
-      longPress: '2'
-    },
-    {
-      label: 'DEF',
-      chars: 'def',
-      longPress: '3'
-    },
-  ],
-  [
-    {
-      label: 'GHI',
-      chars: 'ghi',
-      longPress: '4'
-    },
-    {
-      label: 'JKL',
-      chars: 'jkl',
-      longPress: '5'
-    },
-    {
-      label: 'MNO',
-      chars: 'mno',
-      longPress: '6'
-    },
-  ],
-  [
-    {
-      label: 'PQRS',
-      chars: 'pqrs',
-      longPress: '7'
-    },
-    {
-      label: 'TUV',
-      chars: 'tuv',
-      longPress: '8'
-    },
-    {
-      label: 'WXYZ',
-      chars: 'wxyz',
-      longPress: '9'
-    },
-  ],
-]
-
 
 function getActiveRows() {
   return currentLanguage === "ru" ? ruRows : enRows
@@ -510,14 +409,14 @@ function addLetterPressEffect(button) {
   button.addEventListener(event.CLICK_DOWN, () => {
     button.setProperty(prop.MORE, {
       ...styles.keyButton,
-      color: 0xb6b6b6,
+      ...styles.keyButtonPressed,
     })
   })
 
   button.addEventListener(event.CLICK_UP, () => {
     button.setProperty(prop.MORE, {
       ...styles.keyButton,
-      color: 0xffffff,
+      ...styles.keyButtonReleased,
     })
   })
 }
@@ -618,21 +517,22 @@ DataWidget({
     predictionBar = vc
 
     // Opaque TOP bar background keeps the input text behind it hidden.
-    predictionBarBackground = createWidget(widget.FILL_RECT, {
+    const predictionBarBackground = createWidget(widget.FILL_RECT, {
       parent: vc,
       ...styles.prediction_bar,
-      color: 0x000000,
+      ...styles.predictionBarBackground,
     })
 
     // Single separator below the TOP bar, following Zepp's approach.
     predictionBarSeparator = createWidget(widget.STROKE_RECT, {
       parent: vc,
+        ...styles.predictionBarSeparator,
       x: styles.prediction_bar.x,
-      y: styles.prediction_bar.y + styles.prediction_bar.h - 1,
+      y: 
+      styles.prediction_bar.y + 
+      styles.prediction_bar.h - 
+      styles.predictionBarSeparator.h,
       w: styles.prediction_bar.w,
-      h: 1,
-      line_width: 1,
-      color: 0x505050,
     })
     predictionBarSeparator.setProperty(prop.VISIBLE, false)
 

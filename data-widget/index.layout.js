@@ -1,4 +1,4 @@
-import { keyboard } from '@zos/ui';
+import { keyboard, align } from '@zos/ui';
 import { getDeviceInfo } from '@zos/device';
 import { px } from '@zos/utils';
 
@@ -91,5 +91,39 @@ export const styles = {
         y: 0,
         w: DEVICE_WIDTH,
         h: px(41),
+    },
+
+    // Prediction item geometry and appearance.
+    predictionItemWidth: px(85),
+    predictionItemGap: px(8),
+
+    predictionText: {
+        text_size: px(22),
+        color: 0xffffff,
+        align_h: align.CENTER_H,
+        align_v: align.CENTER_V,
+    },
+
+    predictionTouchOverlay: {
+        alpha: 0,
+    },
+
+    predictionBarBackground: {
+        color: 0x000000,
+    },
+
+    predictionBarSeparator: {
+        h: 1,
+        line_width: 1,
+        color: 0x505050,
+    },
+
+    // Letter key press feedback.
+    keyButtonPressed: {
+        color: 0xb6b6b6,
+    },
+
+    keyButtonReleased: {
+        color: 0xffffff,
     },
 }
