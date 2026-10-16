@@ -11,7 +11,7 @@ import { styles } from "zosLoader:./index.[pf].layout.js"
 import { LocalStorage } from "@zos/storage";
 import { Vibrator } from '@zos/sensor'
 import { getText } from "@zos/i18n"
-import { enT9Engine, ruT9Engine } from './engine/t9-engine'; 
+import { enT9Engine, ruT9Engine } from './engine/t9-engine';
 import { getDeviceInfo } from '@zos/device'
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = getDeviceInfo()
@@ -42,6 +42,7 @@ let pendingChar = ""
 let t9Sequence = ""
 let predictionBar = null
 let predictionWidgets = []
+let predictionBarSeparator = null
 
 let currentLanguage = "ru"
 
@@ -324,6 +325,13 @@ function renderPredictions() {
     )
   }
 
+  if (predictionBarSeparator) {
+    predictionBarSeparator.setProperty(
+      prop.VISIBLE,
+      currentPredictions.length > 0
+    )
+  }
+
   if (!predictionTouchOverlay) {
     setupPredictionTouchHandlers()
   }
@@ -595,14 +603,9 @@ DataWidget({
   },
 
   build() {
-    // const background = createWidget(widget.CIRCLE, {
-    //   center_x: 240,
-    //   center_y: 240,
-    //   radius: 240,
-    //   color: 0xf00000
-    // })
     predictionBar = null
     predictionWidgets = []
+    predictionBarSeparator = null
     predictionTouchOverlay = null
     predictionScrollOffset = 0
     // Main container
@@ -631,6 +634,8 @@ DataWidget({
       line_width: 1,
       color: 0x505050,
     })
+    predictionBarSeparator.setProperty(prop.VISIBLE, false)
+
     // Container holding all keyboard rows
     const keyboardWidget = createWidget(
       widget.VIRTUAL_CONTAINER,
@@ -661,7 +666,7 @@ DataWidget({
           keyboard.clearBuffer()
 
           pendingChar = ""
-          t9Sequence = ''
+          t9Sequence = t9Sequence.slice(0, -1)
           updatePredictions()
           currentMultiTapKey = null
           currentMultiTapIndex = 0
@@ -687,7 +692,7 @@ DataWidget({
           text.length === 1
 
         keyboard.backspace(1)
-        t9Sequence = ''
+        t9Sequence = t9Sequence.slice(0, -1)
         updateInputState(
           text.length > 1
         )
@@ -746,9 +751,6 @@ DataWidget({
                   getActiveRows()
                   [rowIndex]
                   [keyIndex]
-                if (/^[2-9]$/.test(activeKey.longPress)) {
-                  t9Sequence += activeKey.longPress
-                }
                 /*
                  * Shift symbols exist only on keys
                  * which define shiftChars.
@@ -791,6 +793,10 @@ DataWidget({
                    * first.
                    */
                   commitPendingChar()
+
+                  if (/^[2-9]$/.test(activeKey.longPress)) {
+                    t9Sequence += activeKey.longPress
+                  }
 
                   currentMultiTapKey =
                     activeKey

@@ -326,7 +326,7 @@ Page({
       layout: {
         width: "100%",
         height: "auto",
-        font_size: px(40),
+        font_size: px(36),
       },
     });
 
