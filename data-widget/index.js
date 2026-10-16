@@ -3,14 +3,19 @@ import {
   widget,
   keyboard,
   prop,
-  event
+  event,
+  align
 } from '@zos/ui'
 import { showToast } from "@zos/interaction";
 import { styles } from "zosLoader:./index.[pf].layout.js"
 import { LocalStorage } from "@zos/storage";
 import { Vibrator } from '@zos/sensor'
 import { getText } from "@zos/i18n"
-import { enT9Engine, ruT9Engine } from './engine/t9-engine';
+import { enT9Engine, ruT9Engine } from './engine/t9-engine'; 
+import { getDeviceInfo } from '@zos/device'
+
+const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = getDeviceInfo()
+const IS_ROUND = DEVICE_WIDTH === DEVICE_HEIGHT
 
 const localStorage = new LocalStorage()
 const vibro = new Vibrator()
@@ -45,7 +50,7 @@ function getActiveT9Engine() {
 }
 
 let currentPredictions = []
-const MAX_PREDICTIONS = 20
+const MAX_PREDICTIONS = 5
 const PREDICTION_ITEM_WIDTH = px(85)
 const PREDICTION_ITEM_GAP = px(8)
 
@@ -147,29 +152,54 @@ function selectPrediction(word) {
 
 
 function getPredictionMaxOffset() {
-  const count = currentPredictions.length
+  const contentWidth = getPredictionContentWidth()
+  const bar = styles.prediction_bar
 
-  const contentWidth = count > 0
-    ? count * PREDICTION_ITEM_WIDTH +
-    (count - 1) * PREDICTION_ITEM_GAP
-    : 0
+  let visibleRight = bar.x + bar.w
+
+  if (IS_ROUND) {
+    const radius = DEVICE_WIDTH / 2
+    const predictionY = bar.y + (bar.h >> 1)
+    const dy = predictionY - radius
+    const safeWidth =
+      Math.sqrt(radius * radius - dy * dy) * 2
+
+    visibleRight =
+      Math.floor(DEVICE_WIDTH / 2 + (safeWidth - 40) / 2)
+  }
 
   return Math.min(
     0,
-    styles.prediction_bar.w - contentWidth
+    visibleRight - (getPredictionStartX() + contentWidth)
   )
+}
+
+function getPredictionContentWidth() {
+  const count = currentPredictions.length
+  return count > 0
+    ? count * PREDICTION_ITEM_WIDTH + (count - 1) * PREDICTION_ITEM_GAP
+    : 0
+}
+
+function getPredictionStartX() {
+  // Keep the first suggestion near the center on round screens;
+  // on square screens, align the bar to its left edge.
+  return IS_ROUND
+    ? Math.floor(DEVICE_WIDTH / 2 - PREDICTION_ITEM_WIDTH / 2)
+    : styles.prediction_bar.x
 }
 
 function updatePredictionWidgetPositions() {
   const bar = styles.prediction_bar
   const stride = PREDICTION_ITEM_WIDTH + PREDICTION_ITEM_GAP
+  const startX = getPredictionStartX()
 
   for (let i = 0; i < predictionWidgets.length; i++) {
     const item = predictionWidgets[i]
     if (!item) continue
 
     item.setProperty(prop.MORE, {
-      x: bar.x + predictionScrollOffset + i * stride,
+      x: startX + predictionScrollOffset + i * stride,
       y: bar.y,
       w: PREDICTION_ITEM_WIDTH,
       h: bar.h,
@@ -233,7 +263,7 @@ function setupPredictionTouchHandlers() {
 
     if (!didSwipe && duration < 450) {
       const relativeX =
-        info.x - bar.x - predictionScrollOffset
+        info.x - getPredictionStartX() - predictionScrollOffset
 
       const stride =
         PREDICTION_ITEM_WIDTH + PREDICTION_ITEM_GAP
@@ -279,10 +309,10 @@ function renderPredictions() {
         w: PREDICTION_ITEM_WIDTH,
         h: bar.h,
         text: word,
-        text_size: px(16),
+        text_size: px(22),
         color: 0xffffff,
-        align_h: 1,
-        align_v: 1,
+        align_h: align.CENTER_H,
+        align_v: align.CENTER_V,
       })
     } else {
       predictionWidgets[i].setProperty(prop.TEXT, word)
@@ -584,11 +614,22 @@ DataWidget({
     )
     predictionBar = vc
 
-    // DEBUG: check prediction bar layering
-    createWidget(widget.FILL_RECT, {
+    // Opaque TOP bar background keeps the input text behind it hidden.
+    predictionBarBackground = createWidget(widget.FILL_RECT, {
       parent: vc,
       ...styles.prediction_bar,
-      color: 0xff00ff,
+      color: 0x000000,
+    })
+
+    // Single separator below the TOP bar, following Zepp's approach.
+    predictionBarSeparator = createWidget(widget.STROKE_RECT, {
+      parent: vc,
+      x: styles.prediction_bar.x,
+      y: styles.prediction_bar.y + styles.prediction_bar.h - 1,
+      w: styles.prediction_bar.w,
+      h: 1,
+      line_width: 1,
+      color: 0x505050,
     })
     // Container holding all keyboard rows
     const keyboardWidget = createWidget(

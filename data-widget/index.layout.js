@@ -87,9 +87,9 @@ export const styles = {
         },
     },
     prediction_bar: {
-    x: (DEVICE_WIDTH - px(320)) / 2,
-    y: px(50),
-    w: px(320),
-    h: px(40),
-},
+        x: 0,
+        y: 0,
+        w: DEVICE_WIDTH,
+        h: px(41),
+    },
 }
