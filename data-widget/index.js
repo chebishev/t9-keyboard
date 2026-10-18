@@ -68,6 +68,7 @@ let pendingChar = ''
 
 // T9
 let t9Sequence = ''
+let t9WordShiftEnabled = false
 let currentPredictions = []
 
 // Keyboard widgets
@@ -86,7 +87,7 @@ let predictionBarSeparator = null
 let predictionTouchOverlay = null
 let predictionScrollOffset = 0
 
-function vibrate(){
+function vibrate() {
   vibro.setMode(27)
   vibro.start()
 }
@@ -111,6 +112,18 @@ function getCurrentWordPrefix() {
   const words = trimmed.split(/\s+/)
 
   return (words[words.length - 1] || '').toLowerCase()
+}
+
+function formatPrediction(word, isShift, isCapsLock) {
+  if (isCapsLock) {
+    return word.toUpperCase()
+  }
+
+  if (isShift) {
+    return word.charAt(0).toUpperCase() + word.slice(1)
+  }
+
+  return word
 }
 
 function updatePredictions() {
@@ -158,6 +171,13 @@ function updatePredictions() {
 function selectPrediction(word) {
   if (!word) return
 
+  const prediction = formatPrediction(
+    word,
+    t9Sequence ? t9WordShiftEnabled : shiftEnabled,
+    capsLockEnabled
+  )
+
+
   // Commit the current multi-tap character first.
   if (pendingChar) {
     commitPendingChar()
@@ -177,10 +197,10 @@ function selectPrediction(word) {
 
   // Replace the complete current word.
   keyboard.backspace(currentWord.length)
-  keyboard.inputText(word + ' ')
-
+  keyboard.inputText(prediction + ' ')
   // Reset prediction state for the next word.
   t9Sequence = ''
+  t9WordShiftEnabled = false
   currentPredictions = []
 
   renderPredictions()
@@ -337,7 +357,11 @@ function renderPredictions() {
   // Create a fixed pool of text widgets.
   // The transparent touch overlay must be above all of them.
   for (let i = 0; i < MAX_PREDICTIONS; i++) {
-    const word = currentPredictions[i] || ''
+    const word = formatPrediction(
+      currentPredictions[i] || '',
+      t9Sequence ? t9WordShiftEnabled : shiftEnabled,
+      capsLockEnabled
+    )
 
     if (!predictionWidgets[i]) {
       predictionWidgets[i] = createWidget(widget.TEXT, {
@@ -535,12 +559,12 @@ DataWidget({
     // Single separator below the TOP bar, following Zepp's approach.
     predictionBarSeparator = createWidget(widget.STROKE_RECT, {
       parent: vc,
-        ...styles.predictionBarSeparator,
+      ...styles.predictionBarSeparator,
       x: styles.prediction_bar.x,
-      y: 
-      styles.prediction_bar.y + 
-      styles.prediction_bar.h - 
-      styles.predictionBarSeparator.h,
+      y:
+        styles.prediction_bar.y +
+        styles.prediction_bar.h -
+        styles.predictionBarSeparator.h,
       w: styles.prediction_bar.w,
     })
     predictionBarSeparator.setProperty(prop.VISIBLE, false)
@@ -701,337 +725,344 @@ DataWidget({
                    * commit the previous character
                    * first.
                    */
-                  commitPendingChar()
-
-                  if (/^[2-9]$/.test(activeKey.longPress)) {
-                    t9Sequence += activeKey.longPress
-                  }
-
-                  currentMultiTapKey =
-                    activeKey
-
-                  currentMultiTapIndex = 0
-                }
-
-                const char =
-                  activeChars[
-                  currentMultiTapIndex
-                  ]
-
-                /*
-                 * Shift-symbol layer:
-                 * use the symbol unchanged.
-                 *
-                 * Normal letter layer:
-                 * apply Shift / Caps Lock case.
-                 */
                 if (
-                  activeKey.shiftChars ===
-                  activeChars
+                  !t9Sequence &&
+                  /^[2-9]$/.test(activeKey.longPress)
                 ) {
-                  pendingChar = char
-                } else {
-                  pendingChar =
-                    (
-                      shiftEnabled ||
-                      capsLockEnabled
-                    )
-                      ? char.toUpperCase()
-                      : char
+                  t9WordShiftEnabled = shiftEnabled
                 }
 
-                /*
-                 * Show only the current pending
-                 * multi-tap character.
-                 */
-                keyboard.clearBuffer()
-                keyboard.inputBuffer(
-                  pendingChar
-                )
-                updatePredictions()
-                deleteImage.setAlpha(255)
-                deleteButton.setEnable(true)
-
-                multiTapTimer =
-                  setTimeout(() => {
-                    commitPendingChar()
-                  }, this.state.multiTapTimeout)
-              },
-
-              longpress_func: () => {
-                const activeKey =
-                  getActiveRows()
-                  [rowIndex]
-                  [keyIndex]
-
-                /*
-                 * Commit pending character first,
-                 * then insert the digit.
-                 */
                 commitPendingChar()
 
-                keyboard.inputText(
-                  activeKey.longPress
-                )
+                if (/^[2-9]$/.test(activeKey.longPress)) {
+                  t9Sequence += activeKey.longPress
+                }
 
-                updateInputState()
-              },
+                currentMultiTapKey =
+                  activeKey
+
+                currentMultiTapIndex = 0
+              }
+
+                const char =
+                activeChars[
+                currentMultiTapIndex
+                ]
+
+        /*
+         * Shift-symbol layer:
+         * use the symbol unchanged.
+         *
+         * Normal letter layer:
+         * apply Shift / Caps Lock case.
+         */
+        if(
+                  activeKey.shiftChars ===
+                    activeChars
+        ) {
+              pendingChar = char
+            } else {
+              pendingChar =
+              (
+                shiftEnabled ||
+                capsLockEnabled
+              )
+                ? char.toUpperCase()
+                : char
+            }
+
+        /*
+         * Show only the current pending
+         * multi-tap character.
+         */
+        keyboard.clearBuffer()
+        keyboard.inputBuffer(
+              pendingChar
+            )
+        updatePredictions()
+        deleteImage.setAlpha(255)
+        deleteButton.setEnable(true)
+
+        multiTapTimer =
+  setTimeout(() => {
+    commitPendingChar()
+  }, this.state.multiTapTimeout)
+},
+
+  longpress_func: () => {
+    const activeKey =
+      getActiveRows()
+      [rowIndex]
+      [keyIndex]
+
+    /*
+     * Commit pending character first,
+     * then insert the digit.
+     */
+    commitPendingChar()
+
+    keyboard.inputText(
+      activeKey.longPress
+    )
+
+    updateInputState()
+  },
             })
 
-          addLetterPressEffect(
-            letterWidget
-          )
+addLetterPressEffect(
+  letterWidget
+)
 
-          /*
-           * Store physical position rather than
-           * the original key object.
-           *
-           * This allows the same widgets to use
-           * either bgRows or enRows.
-           */
-          letterWidgets.push({
-            widget: letterWidget,
-            rowIndex,
-            keyIndex,
-          })
+/*
+ * Store physical position rather than
+ * the original key object.
+ *
+ * This allows the same widgets to use
+ * either bgRows or enRows.
+ */
+letterWidgets.push({
+  widget: letterWidget,
+  rowIndex,
+  keyIndex,
+})
         })
       }
     )
 
 
-    // ACTION ROW
+// ACTION ROW
 
-    const actionRow = createWidget(
+const actionRow = createWidget(
+  widget.VIRTUAL_CONTAINER,
+  {
+    parent: keyboardWidget,
+
+    layout: {
+      ...styles.keyboardRow.layout,
+    },
+  }
+)
+
+
+const actionKeys = [
+  // SHIFT
+  {
+    type: "shift",
+    src: "image/shift_off.png",
+
+    action: () => {
+      if (capsLockEnabled) {
+        capsLockEnabled = false
+        shiftEnabled = false
+      } else {
+        shiftEnabled =
+          !shiftEnabled
+      }
+
+      shiftImage.setProperty(
+        prop.SRC,
+        shiftEnabled
+          ? "image/shift_on.png"
+          : "image/shift_off.png"
+      )
+
+      /*
+       * Normal:
+       *   .,?!
+       *
+       * One-shot Shift:
+       *   @€-_
+       *
+       * Caps Lock:
+       *   .,?!
+       */
+      updateKeyLabels()
+      vibrate()
+    },
+
+    longpress_func: () => {
+      capsLockEnabled =
+        !capsLockEnabled
+
+      shiftEnabled = false
+
+      shiftImage.setProperty(
+        prop.SRC,
+        capsLockEnabled
+          ? "image/shift_on_caps.png"
+          : "image/shift_off.png"
+      )
+
+      updateKeyLabels()
+      vibrate()
+    },
+  },
+
+
+  // LANGUAGE / INPUT METHOD
+  {
+    type: "globe",
+    src: "image/globe.png",
+
+    action: () => {
+      /*
+       * Finish the current character before
+       * changing its mapping.
+       */
+      commitPendingChar()
+
+      currentLanguage =
+        currentLanguage === "ru"
+          ? "en"
+          : "ru"
+
+      updateKeyLabels()
+      vibrate()
+      t9Sequence = ''
+      currentPredictions = []
+      updatePredictions()
+    },
+
+    longpress_func: () => {
+      /*
+       * Keep the Zepp OS input-method
+       * selector on long press.
+       */
+      keyboard.sendFnKey(
+        keyboard.SELECT
+      )
+    },
+  },
+
+
+  // SPACE / 0
+  {
+    src: "image/blank.png",
+
+    action: () => {
+      if (pendingChar) {
+        commitPendingChar()
+      }
+      keyboard.inputText(" ")
+      t9Sequence = ''
+      currentPredictions = []
+      updatePredictions()
+      updateInputState()
+    },
+
+    longpress_func: () => {
+      /*
+       * Otherwise 0 could be inserted before
+       * an active pending character.
+       */
+      commitPendingChar()
+
+      keyboard.inputText("0")
+      updateInputState()
+    },
+  },
+
+
+  // ENTER / CANCEL
+  {
+    type: "enter",
+    src: "image/check.png",
+
+    action: () => {
+      if (keyboard.getTextContext()) {
+        keyboard.sendFnKey(
+          keyboard.ENTER
+        )
+      } else {
+        keyboard.sendFnKey(
+          keyboard.CANCEL
+        )
+      }
+    },
+    longpress_func: () => {
+      this.changeMultiTapTimeout()
+      vibrate()
+    }
+  },
+]
+
+
+actionKeys.forEach((key) => {
+  const keyContainer =
+    createWidget(
       widget.VIRTUAL_CONTAINER,
       {
-        parent: keyboardWidget,
-
-        layout: {
-          ...styles.keyboardRow.layout,
-        },
+        parent: actionRow,
+        ...styles.actionKeyContainer,
       }
     )
 
-
-    const actionKeys = [
-      // SHIFT
-      {
-        type: "shift",
-        src: "image/shift_off.png",
-
-        action: () => {
-          if (capsLockEnabled) {
-            capsLockEnabled = false
-            shiftEnabled = false
-          } else {
-            shiftEnabled =
-              !shiftEnabled
-          }
-
-          shiftImage.setProperty(
-            prop.SRC,
-            shiftEnabled
-              ? "image/shift_on.png"
-              : "image/shift_off.png"
-          )
-
-          /*
-           * Normal:
-           *   .,?!
-           *
-           * One-shot Shift:
-           *   @€-_
-           *
-           * Caps Lock:
-           *   .,?!
-           */
-          updateKeyLabels()
-          vibrate()
-        },
-
-        longpress_func: () => {
-          capsLockEnabled =
-            !capsLockEnabled
-
-          shiftEnabled = false
-
-          shiftImage.setProperty(
-            prop.SRC,
-            capsLockEnabled
-              ? "image/shift_on_caps.png"
-              : "image/shift_off.png"
-          )
-
-          updateKeyLabels()
-          vibrate()
-        },
-      },
-
-
-      // LANGUAGE / INPUT METHOD
-      {
-        type: "globe",
-        src: "image/globe.png",
-
-        action: () => {
-          /*
-           * Finish the current character before
-           * changing its mapping.
-           */
-          commitPendingChar()
-
-          currentLanguage =
-            currentLanguage === "ru"
-              ? "en"
-              : "ru"
-
-          updateKeyLabels()
-          vibrate()
-          t9Sequence = ''
-          currentPredictions = []
-          updatePredictions()
-        },
-
-        longpress_func: () => {
-          /*
-           * Keep the Zepp OS input-method
-           * selector on long press.
-           */
-          keyboard.sendFnKey(
-            keyboard.SELECT
-          )
-        },
-      },
-
-
-      // SPACE / 0
-      {
-        src: "image/blank.png",
-
-        action: () => {
-          if (pendingChar) {
-            commitPendingChar()
-          }
-          keyboard.inputText(" ")
-          t9Sequence = ''
-          currentPredictions = []
-          updatePredictions()
-          updateInputState()
-        },
-
-        longpress_func: () => {
-          /*
-           * Otherwise 0 could be inserted before
-           * an active pending character.
-           */
-          commitPendingChar()
-
-          keyboard.inputText("0")
-          updateInputState()
-        },
-      },
-
-
-      // ENTER / CANCEL
-      {
-        type: "enter",
-        src: "image/check.png",
-
-        action: () => {
-          if (keyboard.getTextContext()) {
-            keyboard.sendFnKey(
-              keyboard.ENTER
-            )
-          } else {
-            keyboard.sendFnKey(
-              keyboard.CANCEL
-            )
-          }
-        },
-        longpress_func: () => {
-          this.changeMultiTapTimeout()
-          vibrate()
-        }
-      },
-    ]
-
-
-    actionKeys.forEach((key) => {
-      const keyContainer =
-        createWidget(
-          widget.VIRTUAL_CONTAINER,
-          {
-            parent: actionRow,
-            ...styles.actionKeyContainer,
-          }
-        )
-
-      const img = createWidget(
-        widget.IMG,
-        {
-          parent: keyContainer,
-          src: key.src,
-          enable: false,
-          ...styles.actionImage,
-        }
-      )
-
-      const btn = createWidget(
-        widget.BUTTON,
-        {
-          parent: keyContainer,
-          ...styles.overlayButton,
-          click_func: key.action,
-          longpress_func:
-            key.longpress_func,
-        }
-      )
-
-      btn.setAlpha(0)
-
-      addImagePressEffect(
-        btn,
-        img
-      )
-
-      if (key.type === "shift") {
-        shiftImage = img
-      }
-
-      if (key.type === "globe") {
-        globeImage = img
-      }
-
-      if (key.type === "enter") {
-        actionImage = img
-      }
-    })
-    // enable full shift behaviour on start
-    shiftImage.setProperty(
-      prop.SRC,
-      shiftEnabled
-        ? "image/shift_on.png"
-        : "image/shift_off.png"
-    )
-
-    updateKeyLabels()
-  },
-
-
-  onResume() {
-    // Restore globe image after returning
-    // from the system input selector.
-    if (globeImage) {
-      globeImage.setAlpha(255)
+  const img = createWidget(
+    widget.IMG,
+    {
+      parent: keyContainer,
+      src: key.src,
+      enable: false,
+      ...styles.actionImage,
     }
+  )
 
-    updateInputState()
+  const btn = createWidget(
+    widget.BUTTON,
+    {
+      parent: keyContainer,
+      ...styles.overlayButton,
+      click_func: key.action,
+      longpress_func:
+        key.longpress_func,
+    }
+  )
+
+  btn.setAlpha(0)
+
+  addImagePressEffect(
+    btn,
+    img
+  )
+
+  if (key.type === "shift") {
+    shiftImage = img
+  }
+
+  if (key.type === "globe") {
+    globeImage = img
+  }
+
+  if (key.type === "enter") {
+    actionImage = img
+  }
+})
+// enable full shift behaviour on start
+shiftImage.setProperty(
+  prop.SRC,
+  shiftEnabled
+    ? "image/shift_on.png"
+    : "image/shift_off.png"
+)
+
+updateKeyLabels()
   },
 
 
-  onDestroy() {
-    console.log(
-      'RU keyboard: onDestroy'
-    )
-  },
+onResume() {
+  // Restore globe image after returning
+  // from the system input selector.
+  if (globeImage) {
+    globeImage.setAlpha(255)
+  }
+
+  updateInputState()
+},
+
+
+onDestroy() {
+  console.log(
+    'RU keyboard: onDestroy'
+  )
+},
 })
