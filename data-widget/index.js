@@ -16,7 +16,7 @@ import {
 import { styles } from 'zosLoader:./index.[pf].layout.js'
 
 // Application modules
-import { enT9Engine, ruT9Engine } from './engine/t9-engine'
+import { enT9Engine, nativeT9Engine } from './engine/t9-engine'
 import { enRows, ruRows } from './keyboard-keys'
 
 // ========================================
@@ -56,7 +56,8 @@ const PREDICTION_ITEM_GAP = styles.predictionItemGap
 // ========================================
 
 // Language and character case
-let currentLanguage = 'ru'
+let BASE_LANG = getText("baseLanguage")
+let currentLanguage = BASE_LANG
 let shiftEnabled = true
 let capsLockEnabled = false
 
@@ -93,7 +94,7 @@ function vibrate() {
 }
 
 function getActiveT9Engine() {
-  return currentLanguage === 'ru' ? ruT9Engine : enT9Engine
+  return currentLanguage === BASE_LANG ? nativeT9Engine : enT9Engine
 }
 
 function getCurrentWordPrefix() {
@@ -398,7 +399,7 @@ function renderPredictions() {
 }
 
 function getActiveRows() {
-  return currentLanguage === "ru" ? ruRows : enRows
+  return currentLanguage === BASE_LANG ? ruRows : enRows
 }
 
 
@@ -527,7 +528,7 @@ DataWidget({
 
   onInit() {
     Promise.all([
-      ruT9Engine.init(),
+      nativeT9Engine.init(),
       enT9Engine.init(),
     ]).then(() => {
       console.log('T9 engines ready')
@@ -912,9 +913,9 @@ const actionKeys = [
       commitPendingChar()
 
       currentLanguage =
-        currentLanguage === "ru"
+        currentLanguage === BASE_LANG
           ? "en"
-          : "ru"
+          : BASE_LANG
 
       updateKeyLabels()
       vibrate()

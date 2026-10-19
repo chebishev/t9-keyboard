@@ -1,7 +1,11 @@
 // engine/t9-engine.js
 import { dictionary as ruDictionary } from './dictionary-ru';
 import { dictionary as enDictionary } from './dictionary-en';
+// import { LocalStorage } from '@zos/storage';
+import { getText } from '@zos/i18n';
 
+// const localStorage = new LocalStorage()
+const BASE_LANG = getText("baseLanguage")
 const T9_MAP_K = ['2', '3', '4', '5', '6', '7', '8', '9'];
 
 const EN_T9_MAP_V = [
@@ -9,7 +13,7 @@ const EN_T9_MAP_V = [
     'mno', 'pqrs', 'tuv', 'wxyz',
 ];
 
-const RU_T9_MAP_V = [
+const NATIVE_T9_MAP_V = [
     'абвг', 'дежз', 'ийкл', 'мноп',
     'рсту', 'фхцч', 'шщъы', 'ьюяэ',
 ];
@@ -30,13 +34,13 @@ function l2dMap(mapKeys, mapValues) {
 }
 
 const EN_L2D_MAP = l2dMap(T9_MAP_K, EN_T9_MAP_V);
-const RU_L2D_MAP = l2dMap(T9_MAP_K, RU_T9_MAP_V);
+const NATIVE_L2D_MAP = l2dMap(T9_MAP_K, NATIVE_T9_MAP_V);
 
 class T9Engine {
     constructor(dict, language) {
         this.dictionary = dict;
         this.language = language;
-        this.l2d_map = language === 'ru' ? RU_L2D_MAP : EN_L2D_MAP;
+        this.l2d_map = language === BASE_LANG ? NATIVE_L2D_MAP : EN_L2D_MAP;
         this.seq_cache = new Map();
         this.freq_map = new Map();
         this.seq_map = new Map();
@@ -120,7 +124,7 @@ class T9Engine {
 
             // The keyboard has no separate key for ё.
             // Treat it as е for T9 matching.
-            if (this.language === 'ru' && char === 'ё') {
+            if (this.language === BASE_LANG && char === 'ё') {
                 char = 'е';
             }
 
@@ -316,4 +320,4 @@ class T9Engine {
 }
 
 export const enT9Engine = new T9Engine(enDictionary, 'en');
-export const ruT9Engine = new T9Engine(ruDictionary, 'ru');
+export const nativeT9Engine = new T9Engine(ruDictionary, BASE_LANG);
