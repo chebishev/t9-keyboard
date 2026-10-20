@@ -104,7 +104,7 @@ const PREDICTION_ITEM_GAP = styles.predictionItemGap
 const MAX_USER_WORDS = 500
 const CLEANUP_INTERVAL = 3 * 24 * 60 * 60 * 1000
 const LAST_CLEANUP_KEY = 'dictCleanup'
-const WORD_SEPARATORS = new Set([' ', ',', '.', '!', '?'])
+const WORD_SEPARATORS = new Set([' ', ',', '!', '?'])
 
 // ========================================
 // KEYBOARD STATE
@@ -168,14 +168,16 @@ function recordWordUsage(word, language = currentLanguage) {
   const isNative = language === BASE_LANG
   const dictionary = isNative ? nativeUserDict : enUserDict
   const engine = isNative ? nativeT9Engine : enT9Engine
+  const lettersOnly = normalizedWord.replace(/[-']/g, '')
 
   if (
-    engine.wordToSeq(normalizedWord).length !==
-    normalizedWord.length
+    !lettersOnly ||
+    /^[-']|[-']$|[-']{2,}/.test(normalizedWord) ||
+    engine.wordToSeq(lettersOnly).length !== lettersOnly.length
   ) {
     return
   }
-
+  
   const previous = dictionary[normalizedWord]
 
   dictionary[normalizedWord] = {
@@ -187,6 +189,11 @@ function recordWordUsage(word, language = currentLanguage) {
 }
 
 function getTrailingWord(text) {
+  if (!text) return ''
+
+  // Ignore sentence-ending periods.
+  text = text.replace(/\.+$/, '')
+
   if (!text) return ''
 
   let start = text.length - 1
