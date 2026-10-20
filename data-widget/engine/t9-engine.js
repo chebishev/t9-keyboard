@@ -33,13 +33,12 @@ function l2dMap(mapKeys, mapValues) {
 const EN_L2D_MAP = l2dMap(T9_MAP_K, EN_T9_MAP_V);
 const NATIVE_L2D_MAP = l2dMap(T9_MAP_K, NATIVE_T9_MAP_V);
 
-class T9Engine {
+export class T9Engine {
     constructor(dict, language) {
         this.dictionary = dict;
         this.language = language;
         this.l2d_map = language === BASE_LANG ? NATIVE_L2D_MAP : EN_L2D_MAP;
         this.seq_cache = new Map();
-        this.freq_map = new Map();
         this.seq_map = new Map();
         this.prefix_idx = new Map();
         this.pending_arr = [];
@@ -85,13 +84,9 @@ class T9Engine {
             words_arr.push(word);
         }
 
-        // sort words by freq and len
-        const freq_map = this.freq_map;
-        for (const [_, words_arr] of this.seq_map) {
+        // Sort words by length and then alphabetically.
+        for (const words_arr of this.seq_map.values()) {
             words_arr.sort((a, b) => {
-                const freq_a = freq_map.get(a) || 0;
-                const freq_b = freq_map.get(b) || 0;
-                if (freq_a !== freq_b) return freq_b - freq_a;
                 const len_diff = a.length - b.length;
                 if (len_diff !== 0) return len_diff;
                 return a < b ? -1 : a > b ? 1 : 0;
@@ -132,10 +127,10 @@ class T9Engine {
         return result;
     }
 
-    getSuggestions(seq, typed_prefix, max_results, callback) {
+    getSuggestions(seq, max_results, callback) {
         if (!this.is_ready) {
             this.ready_callbs_arr.push(() => {
-                this.getSuggestions(seq, typed_prefix, max_results, callback);
+                this.getSuggestions(seq, max_results, callback);
             });
             return;
         }
@@ -148,10 +143,8 @@ class T9Engine {
 
         const request = {
             seq,
-            typed_prefix,
             max_results,
             callback,
-            timestamp: Date.now()
         };
 
         this.pending_arr.push(request);
@@ -174,7 +167,6 @@ class T9Engine {
 
         this.getSuggestionsChunked(
             latest.seq,
-            latest.typed_prefix,
             latest.max_results,
             (suggestions) => {
                 if (!this.cancel_flag) {
@@ -185,18 +177,17 @@ class T9Engine {
         );
     }
 
-    getSuggestionsChunked(seq, typed_prefix, max_results, callback) {
+    getSuggestionsChunked(seq, max_results, callback) {
         if (!seq) {
             callback([]);
             return;
         }
 
-        const start_time = Date.now();
         const cache_key = `${seq}_${max_results}`;
 
         if (this.seq_cache.has(cache_key)) {
             const cached = this.seq_cache.get(cache_key);
-            callback(this.applyCapitalization(cached, typed_prefix));
+            callback(cached);
             return;
         }
 
@@ -212,7 +203,7 @@ class T9Engine {
 
         if (suggestions_arr.length >= max_results) {
             this.seq_cache.set(cache_key, suggestions_arr);
-            callback(this.applyCapitalization(suggestions_arr, typed_prefix));
+            callback(suggestions_arr);
             return;
         }
 
@@ -262,13 +253,13 @@ class T9Engine {
 
             if (suggestions_arr.length >= max_results || chunk_idx * chunk_size >= matching_len) {
                 this.seq_cache.set(cache_key, suggestions_arr);
-                callback(this.applyCapitalization(suggestions_arr, typed_prefix));
+                callback(suggestions_arr);
                 return;
             }
 
             if (!found_in_chunk && chunk_idx > 5) {
                 this.seq_cache.set(cache_key, suggestions_arr);
-                callback(this.applyCapitalization(suggestions_arr, typed_prefix));
+                callback(suggestions_arr);
                 return;
             }
 
@@ -276,42 +267,5 @@ class T9Engine {
         };
 
         setTimeout(processChunk, 0);
-    }
-
-    applyCapitalization(suggestions_arr, typed_prefix) {
-        if (!typed_prefix) return suggestions_arr;
-
-        const first_char = typed_prefix[0];
-        const is_upper = first_char !== first_char.toLowerCase();
-
-        if (!is_upper) return suggestions_arr;
-
-        const result_arr = [];
-        const sugg_len = suggestions_arr.length;
-
-        for (let i = 0; i < sugg_len; i++) {
-            const word = suggestions_arr[i];
-            const word_len = word.length;
-            if (word_len > 0) {
-                const upper_first = word[0].toUpperCase();
-                result_arr.push(upper_first + word.substring(1));
-            } else {
-                result_arr.push(word);
-            }
-        }
-
-        return result_arr;
-    }
-
-    cancel() {
-        this.pending_arr = [];
-        this.cur_seq = null;
-        this.cancel_flag = true;
-    }
-
-    recordUsage(word) {
-        const cur_count = this.freq_map.get(word) || 0;
-        this.freq_map.set(word, cur_count + 1);
-        this.seq_cache.clear();
     }
 }

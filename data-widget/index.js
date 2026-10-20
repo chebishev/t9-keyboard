@@ -17,8 +17,6 @@ import { styles } from 'zosLoader:./index.[pf].layout.js'
 
 // Application modules
 import { T9Engine, BASE_LANG } from './engine/t9-engine'
-import { dictionary as ruDictionary  } from './engine/dictionary-ru'
-import { dictionary as enDictionary  } from './engine/dictionary-en'
 import { enRows, nativeRows } from './keyboard-keys'
 
 // ========================================
@@ -29,6 +27,58 @@ const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = getDeviceInfo()
 const IS_ROUND = DEVICE_WIDTH === DEVICE_HEIGHT
 
 const localStorage = new LocalStorage()
+const NATIVE_DICT_KEY = 'nativeDict'
+const EN_DICT_KEY = 'enDict'
+
+function loadUserDictionary(storageKey) {
+  const stored = localStorage.getItem(storageKey)
+
+  if (
+    !stored ||
+    typeof stored !== 'object' ||
+    Array.isArray(stored)
+  ) {
+    return {}
+  }
+
+  return stored
+}
+
+const nativeUserDict = loadUserDictionary(NATIVE_DICT_KEY)
+const enUserDict = loadUserDictionary(EN_DICT_KEY)
+
+function saveUserDictionary(language) {
+  const isNative = language === BASE_LANG
+  const key = isNative ? NATIVE_DICT_KEY : EN_DICT_KEY
+  const dictionary = isNative ? nativeUserDict : enUserDict
+
+  localStorage.setItem(key, dictionary)
+}
+
+function pruneDictionary(dictionary) {
+  const words = Object.keys(dictionary)
+  const excess = words.length - MAX_USER_WORDS
+
+  if (excess <= 0) return false
+
+  words.sort((a, b) => {
+    const usageDiff =
+      (dictionary[a].usageCount || 0) -
+      (dictionary[b].usageCount || 0)
+
+    if (usageDiff !== 0) return usageDiff
+
+    return (dictionary[a].lastUsed || 0) -
+      (dictionary[b].lastUsed || 0)
+  })
+
+  for (let i = 0; i < excess; i++) {
+    delete dictionary[words[i]]
+  }
+
+  return true
+}
+
 const vibro = new Vibrator()
 
 
@@ -51,14 +101,16 @@ const MULTITAP_SPEEDS = [
 const MAX_PREDICTIONS = 5
 const PREDICTION_ITEM_WIDTH = styles.predictionItemWidth
 const PREDICTION_ITEM_GAP = styles.predictionItemGap
-
+const MAX_USER_WORDS = 500
+const CLEANUP_INTERVAL = 3 * 24 * 60 * 60 * 1000
+const LAST_CLEANUP_KEY = 'dictCleanup'
+const WORD_SEPARATORS = new Set([' ', ',', '.', '!', '?'])
 
 // ========================================
 // KEYBOARD STATE
 // ========================================
 
 // Language and character case
-let BASE_LANG = getText("baseLanguage")
 let currentLanguage = BASE_LANG
 let shiftEnabled = true
 let capsLockEnabled = false
@@ -73,8 +125,15 @@ let pendingChar = ''
 let t9Sequence = ''
 let t9WordShiftEnabled = false
 let currentPredictions = []
-const enT9Engine = new T9Engine(enDictionary, 'en')
-const nativeT9Engine = new T9Engine(ruDictionary, BASE_LANG)
+const enT9Engine = new T9Engine(
+  Object.keys(enUserDict),
+  'en'
+)
+
+const nativeT9Engine = new T9Engine(
+  Object.keys(nativeUserDict),
+  BASE_LANG
+)
 
 // Keyboard widgets
 let shiftImage = null
@@ -99,6 +158,65 @@ function vibrate() {
 
 function getActiveT9Engine() {
   return currentLanguage === BASE_LANG ? nativeT9Engine : enT9Engine
+}
+
+function recordWordUsage(word, language = currentLanguage) {
+  const normalizedWord = word.toLowerCase()
+
+  if (!normalizedWord) return
+
+  const isNative = language === BASE_LANG
+  const dictionary = isNative ? nativeUserDict : enUserDict
+  const engine = isNative ? nativeT9Engine : enT9Engine
+
+  if (
+    engine.wordToSeq(normalizedWord).length !==
+    normalizedWord.length
+  ) {
+    return
+  }
+
+  const previous = dictionary[normalizedWord]
+
+  dictionary[normalizedWord] = {
+    usageCount: (previous?.usageCount ?? 0) + 1,
+    lastUsed: Date.now(),
+  }
+
+  saveUserDictionary(language)
+}
+
+function getTrailingWord(text) {
+  if (!text) return ''
+
+  let start = text.length - 1
+
+  if (WORD_SEPARATORS.has(text[start])) {
+    return ''
+  }
+
+  while (
+    start >= 0 &&
+    !WORD_SEPARATORS.has(text[start])
+  ) {
+    start--
+  }
+
+  return text.slice(start + 1)
+}
+
+function recordTrailingWord(separator = '') {
+  let text = keyboard.getTextContext() || ''
+
+  if (separator && text.endsWith(separator)) {
+    text = text.slice(0, -separator.length)
+  }
+
+  const word = getTrailingWord(text)
+
+  if (word) {
+    recordWordUsage(word, currentLanguage)
+  }
 }
 
 function getCurrentWordPrefix() {
@@ -151,7 +269,6 @@ function updatePredictions() {
 
   engine.getSuggestions(
     sequence,
-    prefix,
     MAX_PREDICTIONS,
     (t9Matches) => {
       if (
@@ -203,6 +320,8 @@ function selectPrediction(word) {
   // Replace the complete current word.
   keyboard.backspace(currentWord.length)
   keyboard.inputText(prediction + ' ')
+  // Save/update the word in localStorage (word, usage_count, last_time_used)
+  recordWordUsage(prediction, currentLanguage)
   // Reset prediction state for the next word.
   t9Sequence = ''
   t9WordShiftEnabled = false
@@ -478,6 +597,12 @@ function updateInputState(
 function commitPendingChar() {
   if (!pendingChar) return
 
+  const committedChar = pendingChar
+
+  if (WORD_SEPARATORS.has(committedChar)) {
+    recordTrailingWord(committedChar)
+  }
+
   keyboard.clearBuffer()
   keyboard.inputText(pendingChar)
 
@@ -730,344 +855,365 @@ DataWidget({
                    * commit the previous character
                    * first.
                    */
-                if (
-                  !t9Sequence &&
-                  /^[2-9]$/.test(activeKey.longPress)
-                ) {
-                  t9WordShiftEnabled = shiftEnabled
+                  if (
+                    !t9Sequence &&
+                    /^[2-9]$/.test(activeKey.longPress)
+                  ) {
+                    t9WordShiftEnabled = shiftEnabled
+                  }
+
+                  commitPendingChar()
+
+                  if (/^[2-9]$/.test(activeKey.longPress)) {
+                    t9Sequence += activeKey.longPress
+                  }
+
+                  currentMultiTapKey =
+                    activeKey
+
+                  currentMultiTapIndex = 0
                 }
-
-                commitPendingChar()
-
-                if (/^[2-9]$/.test(activeKey.longPress)) {
-                  t9Sequence += activeKey.longPress
-                }
-
-                currentMultiTapKey =
-                  activeKey
-
-                currentMultiTapIndex = 0
-              }
 
                 const char =
-                activeChars[
-                currentMultiTapIndex
-                ]
+                  activeChars[
+                  currentMultiTapIndex
+                  ]
 
-        /*
-         * Shift-symbol layer:
-         * use the symbol unchanged.
-         *
-         * Normal letter layer:
-         * apply Shift / Caps Lock case.
-         */
-        if(
+                /*
+                 * Shift-symbol layer:
+                 * use the symbol unchanged.
+                 *
+                 * Normal letter layer:
+                 * apply Shift / Caps Lock case.
+                 */
+                if (
                   activeKey.shiftChars ===
-                    activeChars
-        ) {
-              pendingChar = char
-            } else {
-              pendingChar =
-              (
-                shiftEnabled ||
-                capsLockEnabled
-              )
-                ? char.toUpperCase()
-                : char
-            }
+                  activeChars
+                ) {
+                  pendingChar = char
+                } else {
+                  pendingChar =
+                    (
+                      shiftEnabled ||
+                      capsLockEnabled
+                    )
+                      ? char.toUpperCase()
+                      : char
+                }
 
-        /*
-         * Show only the current pending
-         * multi-tap character.
-         */
-        keyboard.clearBuffer()
-        keyboard.inputBuffer(
-              pendingChar
-            )
-        updatePredictions()
-        deleteImage.setAlpha(255)
-        deleteButton.setEnable(true)
+                /*
+                 * Show only the current pending
+                 * multi-tap character.
+                 */
+                keyboard.clearBuffer()
+                keyboard.inputBuffer(
+                  pendingChar
+                )
+                updatePredictions()
+                deleteImage.setAlpha(255)
+                deleteButton.setEnable(true)
 
-        multiTapTimer =
-  setTimeout(() => {
-    commitPendingChar()
-  }, this.state.multiTapTimeout)
-},
+                multiTapTimer =
+                  setTimeout(() => {
+                    commitPendingChar()
+                  }, this.state.multiTapTimeout)
+              },
 
-  longpress_func: () => {
-    const activeKey =
-      getActiveRows()
-      [rowIndex]
-      [keyIndex]
+              longpress_func: () => {
+                const activeKey =
+                  getActiveRows()
+                  [rowIndex]
+                  [keyIndex]
 
-    /*
-     * Commit pending character first,
-     * then insert the digit.
-     */
-    commitPendingChar()
+                /*
+                 * Commit pending character first,
+                 * then insert the digit.
+                 */
+                commitPendingChar()
 
-    keyboard.inputText(
-      activeKey.longPress
-    )
+                keyboard.inputText(
+                  activeKey.longPress
+                )
 
-    updateInputState()
-  },
+                updateInputState()
+              },
             })
 
-addLetterPressEffect(
-  letterWidget
-)
+          addLetterPressEffect(
+            letterWidget
+          )
 
-/*
- * Store physical position rather than
- * the original key object.
- *
- * This allows the same widgets to use
- * either bgRows or enRows.
- */
-letterWidgets.push({
-  widget: letterWidget,
-  rowIndex,
-  keyIndex,
-})
+          /*
+           * Store physical position rather than
+           * the original key object.
+           *
+           * This allows the same widgets to use
+           * either bgRows or enRows.
+           */
+          letterWidgets.push({
+            widget: letterWidget,
+            rowIndex,
+            keyIndex,
+          })
         })
       }
     )
 
 
-// ACTION ROW
+    // ACTION ROW
 
-const actionRow = createWidget(
-  widget.VIRTUAL_CONTAINER,
-  {
-    parent: keyboardWidget,
-
-    layout: {
-      ...styles.keyboardRow.layout,
-    },
-  }
-)
-
-
-const actionKeys = [
-  // SHIFT
-  {
-    type: "shift",
-    src: "image/shift_off.png",
-
-    action: () => {
-      if (capsLockEnabled) {
-        capsLockEnabled = false
-        shiftEnabled = false
-      } else {
-        shiftEnabled =
-          !shiftEnabled
-      }
-
-      shiftImage.setProperty(
-        prop.SRC,
-        shiftEnabled
-          ? "image/shift_on.png"
-          : "image/shift_off.png"
-      )
-
-      /*
-       * Normal:
-       *   .,?!
-       *
-       * One-shot Shift:
-       *   @€-_
-       *
-       * Caps Lock:
-       *   .,?!
-       */
-      updateKeyLabels()
-      vibrate()
-    },
-
-    longpress_func: () => {
-      capsLockEnabled =
-        !capsLockEnabled
-
-      shiftEnabled = false
-
-      shiftImage.setProperty(
-        prop.SRC,
-        capsLockEnabled
-          ? "image/shift_on_caps.png"
-          : "image/shift_off.png"
-      )
-
-      updateKeyLabels()
-      vibrate()
-    },
-  },
-
-
-  // LANGUAGE / INPUT METHOD
-  {
-    type: "globe",
-    src: "image/globe.png",
-
-    action: () => {
-      /*
-       * Finish the current character before
-       * changing its mapping.
-       */
-      commitPendingChar()
-
-      currentLanguage =
-        currentLanguage === BASE_LANG
-          ? "en"
-          : BASE_LANG
-
-      updateKeyLabels()
-      vibrate()
-      t9Sequence = ''
-      currentPredictions = []
-      updatePredictions()
-    },
-
-    longpress_func: () => {
-      /*
-       * Keep the Zepp OS input-method
-       * selector on long press.
-       */
-      keyboard.sendFnKey(
-        keyboard.SELECT
-      )
-    },
-  },
-
-
-  // SPACE / 0
-  {
-    src: "image/blank.png",
-
-    action: () => {
-      if (pendingChar) {
-        commitPendingChar()
-      }
-      keyboard.inputText(" ")
-      t9Sequence = ''
-      currentPredictions = []
-      updatePredictions()
-      updateInputState()
-    },
-
-    longpress_func: () => {
-      /*
-       * Otherwise 0 could be inserted before
-       * an active pending character.
-       */
-      commitPendingChar()
-
-      keyboard.inputText("0")
-      updateInputState()
-    },
-  },
-
-
-  // ENTER / CANCEL
-  {
-    type: "enter",
-    src: "image/check.png",
-
-    action: () => {
-      if (keyboard.getTextContext()) {
-        keyboard.sendFnKey(
-          keyboard.ENTER
-        )
-      } else {
-        keyboard.sendFnKey(
-          keyboard.CANCEL
-        )
-      }
-    },
-    longpress_func: () => {
-      this.changeMultiTapTimeout()
-      vibrate()
-    }
-  },
-]
-
-
-actionKeys.forEach((key) => {
-  const keyContainer =
-    createWidget(
+    const actionRow = createWidget(
       widget.VIRTUAL_CONTAINER,
       {
-        parent: actionRow,
-        ...styles.actionKeyContainer,
+        parent: keyboardWidget,
+
+        layout: {
+          ...styles.keyboardRow.layout,
+        },
       }
     )
 
-  const img = createWidget(
-    widget.IMG,
-    {
-      parent: keyContainer,
-      src: key.src,
-      enable: false,
-      ...styles.actionImage,
-    }
-  )
 
-  const btn = createWidget(
-    widget.BUTTON,
-    {
-      parent: keyContainer,
-      ...styles.overlayButton,
-      click_func: key.action,
-      longpress_func:
-        key.longpress_func,
-    }
-  )
+    const actionKeys = [
+      // SHIFT
+      {
+        type: "shift",
+        src: "image/shift_off.png",
 
-  btn.setAlpha(0)
+        action: () => {
+          if (capsLockEnabled) {
+            capsLockEnabled = false
+            shiftEnabled = false
+          } else {
+            shiftEnabled =
+              !shiftEnabled
+          }
 
-  addImagePressEffect(
-    btn,
-    img
-  )
+          shiftImage.setProperty(
+            prop.SRC,
+            shiftEnabled
+              ? "image/shift_on.png"
+              : "image/shift_off.png"
+          )
 
-  if (key.type === "shift") {
-    shiftImage = img
-  }
+          /*
+           * Normal:
+           *   .,?!
+           *
+           * One-shot Shift:
+           *   @€-_
+           *
+           * Caps Lock:
+           *   .,?!
+           */
+          updateKeyLabels()
+          vibrate()
+        },
 
-  if (key.type === "globe") {
-    globeImage = img
-  }
+        longpress_func: () => {
+          capsLockEnabled =
+            !capsLockEnabled
 
-  if (key.type === "enter") {
-    actionImage = img
-  }
-})
-// enable full shift behaviour on start
-shiftImage.setProperty(
-  prop.SRC,
-  shiftEnabled
-    ? "image/shift_on.png"
-    : "image/shift_off.png"
-)
+          shiftEnabled = false
 
-updateKeyLabels()
+          shiftImage.setProperty(
+            prop.SRC,
+            capsLockEnabled
+              ? "image/shift_on_caps.png"
+              : "image/shift_off.png"
+          )
+
+          updateKeyLabels()
+          vibrate()
+        },
+      },
+
+
+      // LANGUAGE / INPUT METHOD
+      {
+        type: "globe",
+        src: "image/globe.png",
+
+        action: () => {
+          /*
+           * Finish the current character before
+           * changing its mapping.
+           */
+          commitPendingChar()
+
+          currentLanguage =
+            currentLanguage === BASE_LANG
+              ? "en"
+              : BASE_LANG
+
+          updateKeyLabels()
+          vibrate()
+          t9Sequence = ''
+          currentPredictions = []
+          updatePredictions()
+        },
+
+        longpress_func: () => {
+          /*
+           * Keep the Zepp OS input-method
+           * selector on long press.
+           */
+          keyboard.sendFnKey(
+            keyboard.SELECT
+          )
+        },
+      },
+
+
+      // SPACE / 0
+      {
+        src: "image/blank.png",
+
+        action: () => {
+          if (pendingChar) {
+            commitPendingChar()
+          }
+          recordTrailingWord()
+          keyboard.inputText(" ")
+          t9Sequence = ''
+          currentPredictions = []
+          updatePredictions()
+          updateInputState()
+        },
+
+        longpress_func: () => {
+          /*
+           * Otherwise 0 could be inserted before
+           * an active pending character.
+           */
+          commitPendingChar()
+
+          keyboard.inputText("0")
+          updateInputState()
+        },
+      },
+
+
+      // ENTER / CANCEL
+      {
+        type: "enter",
+        src: "image/check.png",
+
+        action: () => {
+          commitPendingChar()
+
+          const text = keyboard.getTextContext() || ''
+
+          if (text) {
+            recordTrailingWord()
+
+            keyboard.sendFnKey(
+              keyboard.ENTER
+            )
+          } else {
+            keyboard.sendFnKey(
+              keyboard.CANCEL
+            )
+          }
+        },
+        longpress_func: () => {
+          this.changeMultiTapTimeout()
+          vibrate()
+        }
+      },
+    ]
+
+
+    actionKeys.forEach((key) => {
+      const keyContainer =
+        createWidget(
+          widget.VIRTUAL_CONTAINER,
+          {
+            parent: actionRow,
+            ...styles.actionKeyContainer,
+          }
+        )
+
+      const img = createWidget(
+        widget.IMG,
+        {
+          parent: keyContainer,
+          src: key.src,
+          enable: false,
+          ...styles.actionImage,
+        }
+      )
+
+      const btn = createWidget(
+        widget.BUTTON,
+        {
+          parent: keyContainer,
+          ...styles.overlayButton,
+          click_func: key.action,
+          longpress_func:
+            key.longpress_func,
+        }
+      )
+
+      btn.setAlpha(0)
+
+      addImagePressEffect(
+        btn,
+        img
+      )
+
+      if (key.type === "shift") {
+        shiftImage = img
+      }
+
+      if (key.type === "globe") {
+        globeImage = img
+      }
+
+      if (key.type === "enter") {
+        actionImage = img
+      }
+    })
+    // enable full shift behaviour on start
+    shiftImage.setProperty(
+      prop.SRC,
+      shiftEnabled
+        ? "image/shift_on.png"
+        : "image/shift_off.png"
+    )
+
+    updateKeyLabels()
   },
 
 
-onResume() {
-  // Restore globe image after returning
-  // from the system input selector.
-  if (globeImage) {
-    globeImage.setAlpha(255)
-  }
+  onResume() {
+    // Restore globe image after returning
+    // from the system input selector.
+    if (globeImage) {
+      globeImage.setAlpha(255)
+    }
 
-  updateInputState()
-},
+    updateInputState()
+  },
 
 
-onDestroy() {
-  console.log(
-    'RU keyboard: onDestroy'
-  )
-},
+  onDestroy() {
+    const now = Date.now()
+    const lastCleanup =
+      localStorage.getItem(LAST_CLEANUP_KEY) || 0
+
+    if (now - lastCleanup >= CLEANUP_INTERVAL) {
+      if (pruneDictionary(nativeUserDict)) {
+        saveUserDictionary(BASE_LANG)
+      }
+
+      if (pruneDictionary(enUserDict)) {
+        saveUserDictionary('en')
+      }
+
+      localStorage.setItem(LAST_CLEANUP_KEY, now)
+    }
+
+    console.log('T9 keyboard: onDestroy')
+  },
 })
