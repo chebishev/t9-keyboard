@@ -1,11 +1,6 @@
-// engine/t9-engine.js
-import { dictionary as ruDictionary } from './dictionary-ru';
-import { dictionary as enDictionary } from './dictionary-en';
-// import { LocalStorage } from '@zos/storage';
 import { getText } from '@zos/i18n';
 
-// const localStorage = new LocalStorage()
-const BASE_LANG = getText("baseLanguage")
+export const BASE_LANG = getText("baseLanguage")
 const T9_MAP_K = ['2', '3', '4', '5', '6', '7', '8', '9'];
 
 const EN_T9_MAP_V = [
@@ -13,6 +8,7 @@ const EN_T9_MAP_V = [
     'mno', 'pqrs', 'tuv', 'wxyz',
 ];
 
+// TO BE CHANGED FOR OTHER LANGUAGES!!!
 const NATIVE_T9_MAP_V = [
     'абвг', 'дежз', 'ийкл', 'мноп',
     'рсту', 'фхцч', 'шщъы', 'ьюяэ',
@@ -33,6 +29,7 @@ function l2dMap(mapKeys, mapValues) {
     return currentMap;
 }
 
+// create l2d maps
 const EN_L2D_MAP = l2dMap(T9_MAP_K, EN_T9_MAP_V);
 const NATIVE_L2D_MAP = l2dMap(T9_MAP_K, NATIVE_T9_MAP_V);
 
@@ -318,6 +315,3 @@ class T9Engine {
         this.seq_cache.clear();
     }
 }
-
-export const enT9Engine = new T9Engine(enDictionary, 'en');
-export const nativeT9Engine = new T9Engine(ruDictionary, BASE_LANG);

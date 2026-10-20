@@ -16,8 +16,10 @@ import {
 import { styles } from 'zosLoader:./index.[pf].layout.js'
 
 // Application modules
-import { enT9Engine, nativeT9Engine } from './engine/t9-engine'
-import { enRows, ruRows } from './keyboard-keys'
+import { T9Engine, BASE_LANG } from './engine/t9-engine'
+import { dictionary as ruDictionary  } from './engine/dictionary-ru'
+import { dictionary as enDictionary  } from './engine/dictionary-en'
+import { enRows, nativeRows } from './keyboard-keys'
 
 // ========================================
 // DEVICE AND SERVICES
@@ -71,6 +73,8 @@ let pendingChar = ''
 let t9Sequence = ''
 let t9WordShiftEnabled = false
 let currentPredictions = []
+const enT9Engine = new T9Engine(enDictionary, 'en')
+const nativeT9Engine = new T9Engine(ruDictionary, BASE_LANG)
 
 // Keyboard widgets
 let shiftImage = null
@@ -399,7 +403,7 @@ function renderPredictions() {
 }
 
 function getActiveRows() {
-  return currentLanguage === BASE_LANG ? ruRows : enRows
+  return currentLanguage === BASE_LANG ? nativeRows : enRows
 }
 
 

@@ -1,4 +1,4 @@
-export const ruRows = [
+export const nativeRows = [
   [
     {
       label: '.,?!',
