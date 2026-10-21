@@ -27,6 +27,38 @@ const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = getDeviceInfo()
 const IS_ROUND = DEVICE_WIDTH === DEVICE_HEIGHT
 
 const localStorage = new LocalStorage()
+const vibro = new Vibrator()
+
+
+// ========================================
+// CONFIGURATION
+// ========================================
+
+
+// Multi-tap
+const MULTITAP_TIMEOUT = 800
+
+const MULTITAP_SPEEDS = [
+  { value: 200, label: getText('veryFast') },
+  { value: 400, label: getText('fast') },
+  { value: 600, label: getText('normal') },
+  { value: 800, label: getText('slow') },
+  { value: 1000, label: getText('verySlow') },
+]
+
+// Predictions
+const MAX_PREDICTIONS = 5
+const PREDICTION_ITEM_WIDTH = styles.predictionItemWidth
+const PREDICTION_ITEM_GAP = styles.predictionItemGap
+const MAX_USER_WORDS = 500
+const CLEANUP_INTERVAL = 3 * 24 * 60 * 60 * 1000
+const LAST_CLEANUP_KEY = 'dictCleanup'
+const WORD_SEPARATORS = new Set([' ', ',', '!', '?'])
+
+// ========================================
+// USER DICTIONARY
+// ========================================
+
 const NATIVE_DICT_KEY = 'nativeDict'
 const EN_DICT_KEY = 'enDict'
 
@@ -79,32 +111,72 @@ function pruneDictionary(dictionary) {
   return true
 }
 
-const vibro = new Vibrator()
 
+function recordWordUsage(word, language = currentLanguage) {
+  const normalizedWord = word.toLowerCase()
 
-// ========================================
-// CONFIGURATION
-// ========================================
+  if (!normalizedWord) return
 
-// Multi-tap
-const MULTITAP_TIMEOUT = 800
+  const isNative = language === BASE_LANG
+  const dictionary = isNative ? nativeUserDict : enUserDict
+  const engine = isNative ? nativeT9Engine : enT9Engine
+  const lettersOnly = normalizedWord.replace(/[-']/g, '')
 
-const MULTITAP_SPEEDS = [
-  { value: 200, label: getText('veryFast') },
-  { value: 400, label: getText('fast') },
-  { value: 600, label: getText('normal') },
-  { value: 800, label: getText('slow') },
-  { value: 1000, label: getText('verySlow') },
-]
+  if (
+    !lettersOnly ||
+    /^[-']|[-']$|[-']{2,}/.test(normalizedWord) ||
+    engine.wordToSeq(lettersOnly).length !== lettersOnly.length
+  ) {
+    return
+  }
 
-// Predictions
-const MAX_PREDICTIONS = 5
-const PREDICTION_ITEM_WIDTH = styles.predictionItemWidth
-const PREDICTION_ITEM_GAP = styles.predictionItemGap
-const MAX_USER_WORDS = 500
-const CLEANUP_INTERVAL = 3 * 24 * 60 * 60 * 1000
-const LAST_CLEANUP_KEY = 'dictCleanup'
-const WORD_SEPARATORS = new Set([' ', ',', '!', '?'])
+  const previous = dictionary[normalizedWord]
+
+  dictionary[normalizedWord] = {
+    usageCount: (previous?.usageCount ?? 0) + 1,
+    lastUsed: Date.now(),
+  }
+
+  saveUserDictionary(language)
+}
+
+function getTrailingWord(text) {
+  if (!text) return ''
+
+  // Ignore sentence-ending periods.
+  text = text.replace(/\.+$/, '')
+
+  if (!text) return ''
+
+  let start = text.length - 1
+
+  if (WORD_SEPARATORS.has(text[start])) {
+    return ''
+  }
+
+  while (
+    start >= 0 &&
+    !WORD_SEPARATORS.has(text[start])
+  ) {
+    start--
+  }
+
+  return text.slice(start + 1)
+}
+
+function recordTrailingWord(separator = '') {
+  let text = keyboard.getTextContext() || ''
+
+  if (separator && text.endsWith(separator)) {
+    text = text.slice(0, -separator.length)
+  }
+
+  const word = getTrailingWord(text)
+
+  if (word) {
+    recordWordUsage(word, currentLanguage)
+  }
+}
 
 // ========================================
 // KEYBOARD STATE
@@ -158,72 +230,6 @@ function vibrate() {
 
 function getActiveT9Engine() {
   return currentLanguage === BASE_LANG ? nativeT9Engine : enT9Engine
-}
-
-function recordWordUsage(word, language = currentLanguage) {
-  const normalizedWord = word.toLowerCase()
-
-  if (!normalizedWord) return
-
-  const isNative = language === BASE_LANG
-  const dictionary = isNative ? nativeUserDict : enUserDict
-  const engine = isNative ? nativeT9Engine : enT9Engine
-  const lettersOnly = normalizedWord.replace(/[-']/g, '')
-
-  if (
-    !lettersOnly ||
-    /^[-']|[-']$|[-']{2,}/.test(normalizedWord) ||
-    engine.wordToSeq(lettersOnly).length !== lettersOnly.length
-  ) {
-    return
-  }
-  
-  const previous = dictionary[normalizedWord]
-
-  dictionary[normalizedWord] = {
-    usageCount: (previous?.usageCount ?? 0) + 1,
-    lastUsed: Date.now(),
-  }
-
-  saveUserDictionary(language)
-}
-
-function getTrailingWord(text) {
-  if (!text) return ''
-
-  // Ignore sentence-ending periods.
-  text = text.replace(/\.+$/, '')
-
-  if (!text) return ''
-
-  let start = text.length - 1
-
-  if (WORD_SEPARATORS.has(text[start])) {
-    return ''
-  }
-
-  while (
-    start >= 0 &&
-    !WORD_SEPARATORS.has(text[start])
-  ) {
-    start--
-  }
-
-  return text.slice(start + 1)
-}
-
-function recordTrailingWord(separator = '') {
-  let text = keyboard.getTextContext() || ''
-
-  if (separator && text.endsWith(separator)) {
-    text = text.slice(0, -separator.length)
-  }
-
-  const word = getTrailingWord(text)
-
-  if (word) {
-    recordWordUsage(word, currentLanguage)
-  }
 }
 
 function getCurrentWordPrefix() {
@@ -687,7 +693,7 @@ DataWidget({
     predictionBar = vc
 
     // Opaque TOP bar background keeps the input text behind it hidden.
-    const predictionBarBackground = createWidget(widget.FILL_RECT, {
+    createWidget(widget.FILL_RECT, {
       parent: vc,
       ...styles.prediction_bar,
       ...styles.predictionBarBackground,

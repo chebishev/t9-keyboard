@@ -14,7 +14,7 @@ export const nativeRows = [
     },
     {
       label: 'ДЕЖЗ',
-      chars: 'дежз',
+      chars: 'деёжз',
       longPress: '3'
     },
   ],
