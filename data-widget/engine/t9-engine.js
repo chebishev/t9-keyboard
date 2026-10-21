@@ -10,7 +10,7 @@ const EN_T9_MAP_V = [
 
 // TO BE CHANGED FOR OTHER LANGUAGES!!!
 const NATIVE_T9_MAP_V = [
-    'абвг', 'дежз', 'ийкл', 'мноп',
+    'абвг', 'деёжз', 'ийкл', 'мноп',
     'рсту', 'фхцч', 'шщъы', 'ьюяэ',
 ];
 
@@ -113,14 +113,8 @@ export class T9Engine {
 
         for (let i = 0; i < word.length; i++) {
             let char = word[i].toLowerCase();
-
-            // The keyboard has no separate key for ё.
-            // Treat it as е for T9 matching.
-            if (this.language === BASE_LANG && char === 'ё') {
-                char = 'е';
-            }
-
             const digit = this.l2d_map[char];
+            
             if (digit) result += digit;
         }
 
