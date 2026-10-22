@@ -278,7 +278,7 @@ Page({
     });
     createWidget(widget.TEXT, {
       parent: imageContainer,
-      text: "Русский",
+      text: "Ελληνικά",
       color: 0xC6C8CD,
       layout: {
         top: px(80),
