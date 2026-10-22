@@ -66,7 +66,7 @@ const defaultTextStyle = {
   text_style: text_style.CHAR_WRAP,
 };
 
-const menuButtonColor = 0x0c86d1;
+const menuButtonColor = 0x383838;
 
 const menuButtonLayout = {
   width: "100%",
@@ -229,12 +229,12 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `${getText("enabled")}${appName}`,
+      text: `${getText("enable")}${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
         height: "auto",
-        font_size: px(40),
+        font_size: px(36),
       },
     });
 
@@ -276,6 +276,20 @@ Page({
         line_clamp: 2,
       },
     });
+    createWidget(widget.TEXT, {
+      parent: imageContainer,
+      text: "Русский",
+      color: 0xC6C8CD,
+      layout: {
+        top: px(80),
+        left: px(20),
+        width: "auto",
+        max_width: px(200),
+        height: px(35),
+        font_size: px(27),
+        line_clamp: 1,
+      },
+    });
 
 
     createWidget(widget.TEXT, {
@@ -312,7 +326,7 @@ Page({
       layout: {
         width: "100%",
         height: "auto",
-        font_size: px(40),
+        font_size: px(36),
       },
     });
 
@@ -348,9 +362,6 @@ Page({
 
     createInstructionsButton(vc);
     createAboutButton(vc);
-    createMenuButton(vc, getText("exit"), () => {
-      exit();
-    });
     createBottomSpacer(vc);
   },
 
@@ -388,13 +399,9 @@ Page({
 
     createInstructionsButton(vc);
     createAboutButton(vc);
-
-
     createMenuButton(vc, getText("exit"), () => {
       exit();
     });
-
-
     createBottomSpacer(vc);
   },
 

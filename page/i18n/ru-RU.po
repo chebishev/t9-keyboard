@@ -1,4 +1,6 @@
 // data-widget
+msgid "baseLanguage"
+msgstr "ru"
 
 msgid "veryFast"
 msgstr "Очень быстро"
