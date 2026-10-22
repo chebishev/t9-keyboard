@@ -1,4 +1,6 @@
 // data-widget
+msgid "baseLanguage"
+msgstr "gr"
 
 msgid "veryFast"
 msgstr "Very fast"
@@ -14,6 +16,9 @@ msgstr "Slow"
 
 msgid "verySlow"
 msgstr "Very slow"
+
+msgid "typingSpeed"
+msgstr "Typing speed:\n"
 
 // about.layout.js
 
@@ -82,7 +87,7 @@ msgid "holdSpace"
 msgstr "Hold — Type 0"
 
 msgid "globe"
-msgstr "Tap — Greek / English\nHold — More keyboards"
+msgstr "Tap — Russian / English\nHold — More keyboards"
 
 msgid "enter"
 msgstr "Hold — change\ntyping speed"

@@ -1,4 +1,6 @@
 // data-widget
+msgid "baseLanguage:
+msgstr "gr"
 
 msgid "veryFast"
 msgstr "Πολύ γρήγορα"
@@ -14,6 +16,9 @@ msgstr "Αργά"
 
 msgid "verySlow"
 msgstr "Πολύ αργά"
+
+msgid "typingSpeed"
+msgstr "Ταχύτητα πληκτρολόγησης:\n"
 
 // about.layout.js
 
