@@ -229,7 +229,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `${getText("enable")}${appName}`,
+      text: `${getText("enable")}\n${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
@@ -306,7 +306,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `${getText("enable")}${appName}`,
+      text: `${getText("enable")}\n${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",

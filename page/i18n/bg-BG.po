@@ -40,10 +40,10 @@ msgid "menuButtonFontSize"
 msgstr "36"
 
 msgid "enable"
-msgstr "Разрешаване "
+msgstr "Разрешаване на "
 
 msgid "toggle"
-msgstr "Моля включете "
+msgstr "Моля, включете "
 
 msgid "onInSettings"
 msgstr " в настройките"
@@ -55,7 +55,7 @@ msgid "touchHoldSelect"
 msgstr "Натиснете и задръжте иконата с глобуса, след което изберете "
 
 msgid "showKeyboard"
-msgstr "Покажи клавиатурата"
+msgstr "Виж клавиатурата"
 
 msgid "instructions"
 msgstr "Инструкции"
@@ -78,7 +78,7 @@ msgid "howToUse"
 msgstr "Начин на употреба"
 
 msgid "shift"
-msgstr "Натискане — Shift / символи\nЗадържане — Caps Lock"
+msgstr "Натискане — Shift/символи\nЗадържане — Caps Lock"
 
 msgid "holdKey"
 msgstr "Задържане на бутон — Изписва съответната цифра"
@@ -93,4 +93,4 @@ msgid "enter"
 msgstr "Задържане — промяна\nскоростта на въвеждане"
 
 msgid "multiTap"
-msgstr "Натискайте неколкократно, за да изреждате буквите"
+msgstr "Натискайте неколкократно,\nза да изреждате буквите"

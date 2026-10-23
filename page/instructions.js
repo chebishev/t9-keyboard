@@ -5,6 +5,7 @@ import {
     align,
     setStatusBarVisible
 } from '@zos/ui'
+import { getText } from "@zos/i18n"
 import { getDeviceInfo, SCREEN_SHAPE_SQUARE } from '@zos/device'
 
 const { width: DEVICE_WIDTH, screenShape } = getDeviceInfo()
@@ -32,7 +33,7 @@ Page({
             y: 25,
             w: DEVICE_WIDTH,
             h: 45,
-            text: "HOW TO USE",
+            text: getText("howToUse"),
             text_size: widgetTextSize + 4,
             color: widgetTextColor,
             align_h: align.CENTER_H,
@@ -54,7 +55,7 @@ Page({
             y: 74,
             w: widgetTextW,
             h: 65,
-            text: "Tap — Shift / symbols\nHold — Caps Lock",
+            text: getText("shift"),
             text_size: widgetTextSize,
             color: widgetTextColor,
             text_style: text_style.WRAP,
@@ -78,7 +79,7 @@ Page({
             y: 147,
             w: widgetTextW,
             h: 54,
-            text: "Hold key — Type number",
+            text: getText("holdKey"),
             text_size: widgetTextSize,
             color: widgetTextColor,
         })
@@ -98,7 +99,7 @@ Page({
             y: 200,
             w: widgetTextW,
             h: 50,
-            text: "Hold — Type 0",
+            text: getText("holdSpace"),
             text_size: widgetTextSize,
             color: widgetTextColor,
         })
@@ -118,7 +119,7 @@ Page({
             y: 245,
             w: widgetTextW,
             h: 65,
-            text: "Tap — Bulgarian / English\nHold — More keyboards",
+            text: getText("globe"),
             text_size: widgetTextSize,
             color: widgetTextColor,
             text_style: text_style.WRAP,
@@ -145,7 +146,7 @@ Page({
             y: 315,
             w: widgetTextW,
             h: 60,
-            text: "Hold — change\ntyping speed",
+            text: getText("enter"),
             text_size: widgetTextSize,
             color: widgetTextColor,
         })
@@ -156,7 +157,7 @@ Page({
             y: 395,
             w: DEVICE_WIDTH,
             h: 60,
-            text: "Tap repeatedly to cycle letters",
+            text: getText("multiTap"),
             text_size: widgetTextSize - 2,
             color: 0xb6b6b6,
             align_h: align.CENTER_H,

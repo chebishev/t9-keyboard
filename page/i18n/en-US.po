@@ -3,33 +3,33 @@ msgid "baseLanguage"
 msgstr "bg"
 
 msgid "veryFast"
-msgstr "Very fast"
+msgstr "Много бърза"
 
 msgid "fast"
-msgstr "Fast"
+msgstr "Бърза"
 
 msgid "normal"
-msgstr "Normal"
+msgstr "Нормална"
 
 msgid "slow"
-msgstr "Slow"
+msgstr "Бавна"
 
 msgid "verySlow"
-msgstr "Very slow"
+msgstr "Много бавна"
 
 msgid "typingSpeed"
-msgstr "Typing speed:\n"
+msgstr "Скорост на въвеждане:\n"
 
 // about.layout.js
 
 msgid "ver"
-msgstr "\nver. "
+msgstr "\nвер. "
 
 msgid "creator"
-msgstr "This app is created by "
+msgstr "Това приложение е създадено от  "
 
 msgid "email"
-msgstr "Feedback: suffer@abv.bg"
+msgstr "Обратна връзка: suffer@abv.bg"
 
 msgid "link"
 msgstr "https://chebishev.github.io"
@@ -40,57 +40,57 @@ msgid "menuButtonFontSize"
 msgstr "36"
 
 msgid "enable"
-msgstr "Enable "
+msgstr "Разрешаване на "
 
 msgid "toggle"
-msgstr "Please toggle "
+msgstr "Моля, включете "
 
 msgid "onInSettings"
-msgstr " on in settings"
+msgstr " в настройките"
 
 msgid "goToSettings"
-msgstr "Go to settings"
+msgstr "Към настройките"
 
 msgid "touchHoldSelect"
-msgstr "Touch and hold the Globe key on the keyboard, then select "
+msgstr "Натиснете и задръжте иконата с глобуса, след което изберете "
 
 msgid "showKeyboard"
-msgstr "Show keyboard"
+msgstr "Виж клавиатурата"
 
 msgid "instructions"
-msgstr "Instructions"
+msgstr "Инструкции"
 
 msgid "about"
-msgstr "About"
+msgstr "За приложението"
 
 msgid "exit"
-msgstr "Exit"
+msgstr "Изход"
 
 msgid "youAreAllSet"
-msgstr "You're all set"
+msgstr "Всичко е настроено"
 
 msgid "input"
-msgstr "Input: "
+msgstr "Въвеждане: "
 
 // instructions.js
 
 msgid "howToUse"
-msgstr "How to use"
+msgstr "Начин на употреба"
 
 msgid "shift"
-msgstr "Tap — Shift / symbols\nHold — Caps Lock"
+msgstr "Натискане — Shift/символи\nЗадържане — Caps Lock"
 
 msgid "holdKey"
-msgstr "Hold key — Type number"
+msgstr "Задържане на бутон — Изписва съответната цифра"
 
 msgid "holdSpace"
-msgstr "Hold — Type 0"
+msgstr "Задържане — Изписва 0"
 
 msgid "globe"
-msgstr "Tap — Bulgarian / English\nHold — More keyboards"
+msgstr "Натискане — Български / Английски\nЗадържане — още клавиатури"
 
 msgid "enter"
-msgstr "Hold — change\ntyping speed"
+msgstr "Задържане — промяна\nскоростта на въвеждане"
 
 msgid "multiTap"
-msgstr "Tap repeatedly to cycle letters"
+msgstr "Натискайте неколкократно,\nза да изреждате буквите"
