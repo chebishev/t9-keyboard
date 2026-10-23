@@ -1,0 +1,96 @@
+// data-widget
+msgid "baseLanguage"
+msgstr "bg"
+
+msgid "veryFast"
+msgstr "Много бърза"
+
+msgid "fast"
+msgstr "Бърза"
+
+msgid "normal"
+msgstr "Нормална"
+
+msgid "slow"
+msgstr "Бавна"
+
+msgid "verySlow"
+msgstr "Много бавна"
+
+msgid "typingSpeed"
+msgstr "Скорост на въвеждане:\n"
+
+// about.layout.js
+
+msgid "ver"
+msgstr "\nвер. "
+
+msgid "creator"
+msgstr "Това приложение е създадено от  "
+
+msgid "email"
+msgstr "Обратна връзка: suffer@abv.bg"
+
+msgid "link"
+msgstr "https://chebishev.github.io"
+
+// index.js
+
+msgid "menuButtonFontSize"
+msgstr "36"
+
+msgid "enable"
+msgstr "Разрешаване "
+
+msgid "toggle"
+msgstr "Моля включете "
+
+msgid "onInSettings"
+msgstr " в настройките"
+
+msgid "goToSettings"
+msgstr "Към настройките"
+
+msgid "touchHoldSelect"
+msgstr "Натиснете и задръжте иконата с глобуса, след което изберете "
+
+msgid "showKeyboard"
+msgstr "Покажи клавиатурата"
+
+msgid "instructions"
+msgstr "Инструкции"
+
+msgid "about"
+msgstr "За приложението"
+
+msgid "exit"
+msgstr "Изход"
+
+msgid "youAreAllSet"
+msgstr "Всичко е настроено"
+
+msgid "input"
+msgstr "Въвеждане: "
+
+// instructions.js
+
+msgid "howToUse"
+msgstr "Начин на употреба"
+
+msgid "shift"
+msgstr "Натискане — Shift / символи\nЗадържане — Caps Lock"
+
+msgid "holdKey"
+msgstr "Задържане на бутон — Изписва съответната цифра"
+
+msgid "holdSpace"
+msgstr "Задържане — Изписва 0"
+
+msgid "globe"
+msgstr "Натискане — Български / Английски\nЗадържане — още клавиатури"
+
+msgid "enter"
+msgstr "Задържане — промяна\nскоростта на въвеждане"
+
+msgid "multiTap"
+msgstr "Натискайте неколкократно, за да изреждате буквите"

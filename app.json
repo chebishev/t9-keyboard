@@ -5,8 +5,8 @@
     "appName": "T9 BG Keyboard",
     "appType": "app",
     "version": {
-      "code": 2,
-      "name": "1.1.0"
+      "code": 3,
+      "name": "1.2.0"
     },
     "icon": "icon.png",
     "vender": "chebishev",
@@ -69,6 +69,9 @@
   "i18n": {
     "en-US": {
       "appName": "T9 BG Keyboard"
+    },
+    "bg-BG": {
+      "appName": "Т9 БГ Клавиатура"
     }
   },
   "defaultLanguage": "en-US"

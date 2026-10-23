@@ -10,7 +10,7 @@ import {
   updateLayout,
   setStatusBarVisible,
 } from "@zos/ui";
-
+import { getText } from "@zos/i18n"
 import { px } from "@zos/utils";
 import { showToast } from "@zos/interaction";
 import { scrollTo } from "@zos/page";
@@ -21,7 +21,6 @@ import { getPackageInfo } from "@zos/app";
 
 const deviceInfo = getDeviceInfo();
 const appName = getPackageInfo().name;
-
 
 function keyboardIsEnabled() {
   if (keyboard.isEnabled) {
@@ -67,12 +66,12 @@ const defaultTextStyle = {
   text_style: text_style.CHAR_WRAP,
 };
 
-const menuButtonColor = 0x0c86d1;
+const menuButtonColor = 0x383838;
 
 const menuButtonLayout = {
   width: "100%",
   height: px(88),
-  font_size: px(36),
+  font_size: px(Number(getText("menuButtonFontSize"))),
   corner_radius: px(44),
 };
 
@@ -124,7 +123,7 @@ function createBottomSpacer(parent) {
 }
 
 function createInstructionsButton(parent) {
-  return createMenuButton(parent, "Instructions", () => {
+  return createMenuButton(parent, getText("instructions"), () => {
     push({
       url: "page/instructions",
     });
@@ -132,7 +131,7 @@ function createInstructionsButton(parent) {
 }
 
 function createAboutButton(parent) {
-  return createMenuButton(parent, "About", () => {
+  return createMenuButton(parent, getText("about"), () => {
     push({
       url: "page/about",
     });
@@ -230,12 +229,12 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `Enable ${appName}`,
+      text: `${getText("enable")}${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
         height: "auto",
-        font_size: px(40),
+        font_size: px(36),
       },
     });
 
@@ -278,10 +277,9 @@ Page({
       },
     });
 
-
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `Please toggle ${appName} on in settings`,
+      text: `${getText("toggle")}${appName}${getText("onInSettings")}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
@@ -291,7 +289,7 @@ Page({
     });
 
 
-    createMenuButton(vc, "Go to Settings", () => {
+    createMenuButton(vc, getText("goToSettings"), () => {
       keyboardGotoSettings();
     });
 
@@ -308,12 +306,12 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `Enable ${appName}`,
+      text: `${getText("enable")}${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
         height: "auto",
-        font_size: px(40),
+        font_size: px(36),
       },
     });
 
@@ -331,7 +329,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `Touch and hold the Globe key on the keyboard, then select ${appName}`,
+      text: `${getText("touchHoldSelect")}${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
@@ -341,7 +339,7 @@ Page({
     });
 
 
-    createMenuButton(vc, "Show Keyboard", () => {
+    createMenuButton(vc, getText("showKeyboard"), () => {
       this.keyboard(() => {
         this.onResume();
       });
@@ -349,9 +347,6 @@ Page({
 
     createInstructionsButton(vc);
     createAboutButton(vc);
-    createMenuButton(vc, "Exit", () => {
-      exit();
-    });
     createBottomSpacer(vc);
   },
 
@@ -362,7 +357,7 @@ Page({
 
 
     showToast({
-      content: "You're all set",
+      content: getText("youAreAllSet"),
     });
 
 
@@ -378,24 +373,20 @@ Page({
     });
 
 
-    createMenuButton(vc, "Show Keyboard", () => {
+    createMenuButton(vc, getText("showKeyboard"), () => {
       this.keyboard();
     });
 
 
-    createMenuButton(vc, "Go To Settings", () => {
+    createMenuButton(vc, getText("goToSettings"), () => {
       keyboardGotoSettings();
     });
 
     createInstructionsButton(vc);
     createAboutButton(vc);
-
-
-    createMenuButton(vc, "Exit", () => {
+    createMenuButton(vc, getText("exit"), () => {
       exit();
     });
-
-
     createBottomSpacer(vc);
   },
 
@@ -408,7 +399,7 @@ Page({
         deleteKeyboard();
 
         showToast({
-          content: "Input: " + result.data,
+          content: getText("input") + result.data,
         });
 
         if (cb) {
