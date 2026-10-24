@@ -229,7 +229,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `${getText("enable")}${appName}`,
+      text: `${getText("enable")}\n${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
@@ -290,8 +290,7 @@ Page({
         line_clamp: 1,
       },
     });
-
-
+    
     createWidget(widget.TEXT, {
       parent: vc,
       text: `${getText("toggle")}${appName}${getText("onInSettings")}`,
@@ -321,7 +320,7 @@ Page({
 
     createWidget(widget.TEXT, {
       parent: vc,
-      text: `${getText("enable")}${appName}`,
+      text: `${getText("enable")}\n${appName}`,
       ...defaultTextStyle,
       layout: {
         width: "100%",
