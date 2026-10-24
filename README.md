@@ -1,32 +1,79 @@
 # T9 Greek Keyboard
 
-A Greek and English multi-tap keyboard for Zepp OS.
+Ένα πληκτρολόγιο για ελληνικά και αγγλικά σε συσκευές Amazfit με Zepp OS, που υποστηρίζει δύο τρόπους εισαγωγής κειμένου: **T9 με πρόβλεψη λέξεων** και **Multi-tap με επαναλαμβανόμενο πάτημα πλήκτρων**.
 
-T9 Greek Keyboard brings a classic mobile phone-style typing experience to compatible Amazfit devices. Letters are grouped on 9 keys and selected by repeatedly tapping the corresponding key.
+Το πληκτρολόγιο υποστηρίζει ελληνικά και αγγλικά. Στη λειτουργία T9, η ακολουθία των πατημάτων χρησιμοποιείται για την αναζήτηση κατάλληλων λέξεων στο προσωπικό λεξικό του χρήστη. Το πληκτρολόγιο απομνημονεύει αυτόματα τις λέξεις που πληκτρολογεί ο χρήστης και προσαρμόζεται σταδιακά στις συνήθειές του.
 
-The keyboard supports Greek and English, Shift, Caps Lock, numbers, symbols, and switching to other Zepp OS input methods.
+Η λειτουργία Multi-tap επιτρέπει την επιλογή μεμονωμένων γραμμάτων με επαναλαμβανόμενα πατήματα των αριθμητικών πλήκτρων.
 
-## Features
+## Δυνατότητες
 
-- 🇬🇷 Greek multi-tap layout
-- 🇬🇧 English multi-tap layout
-- Classic 9-key typing
-- Shift for a single uppercase letter
-- Caps Lock (longpress Shift Button to activate it)
-- Additional symbols (.,?!/@€-_)
-- Numbers 0–9
-- Quick Greek / English switching
-- Access to other installed Zepp OS keyboards (longpress globe icon)
-- Change typing speed (hold X or ✓ keys)
-- Support for round and square displays
-- Shift enabled by default on startup
+- 🇬🇷 Ελληνική διάταξη με υποστήριξη T9 και Multi-tap.
+- 🇬🇧 Αγγλική διάταξη με υποστήριξη T9 και Multi-tap.
+- Αυτόματη εκμάθηση λέξεων από τον χρήστη.
+- Ξεχωριστό προσωπικό λεξικό για κάθε γλώσσα.
+- Γραμμή προτάσεων με έως πέντε επιλογές.
+- Κλασική εισαγωγή κειμένου μέσω εννέα αριθμητικών πλήκτρων.
+- Υποστήριξη ελληνικών χαρακτήρων με τόνους.
+- Shift για εισαγωγή ενός κεφαλαίου γράμματος.
+- Caps Lock, ενεργοποιούμενο με παρατεταμένο πάτημα του Shift.
+- Εισαγωγή αριθμών από 0 έως 9.
+- Σημεία στίξης και πρόσθετα σύμβολα.
+- Γρήγορη εναλλαγή μεταξύ ελληνικής και αγγλικής διάταξης.
+- Εναλλαγή σε άλλες εγκατεστημένες μεθόδους εισαγωγής του Zepp OS.
+- Ρύθμιση της ταχύτητας Multi-tap.
+- Υποστήριξη στρογγυλών και τετράγωνων οθονών.
 
-## Keyboard Layout
+## T9 και Multi-tap: Ποια είναι η διαφορά;
 
-### Greek
+### T9 — Πρόβλεψη λέξεων
 
-| Key | Characters |
-|-----|------------|
+Στη λειτουργία T9, κάθε γράμμα αντιστοιχεί σε ένα αριθμητικό πλήκτρο, το οποίο πατιέται μία φορά. Το πληκτρολόγιο μετατρέπει την ακολουθία πατημάτων σε συνδυασμό αριθμών και αναζητά κατάλληλες λέξεις στο προσωπικό λεξικό.
+
+Οι προτάσεις εμφανίζονται στη γραμμή προβλέψεων. Ο χρήστης μπορεί να επιλέξει την επιθυμητή λέξη χωρίς να χρειάζεται να εισαγάγει κάθε γράμμα ξεχωριστά.
+
+Σε αντίθεση με πληκτρολόγια που βασίζονται σε προκαθορισμένα λεξικά, το T9 Greek Keyboard δημιουργεί το προσωπικό λεξικό σταδιακά, με βάση τις λέξεις που πληκτρολογεί ο ίδιος ο χρήστης.
+
+### Multi-tap — Επαναλαμβανόμενο πάτημα
+
+Στη λειτουργία Multi-tap, κάθε αριθμητικό πλήκτρο αντιστοιχεί σε μια ομάδα γραμμάτων. Για να επιλέξετε το επιθυμητό γράμμα, πατήστε επανειλημμένα το αντίστοιχο πλήκτρο.
+
+Παράδειγμα στην αγγλική διάταξη:
+
+`a → b → c`
+
+Παράδειγμα στην ελληνική διάταξη:
+
+`α → ά → β → γ`
+
+Η λειτουργία Multi-tap επιτρέπει την εισαγωγή συγκεκριμένων χαρακτήρων με διαδοχικές πιέσεις του αντίστοιχου πλήκτρου.
+
+## Αυτοεκπαιδευόμενο λεξικό T9
+
+Το πληκτρολόγιο δεν περιλαμβάνει προφορτωμένα λεξικά ελληνικών και αγγλικών. Ο χρήστης δημιουργεί τα προσωπικά του λεξικά κατά τη χρήση του πληκτρολογίου.
+
+Ο μηχανισμός εκμάθησης:
+
+- Αποθηκεύει αυτόματα έγκυρες λέξεις που πληκτρολογεί ο χρήστης.
+- Καταγράφει τις λέξεις που επιλέγονται από τη γραμμή προτάσεων.
+- Διατηρεί ξεχωριστά στατιστικά χρήσης για κάθε γλώσσα.
+- Λαμβάνει υπόψη τη συχνότητα χρήσης και τον χρόνο τελευταίας χρήσης κάθε λέξης.
+- Αποθηκεύει τα δεδομένα τοπικά στη συσκευή.
+
+Κάθε γλώσσα διαθέτει ξεχωριστό προσωπικό λεξικό με όριο 500 λέξεων.
+
+Όταν ο αριθμός των λέξεων υπερβεί το όριο, η περιοδική εκκαθάριση αφαιρεί τις λιγότερο χρησιμοποιούμενες και τις παλαιότερες λέξεις. Η διαδικασία εκκαθάρισης πραγματοποιείται το πολύ μία φορά κάθε τρεις ημέρες.
+
+Οι νέες λέξεις αποθηκεύονται αμέσως και γίνονται διαθέσιμες στον μηχανισμό T9 μετά την επόμενη εκκίνηση του πληκτρολογίου.
+
+Με αυτόν τον τρόπο, το λεξικό προσαρμόζεται σταδιακά στο προσωπικό λεξιλόγιο του χρήστη, χωρίς να απαιτείται η εγκατάσταση ή η ενημέρωση έτοιμων λεξικών.
+
+## Διάταξη πληκτρολογίου
+
+### Ελληνικά
+
+| Πλήκτρο | Χαρακτήρες |
+|---|---|
 | 1 | . , ? ! |
 | 2 | α ά β γ |
 | 3 | δ ε έ ζ |
@@ -36,116 +83,124 @@ The keyboard supports Greek and English, Shift, Caps Lock, numbers, symbols, and
 | 7 | π ρ σ ς |
 | 8 | τ υ ύ φ |
 | 9 | χ ψ ω ώ |
-| 0 | Space (hold) |
+| 0 | Διάστημα· παρατεταμένο πάτημα για εισαγωγή του αριθμού 0 |
 
-### English
+### Αγγλικά
 
-| Key | Characters |
-|-----|------------|
+| Πλήκτρο | Χαρακτήρες |
+|---|---|
 | 1 | . , ? ! |
-| 2 | a b c |
-| 3 | d e f |
-| 4 | g h i |
-| 5 | j k l |
-| 6 | m n o |
-| 7 | p q r s |
-| 8 | t u v |
-| 9 | w x y z |
-| 0 | Space (hold) |
+| 2 | A B C |
+| 3 | D E F |
+| 4 | G H I |
+| 5 | J K L |
+| 6 | M N O |
+| 7 | P Q R S |
+| 8 | T U V |
+| 9 | W X Y Z |
+| 0 | Διάστημα· παρατεταμένο πάτημα για εισαγωγή του αριθμού 0 |
 
-Repeatedly tap a key to cycle through its characters.
+Για να επιλέξετε το επιθυμητό γράμμα στη λειτουργία Multi-tap, πατήστε επανειλημμένα το αντίστοιχο πλήκτρο.
 
-For example:
+## Shift και Caps Lock
 
-`a → b → c`
+### Σύντομο πάτημα του Shift
 
-or in Greek:
+Ενεργοποιεί το Shift για την εισαγωγή του επόμενου χαρακτήρα με κεφαλαίο γράμμα.
 
-`α → ά → β → γ`
-
-## Shift and Caps Lock
-
-**Tap Shift**
-
-Enables Shift for the next character.
-
-On the punctuation key, Shift provides additional symbols:
+Στο πλήκτρο στίξης, το Shift παρέχει πρόσθετα σύμβολα:
 
 `@ € - _`
 
-**Hold Shift**
+Μετά την εισαγωγή του επόμενου χαρακτήρα, το Shift απενεργοποιείται αυτόματα.
 
-Enables Caps Lock.
+### Παρατεταμένο πάτημα του Shift
 
-Tap Shift again to disable it.
+Ενεργοποιεί ή απενεργοποιεί το Caps Lock.
 
-## Numbers
+Όταν το Caps Lock είναι ενεργό, τα γράμματα εισάγονται με κεφαλαία.
 
-Hold one of the character keys to enter its corresponding number:
+## Εισαγωγή αριθμών
+
+Για να εισαγάγετε έναν αριθμό, πατήστε παρατεταμένα το αντίστοιχο αριθμητικό πλήκτρο:
 
 `1 2 3 4 5 6 7 8 9`
 
-Hold the **Space** key to enter:
+Για να εισαγάγετε το `0`, πατήστε παρατεταμένα το πλήκτρο διαστήματος.
 
-`0`
+## Εναλλαγή γλωσσών και μεθόδων εισαγωγής
 
-## Language Switching
+### Σύντομο πάτημα του εικονιδίου υδρογείου
 
-**Tap the Globe button**
-
-Switches between the built-in Greek and English layouts:
+Εναλλάσσει τις ενσωματωμένες ελληνική και αγγλική διατάξεις:
 
 `GR ↔ EN`
 
-**Hold the Globe button**
+### Παρατεταμένο πάτημα του εικονιδίου υδρογείου
 
-Opens the Zepp OS input method selector, allowing you to switch to another installed keyboard.
+Ανοίγει τον επιλογέα μεθόδων εισαγωγής του Zepp OS, επιτρέποντας την εναλλαγή σε άλλη εγκατεστημένη μέθοδο εισαγωγής.
 
-**Hold Cancel or Enter button**
-- Change the time for the chosen letter to commit with the following options:
-- Very fast: 200ms, Fast: 400ms, Normal: 600ms, Slow: 800ms, Very slow: 1000ms
+## Ρύθμιση ταχύτητας Multi-tap
 
-## Delete
+Το παρατεταμένο πάτημα του πλήκτρου `✓` ανοίγει τη ρύθμιση ταχύτητας Multi-tap.
 
-Tap Delete to remove the previous character.
+Διατίθενται οι ακόλουθες επιλογές:
 
-A character that is still being selected with multi-tap can also be deleted before it is committed.
+| Ταχύτητα | Διάστημα |
+|---|---:|
+| Πολύ γρήγορη | 200 ms |
+| Γρήγορη | 400 ms |
+| Κανονική | 600 ms |
+| Αργή | 800 ms |
+| Πολύ αργή | 1000 ms |
 
-Hold Delete to clear the input.
+Η επιλεγμένη ταχύτητα αποθηκεύεται τοπικά και χρησιμοποιείται στις επόμενες εισαγωγές κειμένου.
 
-## Supported Devices
+## Διαγραφή χαρακτήρων
 
-T9 Greek Keyboard is designed for Zepp OS devices supporting third-party input methods.
+Με σύντομο πάτημα του πλήκτρου διαγραφής αφαιρείται ο προηγούμενος χαρακτήρας.
 
-The interface includes layouts for:
+Μπορείτε επίσης να διαγράψετε έναν χαρακτήρα που βρίσκεται ακόμη σε διαδικασία επιλογής μέσω Multi-tap, πριν ολοκληρωθεί η εισαγωγή του.
 
-- Round displays
-- Square displays
+**Με παρατεταμένο πάτημα του πλήκτρου διαγραφής** διαγράφεται ολόκληρο το κείμενο που έχει εισαχθεί.
 
-Development and testing are primarily focused on 480×480 round devices, 390x450 square devices and Bip Max
-Tested on real Balance 2 and emulators for the other models
+## Υποστηριζόμενες συσκευές
 
-## Requirements
+Το T9 Greek Keyboard προορίζεται για συσκευές Zepp OS που υποστηρίζουν μεθόδους εισαγωγής τρίτων κατασκευαστών.
 
-- Zepp OS with third-party keyboard / data-widget support
-- API Level 4.0 or newer
+Η διεπαφή είναι προσαρμοσμένη για:
 
-## Installation
+- Στρογγυλές οθόνες.
+- Τετράγωνες οθόνες.
 
-The keyboard is implemented as a Zepp OS data widget.
+Η ανάπτυξη και οι δοκιμές επικεντρώνονται κυρίως σε συσκευές με στρογγυλές οθόνες 480 × 480, τετράγωνες οθόνες 390 × 450, καθώς και στο Bip Max.
 
-After installation, enable T9 Greek Keyboard from the keyboard/input method settings on your watch.
+Το πληκτρολόγιο έχει δοκιμαστεί σε πραγματική συσκευή **Amazfit Balance 2** και σε εξομοιωτές άλλων μοντέλων.
 
-## Development
+## Απαιτήσεις
 
-The project is built using the Zepp OS SDK.
+- Zepp OS με υποστήριξη πληκτρολογίων τρίτων κατασκευαστών και `data-widget`.
+- API Level 4.0 ή νεότερο.
 
-The keyboard is registered as a `data-widget` and uses the Zepp OS keyboard APIs for text input, composition, function keys, and input-method switching.
+## Εγκατάσταση
 
-## License
+Το πληκτρολόγιο υλοποιείται ως `data-widget` του Zepp OS.
 
-See the repository license for details.
+Μετά την εγκατάσταση, ενεργοποιήστε το **T9 Greek Keyboard** στις ρυθμίσεις πληκτρολογίου ή μεθόδων εισαγωγής του ρολογιού.
 
-## Screenshots
+## Ανάπτυξη
+
+Το έργο αναπτύχθηκε με το Zepp OS SDK.
+
+Το πληκτρολόγιο είναι καταχωρισμένο ως `data-widget` και χρησιμοποιεί τα API του Zepp OS για την εισαγωγή κειμένου, τη διαχείριση χαρακτήρων, τις λειτουργικές εντολές και την εναλλαγή μεθόδων εισαγωγής.
+
+Για την πρόβλεψη λέξεων χρησιμοποιείται η μηχανή T9 με ξεχωριστά προσωπικά λεξικά για τα ελληνικά και τα αγγλικά. Τα λεξικά δημιουργούνται αυτόματα κατά τη χρήση του πληκτρολογίου και αποθηκεύονται στο τοπικό αποθηκευτικό μέσο της συσκευής.
+
+## Άδεια χρήσης
+
+Για περισσότερες πληροφορίες, ανατρέξτε στο αρχείο άδειας χρήσης του αποθετηρίου.
+
+## Στιγμιότυπα οθόνης
+
 ![Image](./screenshots/hello.png)
 ![Image](./screenshots/hellogr.png)
