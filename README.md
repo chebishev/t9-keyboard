@@ -8,7 +8,7 @@ The keyboard supports Greek and English, Shift, Caps Lock, numbers, symbols, and
 
 ## Features
 
-- GR Greek multi-tap layout
+- 🇬🇷 Greek multi-tap layout
 - 🇬🇧 English multi-tap layout
 - Classic 9-key typing
 - Shift for a single uppercase letter

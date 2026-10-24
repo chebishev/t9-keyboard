@@ -1,6 +1,6 @@
 {
   "name": "T9 Greek Keyboard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "T9 English/Greek keyboard",
   "main": "app.js",
   "scripts": {
