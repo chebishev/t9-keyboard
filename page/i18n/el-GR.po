@@ -1,5 +1,5 @@
 // data-widget
-msgid "baseLanguage:
+msgid "baseLanguage"
 msgstr "gr"
 
 msgid "veryFast"
