@@ -848,10 +848,20 @@ DataWidget({
                   !isShiftSymbolLayer &&
                   (shiftEnabled || capsLockEnabled)
 
-                const charsToCycle = useUppercase
-                  ? [...new Set(activeChars.map(char => char.toUpperCase()))]
-                  : activeChars
+                let charsToCycle = activeChars
 
+                if (useUppercase) {
+                  charsToCycle = []
+
+                  for (let i = 0; i < activeChars.length; i++) {
+                    const char = activeChars[i].toUpperCase()
+
+                    if (charsToCycle.indexOf(char) === -1) {
+                      charsToCycle.push(char)
+                    }
+                  }
+                }
+                
                 if (multiTapTimer) {
                   clearTimeout(
                     multiTapTimer
